@@ -11,4 +11,8 @@ public class UserProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
     }
+
+    public void uploadProfilePicture(){
+
+    }
 }

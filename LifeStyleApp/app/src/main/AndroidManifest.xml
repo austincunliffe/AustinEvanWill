@@ -11,8 +11,14 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Weather"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_weather"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/FullscreenTheme"></activity>
+        <activity
+            android:name=".Weath"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_weath"
+            android:theme="@style/FullscreenTheme" />
         <activity android:name=".UserProfile" />
         <activity
             android:name=".MainActivity"

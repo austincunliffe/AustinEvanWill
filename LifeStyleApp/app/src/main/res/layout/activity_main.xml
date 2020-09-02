@@ -6,14 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/bottom_bar" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
@@ -21,7 +13,6 @@
         android:background="#2E2F35"
         android:gravity="center_horizontal"
         android:textAlignment="center">
-
 
         <TextView
             android:id="@+id/title"
@@ -136,7 +127,6 @@
                 android:textSize="30sp" />
 
         </LinearLayout>
-
 
         <ImageView
             android:id="@+id/imageView"
