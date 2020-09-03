@@ -1,14 +1,25 @@
 package com.example.lifestyleapp;
 
+import androidx.annotation.RequiresPermission;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.se.omapi.Reader;
+import android.util.JsonReader;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
+
+import javax.net.ssl.HttpsURLConnection;
 
 public class WeatherActivity extends AppCompatActivity {
 
@@ -17,36 +28,77 @@ public class WeatherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
         try {
-            getWeather();
-        } catch (IOException e) {
+            Location userLocation = new Location("London","UK");
+            getWeather(userLocation);
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
 
     }
-    // whatever information necessary to receive weather hardcode to work
-    // 63e730362b278faf6db7254c1f3837d8
-    public void getWeather() throws IOException {
-        String cityName = "London";
-//        String stateCode ="UT";
+
+
+    private URL buildOpenWeatherAPIURL(String cityName) throws MalformedURLException {
         String apiKey= "&appid=63e730362b278faf6db7254c1f3837d8";
         String urlBuild = "https://api.openweathermap.org/data/2.5/weather?q=";
-//        urlBuild+=cityName+stateCode+apiKey;
         urlBuild+=cityName+apiKey;
-        System.out.println(urlBuild);
         URL url = new URL(urlBuild);
-        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+        return url;
+    }
+
+    private InputStream sendAPIHTTPRequest(URL openWeatherFormattedURL) throws IOException {
+        HttpsURLConnection urlConnection = (HttpsURLConnection) openWeatherFormattedURL.openConnection();
+        InputStream in;
         try {
-            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-            System.out.println((in));
+            in = new BufferedInputStream(urlConnection.getInputStream());
+            return in;
+        } catch (IOException e) {
+            String failureToGetWeather = "--";
+            in = new ByteArrayInputStream( failureToGetWeather.getBytes());
+            return in;
         } finally {
             urlConnection.disconnect();
         }
     }
 
+    private String readInputStream(InputStream in) throws IOException {
+        int i;
+        char c;
+        String inString = "";
+        while((i = in.read())!=-1) {
+            c =(char) i;
+            inString+=c;
+        }
+
+        return inString;
+    }
+
+    private Weather JSONToWeather(String weatherData) throws JSONException {
+        JSONObject weatherDataJSON = new JSONObject(weatherData);
+
+        JSONArray weatherArr = weatherDataJSON.getJSONArray("weather");
+        JSONObject weatherObjects = (JSONObject) weatherArr.get(0);
+        String conditions = weatherObjects.getString("description");
+
+        JSONObject main = weatherDataJSON.getJSONObject("main");
+        String temp = main.getString("temp");
+        float tempKelvin = Float.parseFloat(temp);
+        Weather userLocationWeather = new Weather(conditions,(int) tempKelvin);
+        return userLocationWeather;
+    }
 
 
-    private void readStream(InputStream in) {
+    // 63e730362b278faf6db7254c1f3837d8
+    private void getWeather(Location userLocation) throws IOException, JSONException {
+        URL url = buildOpenWeatherAPIURL(userLocation.city);
 
+        InputStream in = sendAPIHTTPRequest(url);
+
+        String weatherData = readInputStream(in);
+
+        if (weatherData.length() <=2)
+            return;
+        Weather userLocationWeather = JSONToWeather(weatherData);
+        System.out.println(userLocationWeather.temp);
     }
 
 
