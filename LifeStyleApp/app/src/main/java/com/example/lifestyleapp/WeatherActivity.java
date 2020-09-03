@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.se.omapi.Reader;
 import android.util.JsonReader;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,20 +28,29 @@ public class WeatherActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
+        Location userLocation = new Location("London", "UK");
+        Weather userLocationWeather;
         try {
-            Location userLocation = new Location("London","UK");
-            getWeather(userLocation);
+            userLocationWeather = getWeather(userLocation);
         } catch (IOException | JSONException e) {
-            e.printStackTrace();
+            userLocationWeather = new Weather("Load Error",404);
         }
 
+        TextView weatherCity = findViewById(R.id.weatherCity);
+        weatherCity.setText(userLocation.city);
+
+        TextView weatherConditions = findViewById(R.id.weatherConditions);
+        weatherConditions.setText(userLocationWeather.conditions);
+
+        TextView weatherTemperature = findViewById(R.id.temperature);
+        weatherTemperature.setText(String.valueOf(userLocationWeather.temp));
     }
 
 
     private URL buildOpenWeatherAPIURL(String cityName) throws MalformedURLException {
-        String apiKey= "&appid=63e730362b278faf6db7254c1f3837d8";
+        String apiKey = "&appid=63e730362b278faf6db7254c1f3837d8";
         String urlBuild = "https://api.openweathermap.org/data/2.5/weather?q=";
-        urlBuild+=cityName+apiKey;
+        urlBuild += cityName + apiKey;
         URL url = new URL(urlBuild);
         return url;
     }
@@ -53,7 +63,7 @@ public class WeatherActivity extends AppCompatActivity {
             return in;
         } catch (IOException e) {
             String failureToGetWeather = "--";
-            in = new ByteArrayInputStream( failureToGetWeather.getBytes());
+            in = new ByteArrayInputStream(failureToGetWeather.getBytes());
             return in;
         } finally {
             urlConnection.disconnect();
@@ -64,9 +74,9 @@ public class WeatherActivity extends AppCompatActivity {
         int i;
         char c;
         String inString = "";
-        while((i = in.read())!=-1) {
-            c =(char) i;
-            inString+=c;
+        while ((i = in.read()) != -1) {
+            c = (char) i;
+            inString += c;
         }
 
         return inString;
@@ -82,23 +92,23 @@ public class WeatherActivity extends AppCompatActivity {
         JSONObject main = weatherDataJSON.getJSONObject("main");
         String temp = main.getString("temp");
         float tempKelvin = Float.parseFloat(temp);
-        Weather userLocationWeather = new Weather(conditions,(int) tempKelvin);
+        Weather userLocationWeather = new Weather(conditions, (int) tempKelvin);
         return userLocationWeather;
     }
 
 
     // 63e730362b278faf6db7254c1f3837d8
-    private void getWeather(Location userLocation) throws IOException, JSONException {
+    private Weather getWeather(Location userLocation) throws IOException, JSONException {
         URL url = buildOpenWeatherAPIURL(userLocation.city);
 
         InputStream in = sendAPIHTTPRequest(url);
 
         String weatherData = readInputStream(in);
 
-        if (weatherData.length() <=2)
-            return;
+        if (weatherData.length() <= 2)
+            return new Weather("Load Error", 404);
         Weather userLocationWeather = JSONToWeather(weatherData);
-        System.out.println(userLocationWeather.temp);
+        return userLocationWeather;
     }
 
 
