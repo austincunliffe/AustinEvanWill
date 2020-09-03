@@ -3,12 +3,7 @@ package com.example.lifestyleapp;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.View;
 
@@ -24,12 +19,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void viewUserProfile(View view){
-        Intent intent = new Intent(this,UserProfile.class);
+        Intent intent = new Intent(this, UserProfileActivity.class);
         startActivity(intent);
     }
 
     public void viewWeather(View view){
-        Intent intent = new Intent(this,Weather.class);
+        Intent intent = new Intent(this, WeatherActivity.class);
         startActivity(intent);
     }
 
