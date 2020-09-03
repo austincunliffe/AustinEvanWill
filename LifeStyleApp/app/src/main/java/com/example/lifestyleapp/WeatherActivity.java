@@ -1,11 +1,8 @@
 package com.example.lifestyleapp;
 
-import androidx.annotation.RequiresPermission;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.se.omapi.Reader;
-import android.util.JsonReader;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -18,7 +15,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -28,12 +24,12 @@ public class WeatherActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
-        Location userLocation = new Location("London", "UK");
+        Location userLocation = new Location("Salt Lake City", "US");
         Weather userLocationWeather;
         try {
             userLocationWeather = getWeather(userLocation);
         } catch (IOException | JSONException e) {
-            userLocationWeather = new Weather("Load Error",404);
+            userLocationWeather = new Weather("--",0);
         }
 
         TextView weatherCity = findViewById(R.id.weatherCity);
@@ -43,7 +39,11 @@ public class WeatherActivity extends AppCompatActivity {
         weatherConditions.setText(userLocationWeather.conditions);
 
         TextView weatherTemperature = findViewById(R.id.temperature);
-        weatherTemperature.setText(String.valueOf(userLocationWeather.temp));
+        if(userLocationWeather.conditions=="--")
+            weatherTemperature.setText("--");
+        else {
+            weatherTemperature.setText(String.valueOf(userLocationWeather.temp));
+        }
     }
 
 
@@ -52,6 +52,7 @@ public class WeatherActivity extends AppCompatActivity {
         String urlBuild = "https://api.openweathermap.org/data/2.5/weather?q=";
         urlBuild += cityName + apiKey;
         URL url = new URL(urlBuild);
+        System.out.println(url);
         return url;
     }
 
@@ -106,7 +107,7 @@ public class WeatherActivity extends AppCompatActivity {
         String weatherData = readInputStream(in);
 
         if (weatherData.length() <= 2)
-            return new Weather("Load Error", 404);
+            return new Weather("--", 0);
         Weather userLocationWeather = JSONToWeather(weatherData);
         return userLocationWeather;
     }
