@@ -3,13 +3,9 @@ package com.example.lifestyleapp;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.navigation.fragment.NavHostFragment;
 
+import android.os.StrictMode;
 import android.view.View;
 
 import android.view.Menu;
@@ -21,15 +17,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (android.os.Build.VERSION.SDK_INT > 9)   // Starts new thread for network http request (Prevent app from crashing)
+        {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
     }
 
     public void viewUserProfile(View view){
-        Intent intent = new Intent(this,UserProfile.class);
+        Intent intent = new Intent(this, UserProfileActivity.class);
         startActivity(intent);
     }
 
     public void viewWeather(View view){
-        Intent intent = new Intent(this,Weather.class);
+        Intent intent = new Intent(this, WeatherActivity.class);
         startActivity(intent);
     }
 
