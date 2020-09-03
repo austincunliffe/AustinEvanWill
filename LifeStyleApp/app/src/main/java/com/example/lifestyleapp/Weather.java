@@ -1,14 +1,17 @@
 package com.example.lifestyleapp;
 
-import androidx.appcompat.app.AppCompatActivity;
+public class Weather {
+    String conditions;
+    int temp;
 
-import android.os.Bundle;
+    Weather(String conditions, int temp){
+        this.conditions = conditions;
+        this.temp = kelvinToFahrenheit(temp);
+    }
 
-public class Weather extends AppCompatActivity {
+    private int kelvinToFahrenheit(int kelvinTemp){
+        int fahrenheitTemp = (int) ((kelvinTemp -273.15) * 9/5 +32);
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_weather);
+        return fahrenheitTemp;
     }
 }
