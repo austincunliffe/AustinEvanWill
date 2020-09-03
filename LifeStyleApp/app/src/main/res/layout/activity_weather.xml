@@ -7,12 +7,13 @@
     android:background="#2196F3"
     tools:context=".WeatherActivity">
 
+
     <TextView
         android:id="@+id/weatherCity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="95dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="20dp"
         android:baselineAligned="false"
         android:fontFamily="cursive"
         android:gravity="top|center_vertical"
@@ -31,7 +32,6 @@
         android:id="@+id/weatherConditions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
         android:layout_marginBottom="133dp"
         android:fontFamily="cursive"
         android:text="Conditions"
@@ -43,15 +43,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/weatherCity" />
 
-
     <TextView
         android:id="@+id/temperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="138dp"
+        android:layout_marginTop="70dp"
         android:text="Temperature"
+        android:background="@drawable/circle"
+        android:textColor="#FFFFFF"
+        android:textSize="50sp"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/weatherConditions" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
