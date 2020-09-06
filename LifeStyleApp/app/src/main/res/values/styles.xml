@@ -28,4 +28,8 @@
         <item name="android:background">@color/black_overlay</item>
     </style>
 
+    <style name="spinner_AC_Theme">
+        <item name="android:textColor">@android:color/holo_blue_light</item>
+    </style>
+
 </resources>
