@@ -3,29 +3,44 @@ package com.example.lifestyleapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 public class CreateAccountActivity extends AppCompatActivity implements
         AdapterView.OnItemSelectedListener {
 
+    String country, sex, username, email, password, dob;
+
     Spinner spin_country, spin_sex;
-    String country, sex;
 
     NumberPicker picker_weight, picker_height;
     int weight, height;
+
+    EditText et_DOB;
+    final Calendar calendar_DOB = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
         getSupportActionBar().hide();
+
+        // Find DOB edit text.
+        et_DOB = findViewById(R.id.et_DOB);
+        initializeDOB();
 
         // Set up pickers.
         picker_weight = findViewById(R.id.np_weight);
@@ -69,7 +84,7 @@ public class CreateAccountActivity extends AppCompatActivity implements
 
     }
 
-    public void initializeWeightPicker(){
+    public void initializeWeightPicker() {
         picker_weight.setMaxValue(600);
         picker_weight.setMinValue(50);
         picker_weight.setValue(130);
@@ -82,7 +97,7 @@ public class CreateAccountActivity extends AppCompatActivity implements
         });
     }
 
-    public void initializeHeightPicker(){
+    public void initializeHeightPicker() {
         picker_height.setMaxValue(96);
         picker_height.setMinValue(24);
         picker_height.setValue(65);
@@ -93,5 +108,35 @@ public class CreateAccountActivity extends AppCompatActivity implements
                 height = picker_height.getValue();
             }
         });
+    }
+
+    public void initializeDOB() {
+
+        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                calendar_DOB.set(Calendar.YEAR, year);
+                calendar_DOB.set(Calendar.MONTH, month);
+                calendar_DOB.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel();
+            }
+        };
+
+        et_DOB.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(CreateAccountActivity.this, date, calendar_DOB
+                        .get(Calendar.YEAR), calendar_DOB.get(Calendar.MONTH),
+                        calendar_DOB.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+    }
+
+    private void updateLabel() {
+        String myFormat = "MM/dd/yy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        dob = sdf.format(calendar_DOB.getTime());
+        et_DOB.setText(sdf.format(calendar_DOB.getTime()));
     }
 }
