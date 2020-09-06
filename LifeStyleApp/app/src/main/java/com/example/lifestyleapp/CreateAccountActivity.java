@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -17,11 +18,20 @@ public class CreateAccountActivity extends AppCompatActivity implements
     Spinner spin_country, spin_sex;
     String country, sex;
 
+    NumberPicker picker_weight, picker_height;
+    int weight, height;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
         getSupportActionBar().hide();
+
+        // Set up pickers.
+        picker_weight = findViewById(R.id.np_weight);
+        initializeWeightPicker();
+        picker_height = findViewById(R.id.np_height);
+        initializeHeightPicker();
 
         // Set up spinners.
         spin_country = findViewById(R.id.spinner_country);
@@ -57,5 +67,31 @@ public class CreateAccountActivity extends AppCompatActivity implements
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    public void initializeWeightPicker(){
+        picker_weight.setMaxValue(600);
+        picker_weight.setMinValue(50);
+        picker_weight.setValue(130);
+
+        picker_weight.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker numberPicker, int i, int i2) {
+                weight = picker_weight.getValue();
+            }
+        });
+    }
+
+    public void initializeHeightPicker(){
+        picker_height.setMaxValue(96);
+        picker_height.setMinValue(24);
+        picker_height.setValue(65);
+
+        picker_height.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker numberPicker, int i, int i2) {
+                height = picker_height.getValue();
+            }
+        });
     }
 }
