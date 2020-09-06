@@ -212,12 +212,11 @@
                 app:layout_constraintLeft_toRightOf="@id/guideline"
                 app:layout_constraintTop_toBottomOf="@id/et_city" />
 
-            <EditText
-                android:id="@+id/et_height"
-                android:layout_width="250sp"
+            <NumberPicker
+                android:id="@+id/np_height"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4sp"
-                android:background="@drawable/edittext_frame"
+                android:theme="@style/numberpicker_AC_Theme"
                 app:layout_constraintLeft_toRightOf="@id/guideline"
                 app:layout_constraintTop_toBottomOf="@id/tv_height" />
 
@@ -229,16 +228,16 @@
                 android:text="Weight (lb)"
                 android:textColor="@android:color/holo_blue_light"
                 app:layout_constraintLeft_toRightOf="@id/guideline"
-                app:layout_constraintTop_toBottomOf="@id/et_height" />
+                app:layout_constraintTop_toBottomOf="@id/np_height" />
 
-            <EditText
-                android:id="@+id/et_weight"
-                android:layout_width="250sp"
+            <NumberPicker
+                android:id="@+id/np_weight"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4sp"
-                android:background="@drawable/edittext_frame"
+                android:theme="@style/numberpicker_AC_Theme"
                 app:layout_constraintLeft_toRightOf="@id/guideline"
                 app:layout_constraintTop_toBottomOf="@id/tv_weight" />
+
 
             <TextView
                 android:id="@+id/tv_sex"
@@ -248,7 +247,7 @@
                 android:text="Sex"
                 android:textColor="@android:color/holo_blue_light"
                 app:layout_constraintLeft_toRightOf="@id/guideline"
-                app:layout_constraintTop_toBottomOf="@id/et_weight" />
+                app:layout_constraintTop_toBottomOf="@id/np_weight" />
 
 
             <Spinner
