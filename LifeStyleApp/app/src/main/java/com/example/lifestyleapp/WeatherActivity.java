@@ -63,6 +63,7 @@ public class WeatherActivity extends AppCompatActivity {
             in = new BufferedInputStream(urlConnection.getInputStream());
             return in;
         } catch (IOException e) {
+            System.out.println(e);
             String failureToGetWeather = "--";
             in = new ByteArrayInputStream(failureToGetWeather.getBytes());
             return in;
