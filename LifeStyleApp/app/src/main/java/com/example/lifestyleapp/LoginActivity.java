@@ -9,24 +9,32 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
     private static final String LOGIN_KEY = "LOGIN_KEY";
+
+    EditText et_uname, et_pw;
+    String un, user_pw;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        SharedPreferences pref = getPreferences(Context.MODE_PRIVATE);
+        et_uname = findViewById(R.id.username);
+        et_pw = findViewById(R.id.password);
 
-        // The following line is for testing purposes. It forces a login.
-        pref.edit().putBoolean(LOGIN_KEY, false).apply();
+        SharedPreferences pref = getSharedPreferences("com.example.lifestyleapp",
+                Context.MODE_PRIVATE);
+
+        // The following line is for testing purposes. It forces credentials.
+//        pref.edit().putBoolean(LOGIN_KEY, false).apply();
 
         if (pref.getBoolean(LOGIN_KEY, false)) {
             //has login
-            System.out.println("Has already logged in. Skipping login activity.");
             startActivity(new Intent(this, MainActivity.class));
             //must finish this activity (the login activity will not be shown when click back in main activity)
             finish();
@@ -34,7 +42,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         else {
             // Mark login
             pref.edit().putBoolean(LOGIN_KEY, false).apply();
-            System.out.println("Just putBoolean into shared preferences.");
             // Do something
         }
 
@@ -51,8 +58,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         switch(v.getId()){
             case R.id.signUp:{
                 System.out.println("Inside case signUp");
-
                 this.startActivity(new Intent(this, CreateAccountActivity.class));
+            }
+
+            case R.id.login:{
+                SharedPreferences pref = getSharedPreferences("com.example.lifestyleapp",
+                        Context.MODE_PRIVATE);
+
+                un = et_uname.getText().toString();
+                user_pw = et_pw.getText().toString();
+
+                String username = pref.getString("username", null);
+                String pw = pref.getString("password", null);
+
+                if (username == null || pw == null || (!username.matches(un)) || (!user_pw.matches(pw))) {
+                    Toast.makeText(this, "Invalid login.", Toast.LENGTH_SHORT).show();
+                } else {
+                    pref.edit().putBoolean(LOGIN_KEY, true).apply();
+                    startActivity(new Intent(this, MainActivity.class));
+                }
             }
             break;
         }
