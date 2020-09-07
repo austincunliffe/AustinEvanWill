@@ -23,6 +23,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        getSupportActionBar().hide();
 
         et_uname = findViewById(R.id.username);
         et_pw = findViewById(R.id.password);
@@ -30,8 +31,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         SharedPreferences pref = getSharedPreferences("com.example.lifestyleapp",
                 Context.MODE_PRIVATE);
 
-        // The following line is for testing purposes. It forces credentials.
-//        pref.edit().putBoolean(LOGIN_KEY, false).apply();
+//         The following line is for testing purposes. It forces credentials.
+        pref.edit().putBoolean(LOGIN_KEY, false).apply();
 
         if (pref.getBoolean(LOGIN_KEY, false)) {
             //has login
