@@ -4,32 +4,37 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
 public class CreateAccountActivity extends AppCompatActivity implements
-        AdapterView.OnItemSelectedListener {
+        AdapterView.OnItemSelectedListener, View.OnClickListener{
 
-    String country, sex, username, email, password, dob;
-
-    Spinner spin_country, spin_sex;
-
-    NumberPicker picker_weight, picker_height;
+    String country, sex, username, email, password, confirm_pw, dob, city;
     int weight, height;
 
-    EditText et_DOB;
+    Spinner spin_country, spin_sex;
+    NumberPicker picker_weight, picker_height;
+    EditText et_DOB, et_username, et_email, et_password, et_confirm_pw, et_city;
+    Button bt_signUp;
+
     final Calendar calendar_DOB = Calendar.getInstance();
 
     @Override
@@ -37,6 +42,15 @@ public class CreateAccountActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
         getSupportActionBar().hide();
+
+        et_username = findViewById(R.id.et_username);
+        et_email = findViewById(R.id.et_email);
+        et_password = findViewById(R.id.et_password);
+        et_confirm_pw = findViewById(R.id.et_confirm_password);
+        et_city = findViewById(R.id.et_city);
+
+        bt_signUp = findViewById(R.id.bt_signUp);
+        bt_signUp.setOnClickListener(this);
 
         // Find DOB edit text.
         et_DOB = findViewById(R.id.et_DOB);
@@ -138,5 +152,39 @@ public class CreateAccountActivity extends AppCompatActivity implements
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         dob = sdf.format(calendar_DOB.getTime());
         et_DOB.setText(sdf.format(calendar_DOB.getTime()));
+    }
+
+    @Override
+    public void onClick(View v) {
+        username = et_username.getText().toString();
+        email = et_email.getText().toString();
+        password = et_password.getText().toString();
+        confirm_pw = et_confirm_pw.getText().toString();
+        city = et_city.getText().toString();
+
+        if (username.matches("") || email.matches("") || password.matches("") ||
+                confirm_pw.matches("") || dob.matches("") || city.matches("")) {
+            Toast.makeText(this, "All fields are required.", Toast.LENGTH_SHORT).show();
+            return;
+        } else if (!password.matches(confirm_pw)) {
+            Toast.makeText(this, "Passwords must match.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        SharedPreferences prefs = this.getSharedPreferences(
+                "com.example.lifestyleapp", Context.MODE_PRIVATE);
+
+        prefs.edit().putString("username", username).apply();
+        prefs.edit().putString("email", email).apply();
+        prefs.edit().putString("password", password).apply();
+        prefs.edit().putString("dob", dob).apply();
+        prefs.edit().putString("country", country).apply();
+        prefs.edit().putString("city", city).apply();
+        prefs.edit().putString("sex", sex).apply();
+        prefs.edit().putInt("height", height).apply();
+        prefs.edit().putInt("weight", weight).apply();
+        prefs.edit().putBoolean("LOGIN_KEY", true).apply();
+
+        this.startActivity(new Intent(this, MainActivity.class));
     }
 }
