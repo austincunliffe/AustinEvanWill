@@ -11,7 +11,6 @@ public class Weather {
 
     private int kelvinToFahrenheit(int kelvinTemp){
         int fahrenheitTemp = (int) ((kelvinTemp -273.15) * 9/5 +32);
-
         return fahrenheitTemp;
     }
 }
