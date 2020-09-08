@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     Toast.makeText(this, "Invalid login.", Toast.LENGTH_SHORT).show();
                 } else {
                     pref.edit().putBoolean(LOGIN_KEY, true).apply();
-                    startActivity(new Intent(this, MainActivity.class));
+                    startActivity(new Intent(this, MainDrawerActivity.class));
                 }
             }
             break;
