@@ -1,10 +1,10 @@
 package com.example.lifestyleapp;
 
 public class Weather {
-    String conditions;
-    int temp;
+    public String conditions;
+    public int temp;
 
-    Weather(String conditions, int temp){
+    public Weather(String conditions, int temp){
         this.conditions = conditions;
         this.temp = kelvinToFahrenheit(temp);
     }

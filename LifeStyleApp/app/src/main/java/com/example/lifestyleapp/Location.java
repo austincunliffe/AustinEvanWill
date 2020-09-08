@@ -1,10 +1,10 @@
 package com.example.lifestyleapp;
 
 public class Location {
-    String city;
-    String country;
+    public String city;
+    public String country;
 
-    Location(String city, String country){
+    public Location(String city, String country){
         this.city = city;
         this.country = country;
     }
