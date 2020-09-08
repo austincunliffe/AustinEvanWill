@@ -1,4 +1,4 @@
-package com.example.lifestyleapp.ui.home;
+package com.example.lifestyleapp.ui.weather;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -10,14 +10,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.lifestyleapp.Location;
 import com.example.lifestyleapp.R;
-import com.example.lifestyleapp.Weather;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,17 +28,17 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class HomeFragment extends Fragment {
+public class WeatherFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
+    private WeatherViewModel weatherViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        weatherViewModel =
+                ViewModelProviders.of(this).get(WeatherViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_weather, container, false);
         SharedPreferences prefs = this.getActivity().getSharedPreferences(
                 "com.example.lifestyleapp", Context.MODE_PRIVATE);
         String city = prefs.getString("city",null);

@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.lifestyleapp.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        android:name="com.example.lifestyleapp.ui.weather.WeatherFragment"
+        android:label="@string/menu_weather"
+        tools:layout="@layout/fragment_weather" />
 
     <fragment
         android:id="@+id/nav_gallery"
