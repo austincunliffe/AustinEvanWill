@@ -2,6 +2,8 @@ package com.example.lifestyleapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -24,7 +26,11 @@ public class WeatherActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
-        Location userLocation = new Location("Salt Lake City", "US");
+        SharedPreferences prefs = this.getSharedPreferences(
+                "com.example.lifestyleapp", Context.MODE_PRIVATE);
+        String city = prefs.getString("city",null);
+        String country = prefs.getString("country",null);
+        Location userLocation = new Location(city, country);
         Weather userLocationWeather;
         try {
             userLocationWeather = getWeather(userLocation);
