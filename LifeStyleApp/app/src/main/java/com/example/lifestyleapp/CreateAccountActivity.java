@@ -185,6 +185,6 @@ public class CreateAccountActivity extends AppCompatActivity implements
         prefs.edit().putInt("weight", weight).apply();
         prefs.edit().putBoolean("LOGIN_KEY", true).apply();
 
-        this.startActivity(new Intent(this, MainActivity.class));
+        this.startActivity(new Intent(this, MainDrawerActivity.class));
     }
 }
