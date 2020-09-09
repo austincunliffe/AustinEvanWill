@@ -11,10 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+<<<<<<< HEAD
         <activity
             android:name=".MainDrawerActivity"
             android:label="@string/title_activity_main_drawer"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+=======
+        <activity android:name=".EditUserProfileActivity"></activity>
+>>>>>>> 5c37e0c... User Profile java and xml - Evan
         <activity android:name=".CreateAccountActivity" />
         <activity
             android:name=".LoginActivity"
