@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         if (pref.getBoolean(LOGIN_KEY, false)) {
             //has login
-            startActivity(new Intent(this, MainActivity.class));
+            startActivity(new Intent(this, MainDrawerActivity.class));
             //must finish this activity (the login activity will not be shown when click back in main activity)
             finish();
         }
@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     Toast.makeText(this, "Invalid login.", Toast.LENGTH_SHORT).show();
                 } else {
                     pref.edit().putBoolean(LOGIN_KEY, true).apply();
-                    startActivity(new Intent(this, MainActivity.class));
+                    startActivity(new Intent(this, MainDrawerActivity.class));
                 }
             }
             break;
