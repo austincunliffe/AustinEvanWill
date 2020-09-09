@@ -1,7 +1,4 @@
-package com.example.lifestyleapp;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.lifestyleapp.ui.userProfile;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,13 +6,25 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class UserProfileActivity extends AppCompatActivity implements  View.OnClickListener{
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+
+
+import com.example.lifestyleapp.R;
+
+public class UserProfileFragment extends Fragment {
+
+    private SlideshowViewModel slideshowViewModel;
 
     private Button mButtonEdit;
 
@@ -25,15 +34,14 @@ public class UserProfileActivity extends AppCompatActivity implements  View.OnCl
     //Define a request code for the camera
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_profile);
 
-        System.out.println("test test");
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+        slideshowViewModel =
+                ViewModelProviders.of(this).get(SlideshowViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
 
-
-        SharedPreferences pref = this.getSharedPreferences("com.example.lifestyleapp",
+        SharedPreferences pref = this.getActivity().getSharedPreferences("com.example.lifestyleapp",
                 Context.MODE_PRIVATE);
 
         //Create variables to hold the three strings
@@ -51,13 +59,13 @@ public class UserProfileActivity extends AppCompatActivity implements  View.OnCl
 
         //Get the text views where we will display names
         //Create variables for the UI elements that we need to control
-        TextView mTvName = findViewById(R.id.tv_name_big);
-        TextView mTvAge = findViewById(R.id.tv_age_big);
-        TextView mTvCity = findViewById(R.id.tv_city_big);
-        TextView mTvCountry = findViewById(R.id.tv_country_big);
-        TextView mTvHeight = findViewById(R.id.tv_height_big);
-        TextView mTvWeight = findViewById(R.id.tv_weight_big);
-        TextView mTvSex = findViewById(R.id.tv_sex_big);
+        TextView mTvName = root.findViewById(R.id.tv_name_big);
+        TextView mTvAge = root.findViewById(R.id.tv_age_big);
+        TextView mTvCity = root.findViewById(R.id.tv_city_big);
+        TextView mTvCountry = root.findViewById(R.id.tv_country_big);
+        TextView mTvHeight = root.findViewById(R.id.tv_height_big);
+        TextView mTvWeight = root.findViewById(R.id.tv_weight_big);
+        TextView mTvSex = root.findViewById(R.id.tv_sex_big);
 
         //setting the text views
         mTvName.setText(mName);
@@ -69,20 +77,21 @@ public class UserProfileActivity extends AppCompatActivity implements  View.OnCl
         mTvWeight.setText(mWeight);
 
         //get button
-        Button mButtonCamera = findViewById(R.id.button_take_pic);
+        Button mButtonCamera = root.findViewById(R.id.button_take_pic);
+//
+//        //set button
+//        mButtonCamera.setOnClickListener((View.OnClickListener) this.getActivity());
 
-        //set button
-        mButtonCamera.setOnClickListener(this);
+        return root;
     }
 
-    @Override
     public void onClick(View v) {
         System.out.println("hello");
         switch(v.getId()) {
             case R.id.button_take_pic: {
                 //The button press should open a camera
                 Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if(cameraIntent.resolveActivity(getPackageManager())!=null){
+                if(cameraIntent.resolveActivity(this.getActivity().getPackageManager())!=null){
                     startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE);
                 }
             }
@@ -90,14 +99,15 @@ public class UserProfileActivity extends AppCompatActivity implements  View.OnCl
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == this.getActivity().RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap thumbnailImage = (Bitmap) extras.get("data");
-            mIvPic = (ImageView) findViewById(R.id.imageView_profile);
+            mIvPic = (ImageView) this.getActivity().findViewById(R.id.imageView_profile);
             mIvPic.setImageBitmap(thumbnailImage);
         }
     }
-}
 
+
+}

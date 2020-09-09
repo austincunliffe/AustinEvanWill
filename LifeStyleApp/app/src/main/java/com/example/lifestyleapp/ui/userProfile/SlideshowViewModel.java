@@ -1,4 +1,4 @@
-package com.example.lifestyleapp.ui.slideshow;
+package com.example.lifestyleapp.ui.userProfile;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

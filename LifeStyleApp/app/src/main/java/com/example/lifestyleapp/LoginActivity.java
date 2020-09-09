@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Context.MODE_PRIVATE);
 
 //         The following line is for testing purposes. It forces credentials.
-        pref.edit().putBoolean(LOGIN_KEY, true).apply();
+        pref.edit().putBoolean(LOGIN_KEY, false).apply();
 
         if (pref.getBoolean(LOGIN_KEY, false)) {
             startActivity(new Intent(this, MainDrawerActivity.class));
@@ -72,6 +72,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     Toast.makeText(this, "Invalid login.", Toast.LENGTH_SHORT).show();
                 } else {
                     pref.edit().putBoolean(LOGIN_KEY, true).apply();
+//                    startActivity(new Intent(this, UserProfileActivity.class));
                     startActivity(new Intent(this, MainDrawerActivity.class));
                 }
             }
