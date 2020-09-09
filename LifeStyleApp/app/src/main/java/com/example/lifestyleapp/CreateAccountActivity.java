@@ -85,10 +85,12 @@ public class CreateAccountActivity extends AppCompatActivity implements
 
             case R.id.spinner_country: {
                 country = (String) parent.getItemAtPosition(position);
+                System.out.println(country);
             }
 
             case R.id.spinner_sex: {
                 sex = (String) parent.getItemAtPosition(position);
+                System.out.println(sex);
             }
         }
     }
