@@ -1,9 +1,19 @@
-package com.example.lifestyleapp;
+package com.example.lifestyleapp.ui.weather;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+
+import com.example.lifestyleapp.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,13 +28,22 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class WeatherActivity extends AppCompatActivity {
+public class WeatherFragment extends Fragment {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_weather);
-        Location userLocation = new Location("Salt Lake City", "US");
+    private WeatherViewModel weatherViewModel;
+
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        weatherViewModel =
+                ViewModelProviders.of(this).get(WeatherViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_weather, container, false);
+        SharedPreferences prefs = this.getActivity().getSharedPreferences(
+                "com.example.lifestyleapp", Context.MODE_PRIVATE);
+        String city = prefs.getString("city",null);
+        String country = prefs.getString("country",null);
+        Location userLocation = new Location(city, country);
         Weather userLocationWeather;
         try {
             userLocationWeather = getWeather(userLocation);
@@ -32,20 +51,27 @@ public class WeatherActivity extends AppCompatActivity {
             userLocationWeather = new Weather("--",0);
         }
 
-        TextView weatherCity = findViewById(R.id.weatherCity);
+        TextView weatherCity = root.findViewById(R.id.weatherCity);
         weatherCity.setText(userLocation.city);
 
-        TextView weatherConditions = findViewById(R.id.weatherConditions);
+        TextView weatherConditions = root.findViewById(R.id.weatherConditions);
         weatherConditions.setText(userLocationWeather.conditions);
 
-        TextView weatherTemperature = findViewById(R.id.temperature);
+        TextView weatherTemperature = root.findViewById(R.id.temperature);
         if(userLocationWeather.conditions=="--")
             weatherTemperature.setText("--");
         else {
             weatherTemperature.setText(String.valueOf(userLocationWeather.temp));
         }
+//        final TextView textView = root.findViewById(R.id.text_home);
+//        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+//            @Override
+//            public void onChanged(@Nullable String s) {
+//                textView.setText(s);
+//            }
+//        });
+        return root;
     }
-
 
     private URL buildOpenWeatherAPIURL(String cityName) throws MalformedURLException {
         String apiKey = "&appid=63e730362b278faf6db7254c1f3837d8";
@@ -112,6 +138,5 @@ public class WeatherActivity extends AppCompatActivity {
         Weather userLocationWeather = JSONToWeather(weatherData);
         return userLocationWeather;
     }
-
 
 }

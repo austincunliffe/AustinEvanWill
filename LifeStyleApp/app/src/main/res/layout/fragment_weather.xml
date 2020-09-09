@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#2196F3"
-    tools:context=".WeatherActivity">
-
+    tools:context=".ui.weather.WeatherFragment">
 
     <TextView
         android:id="@+id/weatherCity"
@@ -73,6 +72,5 @@
         android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="@+id/temperature"
         app:layout_constraintTop_toTopOf="@+id/temperature" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
