@@ -35,15 +35,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         pref.edit().putBoolean(LOGIN_KEY, true).apply();
 
         if (pref.getBoolean(LOGIN_KEY, false)) {
-            //has login
             startActivity(new Intent(this, MainDrawerActivity.class));
-            //must finish this activity (the login activity will not be shown when click back in main activity)
             finish();
         }
         else {
-            // Mark login
             pref.edit().putBoolean(LOGIN_KEY, false).apply();
-            // Do something
         }
 
         Button bt_login = findViewById(R.id.login);
