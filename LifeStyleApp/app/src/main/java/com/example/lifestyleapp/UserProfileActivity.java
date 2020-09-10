@@ -41,6 +41,7 @@ public class UserProfileActivity extends AppCompatActivity implements  View.OnCl
         String mAge = pref.getString("dob", null);
         String mCity = pref.getString("city", null);
         String mCountry = pref.getString("country", "test");
+
 //        converting height and weight to strings
         int mHeightInt = pref.getInt("height", 0);
         String mHeight = Integer.toString(mHeightInt);
