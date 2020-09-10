@@ -102,26 +102,12 @@ public class CreateAccountActivity extends AppCompatActivity implements
         picker_weight.setMaxValue(600);
         picker_weight.setMinValue(50);
         picker_weight.setValue(130);
-
-        picker_weight.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker numberPicker, int i, int i2) {
-                weight = picker_weight.getValue();
-            }
-        });
     }
 
     public void initializeHeightPicker() {
         picker_height.setMaxValue(96);
         picker_height.setMinValue(24);
         picker_height.setValue(65);
-
-        picker_height.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker numberPicker, int i, int i2) {
-                height = picker_height.getValue();
-            }
-        });
     }
 
     public void initializeDOB() {
@@ -163,6 +149,8 @@ public class CreateAccountActivity extends AppCompatActivity implements
         city = et_city.getText().toString();
         country = spin_country.getSelectedItem().toString();
         sex = spin_sex.getSelectedItem().toString();
+        weight = picker_weight.getValue();
+        height = picker_height.getValue();
 
         if (username.matches("") || email.matches("") || password.matches("") ||
                 confirm_pw.matches("") || dob.matches("") || city.matches("")) {
