@@ -84,13 +84,11 @@ public class CreateAccountActivity extends AppCompatActivity implements
         switch (view.getId()) {
 
             case R.id.spinner_country: {
-                country = (String) parent.getItemAtPosition(position);
-                System.out.println(country);
+
             }
 
             case R.id.spinner_sex: {
-                sex = (String) parent.getItemAtPosition(position);
-                System.out.println(sex);
+
             }
         }
     }
@@ -163,6 +161,8 @@ public class CreateAccountActivity extends AppCompatActivity implements
         password = et_password.getText().toString();
         confirm_pw = et_confirm_pw.getText().toString();
         city = et_city.getText().toString();
+        country = spin_country.getSelectedItem().toString();
+        sex = spin_sex.getSelectedItem().toString();
 
         if (username.matches("") || email.matches("") || password.matches("") ||
                 confirm_pw.matches("") || dob.matches("") || city.matches("")) {
