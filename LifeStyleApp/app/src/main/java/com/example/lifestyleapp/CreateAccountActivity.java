@@ -84,11 +84,11 @@ public class CreateAccountActivity extends AppCompatActivity implements
         switch (view.getId()) {
 
             case R.id.spinner_country: {
-
+                break;
             }
 
             case R.id.spinner_sex: {
-
+                break;
             }
         }
     }
