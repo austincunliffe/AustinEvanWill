@@ -1,9 +1,14 @@
 package com.example.lifestyleapp;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.view.Menu;
+import android.widget.Button;
+import android.widget.ImageView;
 
+import com.example.lifestyleapp.ui.userProfile.UserProfileViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -19,6 +24,9 @@ import androidx.appcompat.widget.Toolbar;
 public class MainDrawerActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+
+    //Define a request code for the camera
+    static final int REQUEST_IMAGE_CAPTURE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,5 +60,18 @@ public class MainDrawerActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    public void takePhoto(View v) {
+        System.out.println("hello");
+        switch(v.getId()) {
+            case R.id.button_take_pic: {
+                //The button press should open a camera
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if(cameraIntent.resolveActivity(this.getPackageManager())!=null){
+                    startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE);
+                }
+            }
+        }
     }
 }

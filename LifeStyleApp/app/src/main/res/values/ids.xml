@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="button_take_pic" type="id" />
+    <item name="guideline_vertical" type="id" />
+    <item name="guideline_horizontal" type="id" />
+    <item name="tv_name_small" type="id" />
+    <item name="tv_name_big" type="id" />
+    <item name="tv_age_small" type="id" />
+    <item name="tv_age_big" type="id" />
+    <item name="tv_city_small" type="id" />
+    <item name="tv_city_big" type="id" />
+    <item name="tv_country_small" type="id" />
+    <item name="tv_country_big" type="id" />
+    <item name="tv_height_small" type="id" />
+    <item name="tv_height_big" type="id" />
+    <item name="tv_weight_small" type="id" />
+    <item name="tv_weight_big" type="id" />
+    <item name="tv_sex_small" type="id" />
+    <item name="tv_sex_big" type="id" />
+    <item name="imageView_profile" type="id" />
+</resources>
