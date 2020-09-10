@@ -83,18 +83,18 @@ public class UserProfileFragment extends Fragment {
         return root;
     }
 
-    public void takePhoto(View v) {
-        System.out.println("hello");
-        switch(v.getId()) {
-            case R.id.button_take_pic: {
-                //The button press should open a camera
-                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if(cameraIntent.resolveActivity(this.getActivity().getPackageManager())!=null){
-                    startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE);
-                }
-            }
-        }
-    }
+//    public void takePhoto(View v) {
+//        System.out.println("hello");
+//        switch(v.getId()) {
+//            case R.id.button_take_pic: {
+//                //The button press should open a camera
+//                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                if(cameraIntent.resolveActivity(this.getActivity().getPackageManager())!=null){
+//                    startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE);
+//                }
+//            }
+//        }
+//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
