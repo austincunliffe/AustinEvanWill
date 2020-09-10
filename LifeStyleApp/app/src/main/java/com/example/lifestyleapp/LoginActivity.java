@@ -32,30 +32,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Context.MODE_PRIVATE);
 
 //         The following line is for testing purposes. It forces credentials.
-        pref.edit().putBoolean(LOGIN_KEY, true).apply();
+        pref.edit().putBoolean(LOGIN_KEY, false).apply();
 
         if (pref.getBoolean(LOGIN_KEY, false)) {
             startActivity(new Intent(this, MainDrawerActivity.class));
             finish();
-        }
-        else {
-            pref.edit().putBoolean(LOGIN_KEY, false).apply();
         }
 
         Button bt_login = findViewById(R.id.login);
         bt_login.setOnClickListener(this);
         Button bt_signUp = findViewById(R.id.signUp);
         bt_signUp.setOnClickListener(this);
-
     }
 
     @Override
     public void onClick(View v) {
-        System.out.println("Inside of onclick");
         switch(v.getId()){
             case R.id.signUp:{
-                System.out.println("Inside case signUp");
                 this.startActivity(new Intent(this, CreateAccountActivity.class));
+                break;
             }
 
             case R.id.login:{
@@ -74,8 +69,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     pref.edit().putBoolean(LOGIN_KEY, true).apply();
                     startActivity(new Intent(this, MainDrawerActivity.class));
                 }
+                break;
             }
-            break;
         }
     }
 }
