@@ -25,7 +25,7 @@ public class UserProfileFragment extends Fragment {
 
     private UserProfileViewModel userProfileViewModel;
 
-    private Button mButtonEdit;
+    private Button mButtonEdit, mButtonCamera;
 
     //Create the variable for the ImageView that holds the profile pic
     ImageView mIvPic;
@@ -75,26 +75,27 @@ public class UserProfileFragment extends Fragment {
         mTvHeight.setText(mHeight);
         mTvWeight.setText(mWeight);
 
-        //get button
-        Button mButtonCamera = root.findViewById(R.id.button_take_pic);
-//
-//        //set button
-//        mButtonCamera.setOnClickListener((View.OnClickListener) this.getActivity());
+        mButtonCamera = root.findViewById(R.id.button_take_pic);
+        initializeCamera();
+
         return root;
     }
 
-//    public void takePhoto(View v) {
-//        System.out.println("hello");
-//        switch(v.getId()) {
-//            case R.id.button_take_pic: {
-//                //The button press should open a camera
-//                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                if(cameraIntent.resolveActivity(this.getActivity().getPackageManager())!=null){
-//                    startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE);
-//                }
-//            }
-//        }
-//    }
+    public void initializeCamera() {
+        mButtonCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                takePhoto(v);
+            }
+        });
+    }
+
+    public void takePhoto(View v) {
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if(cameraIntent.resolveActivity(this.getActivity().getPackageManager())!=null){
+            startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
