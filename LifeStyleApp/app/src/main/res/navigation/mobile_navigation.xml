@@ -12,14 +12,14 @@
         tools:layout="@layout/fragment_weather" />
 
     <fragment
-        android:id="@+id/nav_gallery"
+        android:id="@+id/nav_hikes"
         android:name="com.example.lifestyleapp.ui.mapHikes.MapsHikeFragment"
-        android:label="@string/menu_gallery"
+        android:label="@string/menu_hikes"
         tools:layout="@layout/fragment_maps_hike" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
+        android:id="@+id/nav_user_profile"
         android:name="com.example.lifestyleapp.ui.userProfile.UserProfileFragment"
-        android:label="@string/menu_slideshow"
+        android:label="@string/menu_userProfile"
         tools:layout="@layout/fragment_user_profile" />
 </navigation>
