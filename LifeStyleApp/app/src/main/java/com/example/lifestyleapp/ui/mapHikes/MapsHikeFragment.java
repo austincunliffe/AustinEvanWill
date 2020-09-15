@@ -50,13 +50,14 @@ public class MapsHikeFragment extends Fragment {
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
-            LatLng sydney = new LatLng(-34, 151);
-            googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
             try {
                 ArrayList<Trail> trailsNearBy = getNearByHikes();
                 for (Trail el: trailsNearBy){
                     System.out.println("Name: "+el.name+" Lon: "+el.lon+" Lat: "+el.lat);
+                    LatLng hike = new LatLng(el.lat, el.lon);
+                    googleMap.addMarker(new MarkerOptions().position(hike).title(el.name));
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLng(hike));
                 }
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
