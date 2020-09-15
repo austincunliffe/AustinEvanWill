@@ -1,7 +1,5 @@
 package com.example.lifestyleapp.ui.mapHikes;
 
-import android.content.pm.PackageManager;
-import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -12,8 +10,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.lifestyleapp.R;
@@ -31,7 +27,6 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Objects;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -90,7 +85,7 @@ public class MapsHikeFragment extends Fragment {
         }
 
         InputStream in = sendAPIHTTPRequest(url);
-
+        System.out.println(in);
         String hikeData = readInputStream(in);
         System.out.println(hikeData);
 
@@ -124,8 +119,6 @@ public class MapsHikeFragment extends Fragment {
             String failureToGetResponse = "--";
             in = new ByteArrayInputStream(failureToGetResponse.getBytes());
             return in;
-        } finally {
-            urlConnection.disconnect();
         }
     }
 
