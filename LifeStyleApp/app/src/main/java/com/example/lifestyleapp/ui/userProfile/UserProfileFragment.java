@@ -30,7 +30,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Objects;
 
 public class UserProfileFragment extends Fragment {
 
@@ -49,7 +48,7 @@ public class UserProfileFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         userProfileViewModel =
                 ViewModelProviders.of(this).get(UserProfileViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
+        View root = inflater.inflate(R.layout.fragment_user_profile, container, false);
 
         SharedPreferences pref = this.getActivity().getSharedPreferences("com.example.lifestyleapp",
                 Context.MODE_PRIVATE);
