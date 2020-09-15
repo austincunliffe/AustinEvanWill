@@ -19,6 +19,11 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
@@ -49,8 +54,11 @@ public class MapsHikeFragment extends Fragment {
             googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
             try {
-                getNearByHikes();
-            } catch (IOException e) {
+                ArrayList<Trail> trailsNearBy = getNearByHikes();
+                for (Trail el: trailsNearBy){
+                    System.out.println("Name: "+el.name+" Lon: "+el.lon+" Lat: "+el.lat);
+                }
+            } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
         }
@@ -76,33 +84,17 @@ public class MapsHikeFragment extends Fragment {
         }
     }
 
-    private ArrayList<String> getNearByHikes() throws IOException {
-        URL url = null;
-        try {
-             url = buildHikingProjectAPIURL();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
 
-        InputStream in = sendAPIHTTPRequest(url);
-        System.out.println(in);
-        String hikeData = readInputStream(in);
-        System.out.println(hikeData);
-
-        return new ArrayList<>();
-
-    }
-
-//https://www.hikingproject.com/data/get-trails?lat=40.0274&lon=-105.2519&maxDistance=10&key=200914155-a56f977584ebf7887423123ad38c1a82
+    //https://www.hikingproject.com/data/get-trails?lat=40.0274&lon=-105.2519&maxDistance=10&key=200914155-a56f977584ebf7887423123ad38c1a82
     private URL buildHikingProjectAPIURL() throws MalformedURLException {
 
         String urlBuild = "https://www.hikingproject.com/data/get-trails";
         String userLat = "?lat=-34";
         String userLon = "&lon=151";
-        String maxDistance="&maxDistance=30";
+        String maxDistance = "&maxDistance=30";
         String apiKey = "&key=200914155-a56f977584ebf7887423123ad38c1a82";
 
-        urlBuild += userLat+userLon+maxDistance+apiKey;
+        urlBuild += userLat + userLon + maxDistance + apiKey;
         URL url = new URL(urlBuild);
         System.out.println(url);
         return url;
@@ -134,7 +126,37 @@ public class MapsHikeFragment extends Fragment {
         return inString;
     }
 
-    String hikingProjectAPIKey = "200914155-a56f977584ebf7887423123ad38c1a82";
+    ArrayList<Trail> JsonToHikesList(String hikeData) throws JSONException {
+        JSONObject hikeDataJSON = new JSONObject(hikeData);
+        JSONArray trailsArr = hikeDataJSON.getJSONArray("trails");
+        ArrayList<Trail> trailsNearMe = new ArrayList<>();
+        for (int i = 0; i < trailsArr.length(); i++) {
+            JSONObject trail = (JSONObject) trailsArr.get(i);
+            String name = trail.getString("name");
+            String lat = trail.getString("latitude");
+            String lon = trail.getString("longitude");
 
+            trailsNearMe.add(new Trail(name, Float.parseFloat(lon), Float.parseFloat(lat)));
+        }
+        return trailsNearMe;
+    }
+
+
+    private ArrayList<Trail> getNearByHikes() throws IOException, JSONException {
+        URL url = null;
+        try {
+            url = buildHikingProjectAPIURL();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        InputStream in = sendAPIHTTPRequest(url);
+        System.out.println(in);
+        String hikeData = readInputStream(in);
+        System.out.println(hikeData);
+        ArrayList<Trail> trails = JsonToHikesList(hikeData);
+        return trails;
+
+    }
 
 }
