@@ -1,10 +1,14 @@
 package com.example.lifestyleapp.ui.userProfile;
 
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +24,13 @@ import androidx.lifecycle.ViewModelProviders;
 
 
 import com.example.lifestyleapp.R;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Objects;
 
 public class UserProfileFragment extends Fragment {
 
@@ -55,6 +66,17 @@ public class UserProfileFragment extends Fragment {
         int mWeightInt = pref.getInt("weight", 0);
         String mWeight = Integer.toString(mWeightInt);
         String mSex = pref.getString("sex", null);
+
+        final String picPath = pref.getString("profile_pic", null);
+
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                loadProfilePic(picPath);
+            }
+        });
+
 
         //Get the text views where we will display names
         //Create variables for the UI elements that we need to control
@@ -103,10 +125,54 @@ public class UserProfileFragment extends Fragment {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == this.getActivity().RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap thumbnailImage = (Bitmap) extras.get("data");
+
+            saveToInternalStorage(thumbnailImage);
             mIvPic = (ImageView) this.getActivity().findViewById(R.id.imageView_profile);
             mIvPic.setImageBitmap(thumbnailImage);
         }
     }
 
+    private String saveToInternalStorage(Bitmap bitmapImage){
+        ContextWrapper cw = new ContextWrapper(requireActivity().getApplicationContext());
+        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+        // Create imageDir
+        File mypath=new File(directory,"profile.jpg");
 
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(mypath);
+            // Use the compress method on the BitMap object to write image to the OutputStream
+            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        String path = directory.getAbsolutePath();
+
+        SharedPreferences pref = this.getActivity().getSharedPreferences("com.example.lifestyleapp",
+                Context.MODE_PRIVATE);
+        pref.edit().putString("profile_pic", path).apply();
+
+        return path;
+    }
+
+    private void loadProfilePic(String path)
+    {
+        try {
+            File f=new File(path, "profile.jpg");
+            Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+            mIvPic = this.getActivity().findViewById(R.id.imageView_profile);
+            mIvPic.setImageBitmap(b);
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+    }
 }
