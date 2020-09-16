@@ -1,5 +1,6 @@
 package com.example.lifestyleapp.ui.mapHikes;
 
+import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,6 +12,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.lifestyleapp.R;
@@ -33,11 +36,15 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import javax.net.ssl.HttpsURLConnection;
 
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class MapsHikeFragment extends Fragment {
+    double lat;
+    double lon;
+
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
         /**
@@ -51,7 +58,7 @@ public class MapsHikeFragment extends Fragment {
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
-
+            // Set Hikes
             try {
                 ArrayList<Trail> trailsNearBy = getNearByHikes();
                 for (Trail el: trailsNearBy){
@@ -60,9 +67,14 @@ public class MapsHikeFragment extends Fragment {
                     googleMap.addMarker(new MarkerOptions().position(hike).title(el.name));
                     googleMap.moveCamera(CameraUpdateFactory.newLatLng(hike));
                 }
+
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
+
+//            LatLng myLocation = new LatLng(lat, lon);
+//            googleMap.addMarker(new MarkerOptions().position(myLocation).title("Current Location"));
+//            googleMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation));
         }
     };
 
@@ -73,6 +85,8 @@ public class MapsHikeFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+//         lat = getArguments().getDouble("lat");
+//         lon = getArguments().getDouble("lon");
         return inflater.inflate(R.layout.fragment_maps_hike, container, false);
     }
 
@@ -90,6 +104,7 @@ public class MapsHikeFragment extends Fragment {
 
         return new ArrayList<>();
     }
+
 
     private URL buildHikingProjectAPIURL() throws MalformedURLException {
 
