@@ -1,5 +1,6 @@
 package com.example.lifestyleapp.ui.mapHikes;
 
+import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -85,8 +86,11 @@ public class MapsHikeFragment extends Fragment {
         }
     }
 
+    private ArrayList<Float> getMyLocationLonLat(){
 
-    //https://www.hikingproject.com/data/get-trails?lat=40.0274&lon=-105.2519&maxDistance=10&key=200914155-a56f977584ebf7887423123ad38c1a82
+        return new ArrayList<>();
+    }
+
     private URL buildHikingProjectAPIURL() throws MalformedURLException {
 
         String urlBuild = "https://www.hikingproject.com/data/get-trails";
@@ -159,5 +163,4 @@ public class MapsHikeFragment extends Fragment {
         return trails;
 
     }
-
 }
