@@ -46,5 +46,8 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_weather">Weather</string>
+    <string name="google_maps_key">AIzaSyDjGMomdpEGN_gUvGERMQoaKL_bp58MJjU</string>
+    <string name="menu_userProfile">User Profile</string>
+    <string name="menu_hikes">Hikes Neary By</string>
 
 </resources>
