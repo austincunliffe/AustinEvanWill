@@ -1,7 +1,7 @@
 package com.example.lifestyleapp.ui.mapHikes;
-
-import android.content.pm.PackageManager;
 import android.graphics.Point;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -39,6 +39,8 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import javax.net.ssl.HttpsURLConnection;
+
+import static androidx.core.content.ContextCompat.getSystemService;
 
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class MapsHikeFragment extends Fragment {
@@ -101,7 +103,6 @@ public class MapsHikeFragment extends Fragment {
     }
 
     private ArrayList<Float> getMyLocationLonLat(){
-
         return new ArrayList<>();
     }
 
