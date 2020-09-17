@@ -16,5 +16,9 @@
             android:id="@+id/nav_user_profile"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_userProfile" />
+        <item
+            android:id="@+id/nav_bmi"
+            android:title="@string/menu_bmi"
+        />
     </group>
 </menu>
