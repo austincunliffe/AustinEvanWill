@@ -6,20 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.userProfile.UserProfileFragment">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="50dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="120dp" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
@@ -36,7 +22,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_take_pic"
+            app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
 
         <Button
@@ -44,29 +30,33 @@
             android:layout_width="70dp"
             android:layout_height="17dp"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="24sp"
             android:background="#FFFFFF"
             android:text="Set Picture"
             android:textSize="10sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/button_edit"
-
-            android:layout_width="35dp"
-            android:layout_height="17dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-
-            android:background="#FFFFFF"
-            android:text="Edit"
-            android:textSize="10sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/imageView_profile" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsv_inputs"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:paddingBottom="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/userInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/constraintLayout"
+            app:layout_constraintEnd_toEndOf="parent">
 
     <TextView
         android:id="@+id/tv_name_small"
@@ -75,12 +65,12 @@
         android:text="Name"
         android:layout_marginTop="32dp"
         app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
-        app:layout_constraintTop_toTopOf="@id/guideline_horizontal"
+        app:layout_constraintTop_toTopOf="@id/userInfo"
         tools:layout_editor_absoluteX="56dp" />
 
-    <TextView
-        android:id="@+id/tv_name_big"
-        android:layout_width="300dp"
+    <EditText
+        android:id="@+id/et_name_big"
+        android:layout_width="275sp"
         android:layout_height="30dp"
         android:layout_marginTop="4dp"
         android:background="@drawable/rounded_corners"
@@ -95,22 +85,24 @@
         android:id="@+id/tv_age_small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Age"
+        android:text="Date of Birth"
         android:layout_marginTop="16dp"
         app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
-        app:layout_constraintTop_toBottomOf="@id/tv_name_big"
+        app:layout_constraintTop_toBottomOf="@id/et_name_big"
         tools:layout_editor_absoluteX="56dp" />
 
 
-    <TextView
-        android:id="@+id/tv_age_big"
-        android:layout_width="300dp"
+    <EditText
+        android:id="@+id/et_DOB"
+        android:layout_width="275sp"
         android:layout_height="30dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="4sp"
+        android:clickable="true"
+        android:inputType="date"
+        android:focusable="false"
+        android:textColor="@android:color/holo_blue_light"
         android:background="@drawable/rounded_corners"
         android:gravity="center"
-        android:text="Age"
-        android:textColor="@android:color/holo_blue_light"
         app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
         app:layout_constraintTop_toBottomOf="@+id/tv_age_small"
         />
@@ -122,12 +114,12 @@
         android:text="City"
         android:layout_marginTop="16dp"
         app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
-        app:layout_constraintTop_toBottomOf="@id/tv_age_big"
+        app:layout_constraintTop_toBottomOf="@id/et_DOB"
         tools:layout_editor_absoluteX="56dp" />
 
-    <TextView
-        android:id="@+id/tv_city_big"
-        android:layout_width="300dp"
+    <EditText
+        android:id="@+id/et_city_big"
+        android:layout_width="275sp"
         android:layout_height="30dp"
         android:layout_marginTop="4dp"
         android:background="@drawable/rounded_corners"
@@ -141,22 +133,22 @@
     <TextView
         android:id="@+id/tv_country_small"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:text="Country"
         android:layout_marginTop="16dp"
         app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
-        app:layout_constraintTop_toBottomOf="@id/tv_city_big"
+        app:layout_constraintTop_toBottomOf="@id/et_city_big"
         tools:layout_editor_absoluteX="56dp" />
 
-    <TextView
-        android:id="@+id/tv_country_big"
-        android:layout_width="300dp"
+    <Spinner
+        android:id="@+id/spinner_country"
+        android:layout_width="275sp"
         android:layout_height="30dp"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/rounded_corners"
-        android:gravity="center"
-        android:text="Country"
+        android:background="@drawable/rounded_corners_spinner_userprofile"
+        android:theme="@style/spinner_AC_Theme"
         android:textColor="@android:color/holo_blue_light"
+        android:textAlignment="center"
+        android:gravity="center_horizontal"
         app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
         app:layout_constraintTop_toBottomOf="@+id/tv_country_small"
         />
@@ -168,18 +160,15 @@
         android:text="Height"
         android:layout_marginTop="16dp"
         app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
-        app:layout_constraintTop_toBottomOf="@id/tv_country_big"
+        app:layout_constraintTop_toBottomOf="@id/spinner_country"
         tools:layout_editor_absoluteX="56dp" />
 
-    <TextView
-        android:id="@+id/tv_height_big"
-        android:layout_width="300dp"
-        android:layout_height="30dp"
+    <NumberPicker
+        android:id="@+id/np_height"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:theme="@style/numberpicker_AC_Theme"
         android:layout_marginTop="4dp"
-        android:background="@drawable/rounded_corners"
-        android:gravity="center"
-        android:text="Height"
-        android:textColor="@android:color/holo_blue_light"
         app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
         app:layout_constraintTop_toBottomOf="@+id/tv_height_small"
         />
@@ -191,18 +180,15 @@
         android:text="Weight"
         android:layout_marginTop="16dp"
         app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
-        app:layout_constraintTop_toBottomOf="@id/tv_height_big"
+        app:layout_constraintTop_toBottomOf="@id/np_height"
         tools:layout_editor_absoluteX="56dp" />
 
-    <TextView
-        android:id="@+id/tv_weight_big"
-        android:layout_width="300dp"
-        android:layout_height="30dp"
+    <NumberPicker
+        android:id="@+id/np_weight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:theme="@style/numberpicker_AC_Theme"
         android:layout_marginTop="4dp"
-        android:background="@drawable/rounded_corners"
-        android:gravity="center"
-        android:text="Weight"
-        android:textColor="@android:color/holo_blue_light"
         app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
         app:layout_constraintTop_toBottomOf="@+id/tv_weight_small"
         />
@@ -211,22 +197,41 @@
         android:id="@+id/tv_sex_small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sex"
+        android:text="Gender"
         android:layout_marginTop="16dp"
         app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
-        app:layout_constraintTop_toBottomOf="@id/tv_weight_big"
+        app:layout_constraintTop_toBottomOf="@id/np_weight"
         tools:layout_editor_absoluteX="56dp" />
 
-    <TextView
-        android:id="@+id/tv_sex_big"
-        android:layout_width="300dp"
+    <Spinner
+        android:id="@+id/spinner_sex"
+        android:layout_width="275sp"
         android:layout_height="30dp"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/rounded_corners"
-        android:gravity="center"
-        android:text="Sex"
+        android:layout_marginTop="4sp"
+        android:background="@drawable/rounded_corners_spinner_userprofile"
+        android:theme="@style/spinner_AC_Theme"
         android:textColor="@android:color/holo_blue_light"
         app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
         app:layout_constraintTop_toBottomOf="@+id/tv_sex_small"
         />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="50dp" />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="120dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
