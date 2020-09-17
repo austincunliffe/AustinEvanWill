@@ -43,20 +43,9 @@ public class MainDrawerActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_user_profile, R.id.nav_bmi)
+                R.id.nav_home, R.id.nav_hikes, R.id.nav_user_profile, R.id.nav_bmi)
                 .setDrawerLayout(drawer)
                 .build();
-
-///////////
-//        Location currentLocation = getLocation();
-//        System.out.println("Current Location:"+ currentLocation.getLongitude());
-//        System.out.print(currentLocation.getLatitude());
-//        Bundle bundle = new Bundle();
-//        bundle.putDouble("lat", currentLocation.getLatitude());
-//        bundle.putDouble("lon", currentLocation.getLongitude());
-//        MapsHikeFragment mapsHikeFragment = new MapsHikeFragment();
-//        mapsHikeFragment.setArguments(bundle);
-
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
@@ -76,17 +65,4 @@ public class MainDrawerActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-
-//    private Location getLocation() {
-//        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-//        try {
-//            Location currentLoc = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-//            return currentLoc;
-//        } catch (SecurityException e) {
-//            Location loc =  new Location("Error");
-//            loc.setLatitude(151);
-//            loc.setLongitude(-34);
-//            return loc;
-//        }
-//    }
 }

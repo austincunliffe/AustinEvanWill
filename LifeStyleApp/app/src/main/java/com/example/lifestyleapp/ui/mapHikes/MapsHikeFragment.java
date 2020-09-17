@@ -1,6 +1,5 @@
 package com.example.lifestyleapp.ui.mapHikes;
-import android.graphics.Point;
-import android.location.LocationListener;
+import android.content.Context;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,7 +11,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -23,7 +21,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,11 +33,9 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Objects;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import static androidx.core.content.ContextCompat.getSystemService;
 
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class MapsHikeFragment extends Fragment {
@@ -74,7 +69,8 @@ public class MapsHikeFragment extends Fragment {
                 e.printStackTrace();
             }
 
-//            LatLng myLocation = new LatLng(lat, lon);
+
+//            LatLng myLocation = new LatLng(currentLocation  .get(0), currentLocation.get(1));
 //            googleMap.addMarker(new MarkerOptions().position(myLocation).title("Current Location"));
 //            googleMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation));
         }
