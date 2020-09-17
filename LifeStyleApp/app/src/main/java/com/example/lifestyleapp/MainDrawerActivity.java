@@ -47,7 +47,7 @@ public class MainDrawerActivity extends AppCompatActivity {
                 .setDrawerLayout(drawer)
                 .build();
 
-/////////////
+///////////
 //        Location currentLocation = getLocation();
 //        System.out.println("Current Location:"+ currentLocation.getLongitude());
 //        System.out.print(currentLocation.getLatitude());
