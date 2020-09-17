@@ -148,7 +148,9 @@ public class CreateAccountActivity extends AppCompatActivity implements
         confirm_pw = et_confirm_pw.getText().toString();
         city = et_city.getText().toString();
         country = spin_country.getSelectedItem().toString();
+        int country_idx = spin_country.getSelectedItemPosition();
         sex = spin_sex.getSelectedItem().toString();
+        int sex_idx = spin_sex.getSelectedItemPosition();
         weight = picker_weight.getValue();
         height = picker_height.getValue();
 
@@ -169,8 +171,10 @@ public class CreateAccountActivity extends AppCompatActivity implements
         prefs.edit().putString("password", password).apply();
         prefs.edit().putString("dob", dob).apply();
         prefs.edit().putString("country", country).apply();
+        prefs.edit().putInt("country_idx", country_idx).apply();
         prefs.edit().putString("city", city).apply();
         prefs.edit().putString("sex", sex).apply();
+        prefs.edit().putInt("sex_idx", sex_idx).apply();
         prefs.edit().putInt("height", height).apply();
         prefs.edit().putInt("weight", weight).apply();
         prefs.edit().putBoolean("LOGIN_KEY", true).apply();
