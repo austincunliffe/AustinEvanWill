@@ -1,5 +1,10 @@
 package com.example.lifestyleapp.ui.mapHikes;
+
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Point;
+import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
@@ -36,6 +41,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -44,6 +50,7 @@ import static androidx.core.content.ContextCompat.getSystemService;
 
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class MapsHikeFragment extends Fragment {
+    Location location;
     double lat;
     double lon;
 
@@ -63,8 +70,8 @@ public class MapsHikeFragment extends Fragment {
             // Set Hikes
             try {
                 ArrayList<Trail> trailsNearBy = getNearByHikes();
-                for (Trail el: trailsNearBy){
-                    System.out.println("Name: "+el.name+" Lon: "+el.lon+" Lat: "+el.lat);
+                for (Trail el : trailsNearBy) {
+                    System.out.println("Name: " + el.name + " Lon: " + el.lon + " Lat: " + el.lat);
                     LatLng hike = new LatLng(el.lat, el.lon);
                     googleMap.addMarker(new MarkerOptions().position(hike).title(el.name));
                     googleMap.moveCamera(CameraUpdateFactory.newLatLng(hike));
@@ -74,9 +81,9 @@ public class MapsHikeFragment extends Fragment {
                 e.printStackTrace();
             }
 
-//            LatLng myLocation = new LatLng(lat, lon);
-//            googleMap.addMarker(new MarkerOptions().position(myLocation).title("Current Location"));
-//            googleMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation));
+            LatLng myLocation = new LatLng(lat, lon);
+            googleMap.addMarker(new MarkerOptions().position(myLocation).title("Current Location"));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation));
         }
     };
 
@@ -87,8 +94,15 @@ public class MapsHikeFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-//         lat = getArguments().getDouble("lat");
-//         lon = getArguments().getDouble("lon");
+
+        location = getLastKnownLocation();
+        lon = location.getLongitude();
+        lat = location.getLatitude();
+
+        System.out.println("-------------------------LAT LONG---------------------------------");
+        System.out.println("Lat: " + lat);
+        System.out.println("Lon: " + lon);
+
         return inflater.inflate(R.layout.fragment_maps_hike, container, false);
     }
 
@@ -102,7 +116,7 @@ public class MapsHikeFragment extends Fragment {
         }
     }
 
-    private ArrayList<Float> getMyLocationLonLat(){
+    private ArrayList<Float> getMyLocationLonLat() {
         return new ArrayList<>();
     }
 
@@ -110,8 +124,8 @@ public class MapsHikeFragment extends Fragment {
     private URL buildHikingProjectAPIURL() throws MalformedURLException {
 
         String urlBuild = "https://www.hikingproject.com/data/get-trails";
-        String userLat = "?lat=-34";
-        String userLon = "&lon=151";
+        String userLat = "?lat=" + lat;
+        String userLon = "&lon=" + lon;
         String maxDistance = "&maxDistance=30";
         String apiKey = "&key=200914155-a56f977584ebf7887423123ad38c1a82";
 
@@ -178,5 +192,28 @@ public class MapsHikeFragment extends Fragment {
         ArrayList<Trail> trails = JsonToHikesList(hikeData);
         return trails;
 
+    }
+
+    private Location getLastKnownLocation() {
+        LocationManager mLocationManager;
+        mLocationManager = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
+        List<String> providers = mLocationManager.getProviders(true);
+        Location bestLocation = null;
+
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            requestPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        }
+
+        for (String provider : providers) {
+            Location l = mLocationManager.getLastKnownLocation(provider);
+            if (l == null) {
+                continue;
+            }
+            if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                bestLocation = l;
+            }
+        }
+        return bestLocation;
     }
 }
