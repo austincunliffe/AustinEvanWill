@@ -1,18 +1,23 @@
 package com.example.lifestyleapp;
 
-import android.content.Intent;
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.view.View;
 import android.view.Menu;
-import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.example.lifestyleapp.ui.userProfile.UserProfileViewModel;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.example.lifestyleapp.ui.mapHikes.MapsHikeFragment;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -25,6 +30,7 @@ public class MainDrawerActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,12 +43,24 @@ public class MainDrawerActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                R.id.nav_home, R.id.nav_gallery, R.id.nav_user_profile, R.id.nav_bmi)
                 .setDrawerLayout(drawer)
                 .build();
+
+/////////////
+//        Location currentLocation = getLocation();
+//        System.out.println("Current Location:"+ currentLocation.getLongitude());
+//        System.out.print(currentLocation.getLatitude());
+//        Bundle bundle = new Bundle();
+//        bundle.putDouble("lat", currentLocation.getLatitude());
+//        bundle.putDouble("lon", currentLocation.getLongitude());
+//        MapsHikeFragment mapsHikeFragment = new MapsHikeFragment();
+//        mapsHikeFragment.setArguments(bundle);
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
     }
 
     @Override
@@ -58,4 +76,17 @@ public class MainDrawerActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+//    private Location getLocation() {
+//        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+//        try {
+//            Location currentLoc = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+//            return currentLoc;
+//        } catch (SecurityException e) {
+//            Location loc =  new Location("Error");
+//            loc.setLatitude(151);
+//            loc.setLongitude(-34);
+//            return loc;
+//        }
+//    }
 }

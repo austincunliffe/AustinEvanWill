@@ -43,7 +43,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
-import java.util.Objects;
 
 public class UserProfileFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
@@ -66,7 +65,7 @@ public class UserProfileFragment extends Fragment implements AdapterView.OnItemS
                              ViewGroup container, Bundle savedInstanceState) {
         userProfileViewModel =
                 ViewModelProviders.of(this).get(UserProfileViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
+        View root = inflater.inflate(R.layout.fragment_user_profile, container, false);
 
         pref = this.getActivity().getSharedPreferences("com.example.lifestyleapp",
                 Context.MODE_PRIVATE);
