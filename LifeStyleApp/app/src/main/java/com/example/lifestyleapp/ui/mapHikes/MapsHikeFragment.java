@@ -1,5 +1,5 @@
 package com.example.lifestyleapp.ui.mapHikes;
-
+import android.content.Context;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -28,7 +28,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,11 +41,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import static androidx.core.content.ContextCompat.getSystemService;
 
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class MapsHikeFragment extends Fragment {
@@ -80,6 +77,7 @@ public class MapsHikeFragment extends Fragment {
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
+
 
             LatLng myLocation = new LatLng(lat, lon);
             googleMap.addMarker(new MarkerOptions().position(myLocation).title("Current Location"));
