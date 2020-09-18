@@ -18,4 +18,5 @@
     <item name="tv_sex_small" type="id" />
     <item name="tv_sex_big" type="id" />
     <item name="imageView_profile" type="id" />
+    <item name="tv_fitnessGoal" type="id"/>
 </resources>
