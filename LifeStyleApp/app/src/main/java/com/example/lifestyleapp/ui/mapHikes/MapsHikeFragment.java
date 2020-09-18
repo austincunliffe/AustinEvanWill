@@ -2,6 +2,7 @@ package com.example.lifestyleapp.ui.mapHikes;
 import android.content.Context;
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.location.Location;
@@ -21,6 +22,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.lifestyleapp.EditUserProfileActivity;
 import com.example.lifestyleapp.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -46,7 +48,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-public class MapsHikeFragment extends Fragment {
+public class MapsHikeFragment extends Fragment implements ActivityCompat.OnRequestPermissionsResultCallback {
     Location location;
     double lat;
     double lon;
@@ -65,6 +67,7 @@ public class MapsHikeFragment extends Fragment {
         @Override
         public void onMapReady(GoogleMap googleMap) {
             // Set Hikes
+
             try {
                 ArrayList<Trail> trailsNearBy = getNearByHikes();
                 for (Trail el : trailsNearBy) {
@@ -192,6 +195,23 @@ public class MapsHikeFragment extends Fragment {
 
     }
 
+
+    public void onRequestPermissionsResult(
+            int requestCode,
+            String[] permissions,
+            int[] grantResults
+    ){
+        location = getLastKnownLocation();
+        lon = location.getLongitude();
+        lat = location.getLatitude();
+
+        SupportMapFragment mapFragment =
+                (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        if (mapFragment != null) {
+            mapFragment.getMapAsync(callback);
+        }
+    }
+
     private Location getLastKnownLocation() {
         LocationManager mLocationManager;
         mLocationManager = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
@@ -199,8 +219,8 @@ public class MapsHikeFragment extends Fragment {
         Location bestLocation = null;
 
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
             requestPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
         }
 
         for (String provider : providers) {
@@ -211,6 +231,11 @@ public class MapsHikeFragment extends Fragment {
             if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
                 bestLocation = l;
             }
+        }
+        if (bestLocation == null){
+            bestLocation = new Location("Default");
+            bestLocation.setLongitude(-75);
+            bestLocation.setLatitude(39);
         }
         return bestLocation;
     }
