@@ -27,4 +27,8 @@
         android:name="com.example.lifestyleapp.ui.bmi.BMIFragment"
         android:label="@string/menu_bmi"
         tools:layout="@layout/fragment_b_m_i" />
+    <fragment
+        android:id="@+id/nav_fitness_goal"
+        android:name="com.example.lifestyleapp.ui.fitnessGoal.FitnessGoal"
+        android:label="Fitness Goal" />
 </navigation>
