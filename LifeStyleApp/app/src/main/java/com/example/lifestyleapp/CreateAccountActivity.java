@@ -83,9 +83,7 @@ public class CreateAccountActivity extends AppCompatActivity implements
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (view.getId()) {
 
-            case R.id.spinner_country: {
-                break;
-            }
+            case R.id.spinner_country:
 
             case R.id.spinner_sex: {
                 break;
