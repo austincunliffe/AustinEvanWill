@@ -60,15 +60,11 @@ class BMIFragment extends Fragment {
 
         mTvBMI.setText(userBMIString);
 
-
-
-
-//        return inflater.inflate(R.layout.fragment_b_m_i, container, false);
         return root;
     }
     private double getBMI(int userWeight, int userHeight){
         // this is the formula for calculating BMI in imperial units
-        double bmi = (703 * (198/Math.pow(userHeight,2)));
+        double bmi = (703 * (userWeight/Math.pow(userHeight,2)));
         return bmi;
     }
 }
