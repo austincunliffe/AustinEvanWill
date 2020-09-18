@@ -24,8 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class CreateAccountActivity extends AppCompatActivity implements
-        AdapterView.OnItemSelectedListener, View.OnClickListener{
+public class CreateAccountActivity extends AppCompatActivity implements View.OnClickListener{
 
     String country, sex, username, email, password, confirm_pw, dob, city;
     int weight, height;
@@ -68,13 +67,13 @@ public class CreateAccountActivity extends AppCompatActivity implements
                 R.array.countries_array, R.layout.spinner_item);
         country_adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spin_country.setAdapter(country_adapter);
-        spin_country.setOnItemSelectedListener(this);
 
         spin_sex = findViewById(R.id.spinner_sex);
         ArrayAdapter<CharSequence> sex_adapter = ArrayAdapter.createFromResource(this,
                 R.array.sex_array, R.layout.spinner_item);
         country_adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spin_sex.setAdapter(sex_adapter);
+<<<<<<< HEAD
         spin_sex.setOnItemSelectedListener(this);
 
     }
@@ -94,6 +93,8 @@ public class CreateAccountActivity extends AppCompatActivity implements
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+=======
+>>>>>>> c6c86653a3f2e49bc5351cefa60e50959867e672
     }
 
     public void initializeWeightPicker() {
