@@ -204,6 +204,7 @@ public class MapsHikeFragment extends Fragment implements ActivityCompat.OnReque
         location = getLastKnownLocation();
         lon = location.getLongitude();
         lat = location.getLatitude();
+
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null) {
@@ -219,6 +220,7 @@ public class MapsHikeFragment extends Fragment implements ActivityCompat.OnReque
 
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
         }
 
         for (String provider : providers) {
