@@ -43,18 +43,18 @@
 
         <Spinner
             android:id="@+id/spinner_goal"
-            android:layout_width="250sp"
-            android:layout_height="20dp"
+            android:layout_width="258dp"
+            android:layout_height="38dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="40dp"
             android:background="@drawable/spinner_border"
+            android:gravity="center"
             android:theme="@style/spinner_AC_Theme"
             app:layout_constraintBottom_toTopOf="@+id/bt_setGoal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toRightOf="@id/guideline"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_fitnessGoal"
-            />
+            app:layout_constraintTop_toBottomOf="@id/tv_fitnessGoal" />
 
         <Button
             android:id="@+id/bt_setGoal"

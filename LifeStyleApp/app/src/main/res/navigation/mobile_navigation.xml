@@ -30,5 +30,5 @@
     <fragment
         android:id="@+id/nav_fitness_goal"
         android:name="com.example.lifestyleapp.ui.fitnessGoal.FitnessGoal"
-        android:label="Fitness Goal" />
+        android:label="Health" />
 </navigation>
