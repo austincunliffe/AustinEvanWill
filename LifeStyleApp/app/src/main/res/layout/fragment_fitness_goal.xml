@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FitnessGoal">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/constraintLayout"
+        app:layout_constraintEnd_toEndOf="parent">
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="81dp" />
+
+
+        <TextView
+            android:id="@id/tv_fitnessGoal"
+            android:layout_width="112dp"
+            android:layout_height="34dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="200dp"
+            android:layout_marginRight="200dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/menu_fitnessGoal"
+            android:textColor="@android:color/holo_blue_light"
+            app:layout_constraintBottom_toTopOf="@+id/spinner_goal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.36"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Spinner
+            android:id="@+id/spinner_goal"
+            android:layout_width="258dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="40dp"
+            android:background="@drawable/spinner_border"
+            android:gravity="center"
+            android:theme="@style/spinner_AC_Theme"
+            app:layout_constraintBottom_toTopOf="@+id/bt_setGoal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_fitnessGoal" />
+
+        <Button
+            android:id="@+id/bt_setGoal"
+            android:layout_width="250sp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="48dp"
+            android:layout_marginEnd="80dp"
+            android:layout_marginRight="80dp"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/rounded_corners"
+            android:text="Set Goal"
+            android:textAllCaps="false"
+            android:textColor="@android:color/holo_blue_light"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/guideline"
+            android:onClick="onClick"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

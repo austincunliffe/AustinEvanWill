@@ -60,10 +60,6 @@ class BMIFragment extends Fragment {
 
         mTvBMI.setText(userBMIString);
 
-
-
-
-//        return inflater.inflate(R.layout.fragment_b_m_i, container, false);
         return root;
     }
     private double getBMI(int userWeight, int userHeight){
