@@ -37,6 +37,11 @@
         <item>Gain Weight</item>
     </string-array>
 
+    <string-array name="active_array">
+        <item>Active</item>
+        <item>Sedentary</item>
+    </string-array>
+
     <string-array name="sex_array">
         <item>Male</item>
         <item>Female</item>
@@ -57,5 +62,9 @@
     <string name="menu_hikes">Hikes Neary By</string>
     <string name="menu_fitnessGoal">Fitness Goal</string>
     <string name="health">Health</string>
+    <string name="set_goal">Set Goal</string>
+    <string name="what_is_your_fitness_goal">What is your fitness goal?</string>
+    <string name="are_you_active_or_sedentary">Are you active or sedentary?</string>
+    <string name="basal_metabolic_rate">Basal Metabolic Rate:</string>
 
 </resources>

@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="#2196F3"
+
     android:layout_height="match_parent"
     tools:context=".FitnessGoal">
 
@@ -11,6 +13,7 @@
         android:id="@+id/username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#2196F3"
         app:layout_constraintBottom_toBottomOf="@id/constraintLayout"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -27,19 +30,18 @@
             android:id="@id/tv_fitnessGoal"
             android:layout_width="112dp"
             android:layout_height="34dp"
-            android:layout_marginStart="50dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="48dp"
-            android:layout_marginEnd="200dp"
-            android:layout_marginRight="200dp"
+            android:layout_marginTop="32dp"
             android:layout_marginBottom="16dp"
+            android:gravity="center"
             android:text="@string/menu_fitnessGoal"
-            android:textColor="@android:color/holo_blue_light"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/spinner_goal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.36"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+
 
         <Spinner
             android:id="@+id/spinner_goal"
@@ -47,32 +49,114 @@
             android:layout_height="38dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="40dp"
-            android:background="@drawable/spinner_border"
+            android:background="@drawable/edittext_frame"
             android:gravity="center"
             android:theme="@style/spinner_AC_Theme"
-            app:layout_constraintBottom_toTopOf="@+id/bt_setGoal"
+            app:layout_constraintBottom_toTopOf="@+id/spinner_active"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.503"
             app:layout_constraintLeft_toRightOf="@id/guideline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_fitnessGoal" />
+
+        <Spinner
+            android:id="@+id/spinner_active"
+            android:layout_width="258dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/edittext_frame"
+            android:gravity="center"
+            android:theme="@style/spinner_AC_Theme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/spinner_goal" />
+
+        <NumberPicker
+            android:id="@+id/np_weight_change"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/edittext_frame"
+            android:theme="@style/numberpicker_AC_Theme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/spinner_active" />
 
         <Button
             android:id="@+id/bt_setGoal"
             android:layout_width="250sp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="48dp"
-            android:layout_marginEnd="80dp"
-            android:layout_marginRight="80dp"
-            android:layout_marginBottom="4dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/rounded_corners"
-            android:text="Set Goal"
+            android:onClick="onClick"
+            android:shadowColor="@color/black_overlay"
+            android:soundEffectsEnabled="false"
+            android:text="@string/set_goal"
             android:textAllCaps="false"
-            android:textColor="@android:color/holo_blue_light"
+            android:textColor="#2196F3"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toRightOf="@id/guideline"
-            android:onClick="onClick"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/np_weight_change" />
+
+        <TextView
+            android:id="@+id/tv_fitness_prompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="77dp"
+            android:layout_marginLeft="77dp"
+            android:text="@string/what_is_your_fitness_goal"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toTopOf="@+id/spinner_goal"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_lifestyle_prompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="77dp"
+            android:layout_marginLeft="77dp"
+            android:text="@string/are_you_active_or_sedentary"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toTopOf="@+id/spinner_active"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="77dp"
+            android:layout_marginLeft="77dp"
+
+            android:text="@string/basal_metabolic_rate"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toTopOf="@+id/bmr_big"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/bmr_big"
+            android:layout_width="258dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="56dp"
+            android:background="@drawable/edittext_frame"
+            android:text="TextView"
+            android:textColor="#2196F3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bt_setGoal" />
+
+        <TextView
+            android:id="@+id/tv_calorie_intake"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="how many calories you should eat!"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bmr_big" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

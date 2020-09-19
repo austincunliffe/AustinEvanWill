@@ -29,11 +29,11 @@
     </style>
 
     <style name="spinner_AC_Theme">
-        <item name="android:textColor">@android:color/holo_blue_light</item>
+        <item name="android:textColor">#2196F3</item>
     </style>
 
     <style name="numberpicker_AC_Theme">
-        <item name="android:textColorPrimary">@android:color/holo_blue_light</item>
+        <item name="android:textColorPrimary">#2196F3</item>
     </style>
 
 </resources>
