@@ -26,7 +26,8 @@ import java.util.Locale;
 
 public class CreateAccountActivity extends AppCompatActivity implements View.OnClickListener{
 
-    String country, sex, username, email, password, confirm_pw, dob, city;
+    String country, sex, username, email, password, confirm_pw, city;
+    String dob = "";
     int weight, height;
 
     Spinner spin_country, spin_sex;
