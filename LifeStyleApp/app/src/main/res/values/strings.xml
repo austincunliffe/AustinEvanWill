@@ -38,8 +38,13 @@
     </string-array>
 
     <string-array name="active_array">
-        <item>Active</item>
         <item>Sedentary</item>
+        <item>Lightly Active</item>
+        <item>Moderately Active</item>
+        <item>Very Active</item>
+        <item>Extra Active</item>
+
+
     </string-array>
 
     <string-array name="sex_array">

@@ -18,6 +18,17 @@
         app:layout_constraintEnd_toEndOf="parent">
 
 
+        <TextView
+            android:id="@+id/tv_lifestyle_prompt2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="How much weight would you like to lose/gain?"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toTopOf="@+id/np_weight_change"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"
             android:layout_width="wrap_content"
@@ -75,7 +86,7 @@
             android:id="@+id/np_weight_change"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             android:background="@drawable/edittext_frame"
             android:theme="@style/numberpicker_AC_Theme"
             app:layout_constraintEnd_toEndOf="parent"
@@ -86,7 +97,7 @@
             android:id="@+id/bt_setGoal"
             android:layout_width="250sp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             android:background="@drawable/rounded_corners"
             android:onClick="onClick"
             android:shadowColor="@color/black_overlay"
@@ -138,9 +149,9 @@
             android:id="@+id/bmr_big"
             android:layout_width="258dp"
             android:layout_height="38dp"
-            android:layout_marginTop="56dp"
+            android:layout_marginTop="40dp"
             android:background="@drawable/edittext_frame"
-            android:text="TextView"
+            android:text="Pending..."
             android:textColor="#2196F3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -151,9 +162,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="how many calories you should eat!"
-            android:textSize="18sp"
+            android:gravity="center"
+            android:text="Make sure to drink water!"
             android:textColor="@android:color/white"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bmr_big" />

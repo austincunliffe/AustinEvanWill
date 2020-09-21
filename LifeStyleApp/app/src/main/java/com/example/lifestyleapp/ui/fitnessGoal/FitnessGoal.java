@@ -13,6 +13,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.lang.reflect.Field;
+
 
 import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
@@ -22,6 +27,10 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.lifestyleapp.R;
 import com.example.lifestyleapp.ui.userProfile.UserProfileViewModel;
 
+import org.w3c.dom.Text;
+
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.prefs.Preferences;
 
 public class FitnessGoal extends Fragment implements AdapterView.OnItemSelectedListener, View.OnClickListener {
@@ -33,10 +42,14 @@ public class FitnessGoal extends Fragment implements AdapterView.OnItemSelectedL
     String activeOrSedentary;
     String userDOB;
     String userGender;
+    String stringTDEE;
+    String stringCaloriesWeightGoal;
     int weightChange;
     int userWeight;
     int userHeight;
     int testAge = 26;
+    TextView tvBMR;
+    TextView tvCalorieGoal;
     double BMR;
 
     @Nullable
@@ -70,6 +83,13 @@ public class FitnessGoal extends Fragment implements AdapterView.OnItemSelectedL
         //setting up button
         bt_setGoal = root.findViewById(R.id.bt_setGoal);
         bt_setGoal.setOnClickListener(this);
+
+        //setting up textviewBMR
+        tvBMR = root.findViewById(R.id.bmr_big);
+
+        //setting up textviewCalorie
+        tvCalorieGoal = root.findViewById(R.id.tv_calorie_intake);
+
         return root;
     }
 
@@ -86,12 +106,12 @@ public class FitnessGoal extends Fragment implements AdapterView.OnItemSelectedL
     public void initialWeightChangePicker() {
         picker_weight_change.setMaxValue(5);
         picker_weight_change.setMinValue(0);
-        picker_weight_change.setValue(1);
+        picker_weight_change.setValue(0);
     }
 
     public double getBMRMenFormula(int age, int userWeight, int userHeight, String gender){
         // following the Harris-Benedict BMR formula
-        if (gender=="Male"){
+        if (gender.equals("Male")){
             return 66 + (6.2 * (double) userWeight) + (12.7 * (double) userHeight) - (6.76 * (double) age);
         }
         // female
@@ -113,7 +133,79 @@ public class FitnessGoal extends Fragment implements AdapterView.OnItemSelectedL
         return userAge;
     }
 
-    @SuppressLint("CommitPrefEdits") //Not sure what this @Supress is
+    // calculate Total Daily Energy Expenditure
+    public double getTDEE(double userBMR){
+        if (activeOrSedentary.equals("Sedentary") ){
+            return userBMR * 1.2;
+        } else if (activeOrSedentary.equals("Lightly Active")){
+            return userBMR * 1.375;
+        } else if (activeOrSedentary.equals("Moderately Active")){
+            return userBMR * 1.55;
+        } else if (activeOrSedentary.equals("Very Active")){
+            return userBMR * 1.752;
+        } else if (activeOrSedentary.equals("Extra Active")){
+            return userBMR * 1.9;
+        } else{
+            // if value is incorrect default value will be moderately active
+            return userBMR * 1.375;
+        }
+    }
+
+    //getting how many calories user needs to eat to get lose/gain/maintain weight
+    public String getCaloriesToEat(double userBMR){
+        weightChange = picker_weight_change.getValue();
+
+        if (goal.equals("Maintain Weight") || weightChange == 0) {
+            //setting np value to 0 if we are maintaining weight
+            picker_weight_change.setValue(0);
+
+            Double tdee = getTDEE(userBMR);
+            BigDecimal bdTDEE = new BigDecimal(tdee);
+            bdTDEE = bdTDEE.round(new MathContext(5));
+            double roundedTDEE = bdTDEE.doubleValue();
+            return stringTDEE = Double.toString(roundedTDEE);
+        } else if (goal.equals("Lose Weight")){
+            //setting a toast if weight loss or gain is greater than 2 pounds per week
+            if (weightChange > 2){
+                Toast toast = Toast.makeText(getActivity(),
+                        "Losing more than 2 pounds per week is extreme and can be dangerous. Please use caution.",
+                        Toast.LENGTH_LONG);
+
+                toast.show();
+            }
+            Double tdee = getTDEE(userBMR);
+            //the mayo clinic suggests that you need to add/subtract 500 calories per day to gain/lose
+            //1 pound per week
+            Double caloriesWeightGoal = tdee - 500*weightChange;
+            BigDecimal bdCaloriesWeightGoal = new BigDecimal(caloriesWeightGoal);
+            bdCaloriesWeightGoal = bdCaloriesWeightGoal.round(new MathContext(5));
+            double roundedCaloriesWeightGoal = bdCaloriesWeightGoal.doubleValue();
+            return stringCaloriesWeightGoal = Double.toString(roundedCaloriesWeightGoal);
+        } else if (goal.equals("Gain Weight")){
+            //setting a toast if weight loss or gain is greater than 2 pounds per week
+            if (weightChange > 2){
+                Toast toast = Toast.makeText(getActivity(),
+                        "Gaining more than 2 pounds per week is extreme and can be dangerous. Please use caution.",
+                        Toast.LENGTH_LONG);
+
+                toast.show();
+            }
+            Double tdee = getTDEE(userBMR);
+            //the mayo clinic suggests that you need to add/subtract 500 calories per day to gain/lose
+            //1 pound per week
+            Double caloriesWeightGoal = tdee + 500*weightChange;
+            BigDecimal bdCaloriesWeightGoal = new BigDecimal(caloriesWeightGoal);
+            bdCaloriesWeightGoal = bdCaloriesWeightGoal.round(new MathContext(5));
+            double roundedCaloriesWeightGoal = bdCaloriesWeightGoal.doubleValue();
+            return stringCaloriesWeightGoal = Double.toString(roundedCaloriesWeightGoal);
+        } else {
+            return null;
+        }
+    }
+
+
+
+    @SuppressLint({"CommitPrefEdits", "SetTextI18n"}) //Not sure what this @Supress is
     @Override
     public void onClick(View v) {
         goal = spin_goal.getSelectedItem().toString();
@@ -141,13 +233,35 @@ public class FitnessGoal extends Fragment implements AdapterView.OnItemSelectedL
 
         //getting BMR
         BMR = getBMRMenFormula(userAge, userWeight, userHeight, userGender);
+        BigDecimal bdBMR = new BigDecimal(BMR);
+        bdBMR = bdBMR.round(new MathContext(5));
+        double roundedBMR = bdBMR.doubleValue();
+        String stringBMR = Double.toString(roundedBMR);
 
+        //setting text view to display BMR
+        tvBMR.setText(stringBMR + " calories/day");
 
+        //setting text view to display calories need to maintain weight
+        if (goal.equals("Maintain Weight")) {
+            String calorieGoal = getCaloriesToEat(BMR);
+            tvCalorieGoal.setText(("You need to eat " + calorieGoal + " calories/day to maintain your weight."));
+        }
+
+        //setting text view to display calories needed to lose weight
+        if (goal.equals("Lose Weight")){
+            String calorieGoal = getCaloriesToEat(BMR);
+            tvCalorieGoal.setText(("You need to eat " + calorieGoal + " calories/day to lose your goal lbs/week"));
+        }
+
+        //setting text view to display calories needed to gain weight
+        if (goal.equals("Gain Weight")){
+            String calorieGoal = getCaloriesToEat(BMR);
+            tvCalorieGoal.setText(("You need to eat " + calorieGoal + " calories/day to gain your goal lbs/week"));
+        }
 
         //testing
-        weightChange = picker_weight_change.getValue();
+        //weightChange = picker_weight_change.getValue();
         System.out.println("Goal Saved");
-        System.out.println(goal);
         System.out.println("test");
         System.out.println(userAge);
         System.out.println(userWeight);
