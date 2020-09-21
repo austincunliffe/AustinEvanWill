@@ -56,7 +56,7 @@ public class UserProfileTest {
     public ActivityTestRule<LoginActivity> mActivityTestRule = new ActivityTestRule<>(LoginActivity.class);
 
     @Test
-    public void userProfileTest2() {
+    public void userProfileTest() {
 
         DateFormat df = new SimpleDateFormat("MM/dd/yy");
         Date dateobj = new Date();
@@ -159,29 +159,7 @@ public class UserProfileTest {
                         isDisplayed()));
         appCompatEditText7.perform(replaceText("Tahoe"), closeSoftKeyboard());
 
-
-//        ViewInteraction appCompatButton3 = onView(
-//                allOf(withId(R.id.bt_signUp), withText("Sign Up"),
-//                        childAtPosition(
-//                                allOf(withId(R.id.username),
-//                                        childAtPosition(
-//                                                withId(R.id.nsv_inputs),
-//                                                0)),
-//                                22),
-//                        isDisplayed()));
-//        appCompatButton3.perform(click());
-
         onView(withId(R.id.bt_signUp)).perform(customScrollTo, click());
-
-
-//        // Added a sleep statement to match the app's execution delay.
-//        // The recommended way to handle such scenarios is to use Espresso idling resources:
-//        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
-//        try {
-//            Thread.sleep(700);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
 
         ViewInteraction appCompatImageButton = onView(
                 allOf(withContentDescription("Open navigation drawer"),
