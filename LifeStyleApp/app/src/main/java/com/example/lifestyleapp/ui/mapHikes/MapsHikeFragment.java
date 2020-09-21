@@ -2,6 +2,8 @@ package com.example.lifestyleapp.ui.mapHikes;
 import android.content.Context;
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.location.Location;
@@ -21,6 +23,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.lifestyleapp.EditUserProfileActivity;
+import com.example.lifestyleapp.MainDrawerActivity;
 import com.example.lifestyleapp.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -41,12 +45,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.net.ssl.HttpsURLConnection;
 
 
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-public class MapsHikeFragment extends Fragment {
+public class MapsHikeFragment extends Fragment implements ActivityCompat.OnRequestPermissionsResultCallback {
+
     Location location;
     double lat;
     double lon;
@@ -65,6 +71,7 @@ public class MapsHikeFragment extends Fragment {
         @Override
         public void onMapReady(GoogleMap googleMap) {
             // Set Hikes
+
             try {
                 ArrayList<Trail> trailsNearBy = getNearByHikes();
                 for (Trail el : trailsNearBy) {
@@ -85,6 +92,7 @@ public class MapsHikeFragment extends Fragment {
         }
     };
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -93,9 +101,15 @@ public class MapsHikeFragment extends Fragment {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
+        SharedPreferences pref = this.getActivity().getSharedPreferences("com.example.lifestyleapp",
+                Context.MODE_PRIVATE);
         location = getLastKnownLocation();
         lon = location.getLongitude();
         lat = location.getLatitude();
+
+//        lat = Double.parseDouble(pref.getString("lat", "0"));
+//        lon = Double.parseDouble(pref.getString("lon","0"));
+
 
         System.out.println("-------------------------LAT LONG---------------------------------");
         System.out.println("Lat: " + lat);
@@ -113,11 +127,6 @@ public class MapsHikeFragment extends Fragment {
             mapFragment.getMapAsync(callback);
         }
     }
-
-    private ArrayList<Float> getMyLocationLonLat() {
-        return new ArrayList<>();
-    }
-
 
     private URL buildHikingProjectAPIURL() throws MalformedURLException {
 
@@ -192,15 +201,32 @@ public class MapsHikeFragment extends Fragment {
 
     }
 
-    private Location getLastKnownLocation() {
+
+//    public void onRequestPermissionsResult(
+//            int requestCode,
+//            String[] permissions,
+//            int[] grantResults
+//    ){
+//        location = getLastKnownLocation();
+//        lon = location.getLongitude();
+//        lat = location.getLatitude();
+//
+//        SupportMapFragment mapFragment =
+//                (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+//        if (mapFragment != null) {
+//            mapFragment.getMapAsync(callback);
+//        }
+//    }
+
+    public Location getLastKnownLocation() {
         LocationManager mLocationManager;
         mLocationManager = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
         List<String> providers = mLocationManager.getProviders(true);
         Location bestLocation = null;
 
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
             requestPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
         }
 
         for (String provider : providers) {
@@ -211,6 +237,11 @@ public class MapsHikeFragment extends Fragment {
             if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
                 bestLocation = l;
             }
+        }
+        if (bestLocation == null){
+            bestLocation = new Location("Default");
+            bestLocation.setLongitude(-75);
+            bestLocation.setLatitude(39);
         }
         return bestLocation;
     }

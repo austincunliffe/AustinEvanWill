@@ -270,5 +270,6 @@ public class FitnessGoal extends Fragment implements AdapterView.OnItemSelectedL
         System.out.println(BMR);
         System.out.println(activeOrSedentary);
         System.out.println(weightChange);
+
     }
 }

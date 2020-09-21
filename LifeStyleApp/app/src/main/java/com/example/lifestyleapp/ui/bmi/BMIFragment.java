@@ -62,7 +62,7 @@ class BMIFragment extends Fragment {
 
         return root;
     }
-    private double getBMI(int userWeight, int userHeight){
+    public static double getBMI(int userWeight, int userHeight){
         // this is the formula for calculating BMI in imperial units
         double bmi = (703 * (userWeight/Math.pow(userHeight,2)));
         return bmi;
