@@ -3,6 +3,7 @@ import android.content.Context;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.location.Location;
@@ -23,6 +24,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.lifestyleapp.EditUserProfileActivity;
+import com.example.lifestyleapp.MainDrawerActivity;
 import com.example.lifestyleapp.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -43,12 +45,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.net.ssl.HttpsURLConnection;
 
 
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class MapsHikeFragment extends Fragment implements ActivityCompat.OnRequestPermissionsResultCallback {
+
     Location location;
     double lat;
     double lon;
@@ -88,6 +92,7 @@ public class MapsHikeFragment extends Fragment implements ActivityCompat.OnReque
         }
     };
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -96,9 +101,15 @@ public class MapsHikeFragment extends Fragment implements ActivityCompat.OnReque
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
+        SharedPreferences pref = this.getActivity().getSharedPreferences("com.example.lifestyleapp",
+                Context.MODE_PRIVATE);
         location = getLastKnownLocation();
         lon = location.getLongitude();
         lat = location.getLatitude();
+
+//        lat = Double.parseDouble(pref.getString("lat", "0"));
+//        lon = Double.parseDouble(pref.getString("lon","0"));
+
 
         System.out.println("-------------------------LAT LONG---------------------------------");
         System.out.println("Lat: " + lat);
@@ -116,11 +127,6 @@ public class MapsHikeFragment extends Fragment implements ActivityCompat.OnReque
             mapFragment.getMapAsync(callback);
         }
     }
-
-    private ArrayList<Float> getMyLocationLonLat() {
-        return new ArrayList<>();
-    }
-
 
     private URL buildHikingProjectAPIURL() throws MalformedURLException {
 
@@ -196,23 +202,23 @@ public class MapsHikeFragment extends Fragment implements ActivityCompat.OnReque
     }
 
 
-    public void onRequestPermissionsResult(
-            int requestCode,
-            String[] permissions,
-            int[] grantResults
-    ){
-        location = getLastKnownLocation();
-        lon = location.getLongitude();
-        lat = location.getLatitude();
+//    public void onRequestPermissionsResult(
+//            int requestCode,
+//            String[] permissions,
+//            int[] grantResults
+//    ){
+//        location = getLastKnownLocation();
+//        lon = location.getLongitude();
+//        lat = location.getLatitude();
+//
+//        SupportMapFragment mapFragment =
+//                (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+//        if (mapFragment != null) {
+//            mapFragment.getMapAsync(callback);
+//        }
+//    }
 
-        SupportMapFragment mapFragment =
-                (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-        if (mapFragment != null) {
-            mapFragment.getMapAsync(callback);
-        }
-    }
-
-    private Location getLastKnownLocation() {
+    public Location getLastKnownLocation() {
         LocationManager mLocationManager;
         mLocationManager = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
         List<String> providers = mLocationManager.getProviders(true);

@@ -64,7 +64,6 @@ public class FitnessGoal extends Fragment implements AdapterView.OnItemSelectedL
         SharedPreferences prefs = v.getContext().getSharedPreferences(
                 "com.example.lifestyleapp", Context.MODE_PRIVATE);
         prefs.edit().putString("goal", goal);
-//        prefs.getString("goal",goal);
         System.out.println("Goal SavedR");
     }
 }
