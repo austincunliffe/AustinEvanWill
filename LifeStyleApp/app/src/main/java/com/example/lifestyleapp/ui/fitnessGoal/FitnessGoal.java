@@ -177,6 +177,23 @@ public class FitnessGoal extends Fragment implements AdapterView.OnItemSelectedL
             //the mayo clinic suggests that you need to add/subtract 500 calories per day to gain/lose
             //1 pound per week
             Double caloriesWeightGoal = tdee - 500*weightChange;
+
+            //setting a toast if daily calorie intake is less than 1200 or 1000
+            if (userGender.equals("Male") && caloriesWeightGoal < 1200){
+                Toast toast = Toast.makeText(getActivity(),
+                        "Eating less than 1200 calories/day for men can be dangerous.",
+                        Toast.LENGTH_LONG);
+
+                toast.show();
+            }
+            else if (userGender.equals("Female") && caloriesWeightGoal < 1000){
+                Toast toast = Toast.makeText(getActivity(),
+                        "Eating less than 1000 calories/day for women can be dangerous.",
+                        Toast.LENGTH_LONG);
+
+                toast.show();
+            }
+
             BigDecimal bdCaloriesWeightGoal = new BigDecimal(caloriesWeightGoal);
             bdCaloriesWeightGoal = bdCaloriesWeightGoal.round(new MathContext(5));
             double roundedCaloriesWeightGoal = bdCaloriesWeightGoal.doubleValue();
