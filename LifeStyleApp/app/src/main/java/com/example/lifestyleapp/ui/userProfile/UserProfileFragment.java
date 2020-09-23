@@ -163,7 +163,7 @@ public class UserProfileFragment extends Fragment implements AdapterView.OnItemS
         return path;
     }
 
-    private void loadProfilePic(String path)
+    public void loadProfilePic(String path)
     {
         try {
             File f=new File(path, "profile.jpg");

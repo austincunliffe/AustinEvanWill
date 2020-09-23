@@ -14,7 +14,7 @@
         app:layout_constraintBottom_toTopOf="@id/guideline2">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/navEmail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
@@ -38,7 +38,7 @@
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/navEmail" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

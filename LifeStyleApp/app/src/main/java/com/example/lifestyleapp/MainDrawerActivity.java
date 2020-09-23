@@ -15,10 +15,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.Menu;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.lifestyleapp.ui.mapHikes.MapsHikeFragment;
+import com.example.lifestyleapp.ui.userProfile.UserProfileFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.Nullable;
@@ -52,6 +54,7 @@ public class MainDrawerActivity extends AppCompatActivity {
     private TextView navUsername;
     private ImageView navImage;
     private ImageView profileImage;
+    private  View navView;
 
 
     @SuppressLint("CommitPrefEdits")
@@ -74,39 +77,65 @@ public class MainDrawerActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-//
-//        final String picPath = pref.getString("profile_pic", null);
-//        Handler handler = new Handler(Looper.getMainLooper());
-//        handler.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                loadProfilePic(picPath);
-//            }
-//        });
+
+        pref = this.getSharedPreferences("com.example.lifestyleapp",
+                Context.MODE_PRIVATE);
+
+        setNavHeaderData(navigationView);
 
         Location current = getLastKnownLocation();
-        SharedPreferences prefs = this.getSharedPreferences(
-                "com.example.lifestyleapp", Context.MODE_PRIVATE);
-        prefs.edit().putString("lat", String.valueOf(current.getLatitude()));
-        prefs.edit().putString("long", String.valueOf(current.getLongitude()));
+
+        pref.edit().putString("lat", String.valueOf(current.getLatitude()));
+        pref.edit().putString("long", String.valueOf(current.getLongitude()));
     }
+
+
+    void setNavHeaderData(NavigationView navigationView){
+        navView = navigationView.getHeaderView(0);
+        TextView nav_name = (TextView) navView.findViewById(R.id.navUsername);
+        TextView nav_email =(TextView) navView.findViewById(R.id.navEmail);
+
+
+
+
+        final String picPath = pref.getString("profile_pic", null);
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                loadProfilePic(picPath);
+            }
+        });
+
+        String username = pref.getString("username", null);
+        String email = pref.getString("email", null);
+
+        nav_name.setText(username);
+        nav_email.setText(email);
+
+    }
+    public void loadProfilePic(String path)
+    {
+        try {
+            File f=new File(path, "profile.jpg");
+            Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+            ImageView nav_pic =(ImageView) navView.findViewById(R.id.navPic);
+            nav_pic.setImageBitmap(b);
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+
+
 
     @SuppressLint("ResourceType")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main_drawer, menu);
-//        pref = this.getSharedPreferences("com.example.lifestyleapp",
-//                Context.MODE_PRIVATE);
-//        String username = pref.getString("username",null);
-//        String email = pref.getString("email",null);
-//////        R.id.navImage
-//        navEmail = this.findViewById(R.id.tvNavEmail);
-//        navUsername =this.findViewById(R.id.tvNavName);
-//        navEmail.setText(email);
-//        navUsername.setText(username);
-//        profileImage = this.findViewById(R.id.imageView_profile);
-//        navImage =profileImage;
         return true;
     }
 
