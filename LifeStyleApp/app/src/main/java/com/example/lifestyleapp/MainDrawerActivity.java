@@ -34,6 +34,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import org.w3c.dom.Text;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -43,8 +45,14 @@ import java.util.List;
 import java.util.prefs.Preferences;
 
 public class MainDrawerActivity extends AppCompatActivity {
-    private SharedPreferences pref;
+
     private AppBarConfiguration mAppBarConfiguration;
+    private SharedPreferences pref;
+    private TextView navEmail;
+    private TextView navUsername;
+    private ImageView navImage;
+    private ImageView profileImage;
+
 
     @SuppressLint("CommitPrefEdits")
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -83,10 +91,22 @@ public class MainDrawerActivity extends AppCompatActivity {
         prefs.edit().putString("long", String.valueOf(current.getLongitude()));
     }
 
+    @SuppressLint("ResourceType")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main_drawer, menu);
+//        pref = this.getSharedPreferences("com.example.lifestyleapp",
+//                Context.MODE_PRIVATE);
+//        String username = pref.getString("username",null);
+//        String email = pref.getString("email",null);
+//////        R.id.navImage
+//        navEmail = this.findViewById(R.id.tvNavEmail);
+//        navUsername =this.findViewById(R.id.tvNavName);
+//        navEmail.setText(email);
+//        navUsername.setText(username);
+//        profileImage = this.findViewById(R.id.imageView_profile);
+//        navImage =profileImage;
         return true;
     }
 
