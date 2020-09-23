@@ -5,6 +5,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -13,6 +15,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.Menu;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.lifestyleapp.ui.mapHikes.MapsHikeFragment;
@@ -31,11 +34,16 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.prefs.Preferences;
 
 public class MainDrawerActivity extends AppCompatActivity {
-
+    private SharedPreferences pref;
     private AppBarConfiguration mAppBarConfiguration;
 
     @SuppressLint("CommitPrefEdits")
@@ -71,8 +79,8 @@ public class MainDrawerActivity extends AppCompatActivity {
         Location current = getLastKnownLocation();
         SharedPreferences prefs = this.getSharedPreferences(
                 "com.example.lifestyleapp", Context.MODE_PRIVATE);
-        prefs.edit().putString("lat",String.valueOf(current.getLatitude()));
-        prefs.edit().putString("long",String.valueOf(current.getLongitude()));
+        prefs.edit().putString("lat", String.valueOf(current.getLatitude()));
+        prefs.edit().putString("long", String.valueOf(current.getLongitude()));
     }
 
     @Override
@@ -92,7 +100,7 @@ public class MainDrawerActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.M)
     public Location getLastKnownLocation() {
         LocationManager mLocationManager;
-        mLocationManager = (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
+        mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         List<String> providers = mLocationManager.getProviders(true);
         Location bestLocation = null;
 
@@ -109,11 +117,12 @@ public class MainDrawerActivity extends AppCompatActivity {
                 bestLocation = l;
             }
         }
-        if (bestLocation == null){
+        if (bestLocation == null) {
             bestLocation = new Location("Default");
             bestLocation.setLongitude(-75);
             bestLocation.setLatitude(39);
         }
         return bestLocation;
     }
+
 }
