@@ -65,10 +65,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
-                android:text="Name"
+                android:text="Username"
+                android:textColor="@color/DarkBlue"
                 app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
-                app:layout_constraintTop_toTopOf="@id/userInfo"
-                tools:layout_editor_absoluteX="56dp" />
+                app:layout_constraintTop_toTopOf="@id/userInfo" />
 
             <EditText
                 android:id="@+id/et_name_big"
@@ -78,7 +78,7 @@
                 android:background="@drawable/rounded_corners"
                 android:gravity="center"
                 android:text="Name"
-                android:textColor="@android:color/holo_blue_light"
+                android:textColor="@color/DarkBlue"
                 app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
                 app:layout_constraintTop_toBottomOf="@+id/tv_name_small" />
 
@@ -88,9 +88,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Date of Birth"
+                android:textColor="@color/DarkBlue"
                 app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
-                app:layout_constraintTop_toBottomOf="@id/et_name_big"
-                tools:layout_editor_absoluteX="56dp" />
+                app:layout_constraintTop_toBottomOf="@id/et_name_big" />
 
 
             <EditText
@@ -103,7 +103,7 @@
                 android:focusable="false"
                 android:gravity="center"
                 android:inputType="date"
-                android:textColor="@android:color/holo_blue_light"
+                android:textColor="@color/DarkBlue"
                 app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
                 app:layout_constraintTop_toBottomOf="@+id/tv_age_small" />
 
@@ -113,9 +113,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="City"
+                android:textColor="@color/DarkBlue"
                 app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
-                app:layout_constraintTop_toBottomOf="@id/et_DOB"
-                tools:layout_editor_absoluteX="56dp" />
+                app:layout_constraintTop_toBottomOf="@id/et_DOB" />
 
             <EditText
                 android:id="@+id/et_city_big"
@@ -125,7 +125,7 @@
                 android:background="@drawable/rounded_corners"
                 android:gravity="center"
                 android:text="City"
-                android:textColor="@android:color/white"
+                android:textColor="@color/DarkBlue"
                 app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
                 app:layout_constraintTop_toBottomOf="@+id/tv_city_small" />
 
@@ -134,10 +134,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_marginTop="16dp"
+                android:fontFamily="arial"
                 android:text="Country"
+                android:textColor="@color/DarkBlue"
                 app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
-                app:layout_constraintTop_toBottomOf="@id/et_city_big"
-                tools:layout_editor_absoluteX="56dp" />
+                app:layout_constraintTop_toBottomOf="@id/et_city_big" />
 
             <Spinner
                 android:id="@+id/spinner_country"
@@ -146,7 +147,7 @@
                 android:background="@drawable/rounded_corners_spinner_userprofile"
                 android:gravity="center_horizontal"
                 android:textAlignment="center"
-                android:textColor="@android:color/holo_blue_light"
+                android:textColor="@color/DarkBlue"
                 android:theme="@style/spinner_AC_Theme"
                 app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
                 app:layout_constraintTop_toBottomOf="@+id/tv_country_small" />
@@ -157,15 +158,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Height"
+                android:textColor="@color/DarkBlue"
                 app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
-                app:layout_constraintTop_toBottomOf="@id/spinner_country"
-                tools:layout_editor_absoluteX="56dp" />
+                app:layout_constraintTop_toBottomOf="@id/spinner_country" />
 
             <NumberPicker
                 android:id="@+id/np_height"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:scrollbarThumbHorizontal="@color/DarkBlue"
+                android:scrollbarThumbVertical="@color/DarkBlue"
                 android:theme="@style/numberpicker_AC_Theme"
                 app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
                 app:layout_constraintTop_toBottomOf="@+id/tv_height_small" />
@@ -175,16 +178,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:fontFamily="arial"
                 android:text="Weight"
+                android:textColor="@color/DarkBlue"
                 app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
-                app:layout_constraintTop_toBottomOf="@id/np_height"
-                tools:layout_editor_absoluteX="56dp" />
+                app:layout_constraintTop_toBottomOf="@id/np_height" />
 
             <NumberPicker
                 android:id="@+id/np_weight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:scrollbarThumbHorizontal="@color/DarkBlue"
+                android:scrollbarThumbVertical="@color/DarkBlue"
                 android:theme="@style/numberpicker_AC_Theme"
                 app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
                 app:layout_constraintTop_toBottomOf="@+id/tv_weight_small" />
@@ -195,9 +201,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Gender"
+                android:textColor="@color/DarkBlue"
                 app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
-                app:layout_constraintTop_toBottomOf="@id/np_weight"
-                tools:layout_editor_absoluteX="56dp" />
+                app:layout_constraintTop_toBottomOf="@id/np_weight" />
 
             <Spinner
                 android:id="@+id/spinner_sex"
@@ -205,7 +211,9 @@
                 android:layout_height="30dp"
                 android:layout_marginTop="4sp"
                 android:background="@drawable/rounded_corners_spinner_userprofile"
-                android:textColor="@android:color/holo_blue_light"
+                android:scrollbarThumbHorizontal="@color/DarkBlue"
+                android:scrollbarThumbVertical="@color/DarkBlue"
+                android:textColor="@color/DarkBlue"
                 android:theme="@style/spinner_AC_Theme"
                 app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
                 app:layout_constraintTop_toBottomOf="@+id/tv_sex_small" />
