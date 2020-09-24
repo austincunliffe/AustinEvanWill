@@ -47,7 +47,6 @@ public class LoginActivityTest {
     @Before
     public void setUp() {
         Context targetContext = getInstrumentation().getTargetContext();
-//        pref = (SharedPreferences) PreferenceManager.getDefaultSharedPreferences(targetContext).edit();
         pref = targetContext.getSharedPreferences("com.example.lifestyleapp",
                 Context.MODE_PRIVATE);
     }
