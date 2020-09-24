@@ -64,7 +64,7 @@
     <string name="menu_bmi">BMI</string>
     <string name="google_maps_key">AIzaSyDjGMomdpEGN_gUvGERMQoaKL_bp58MJjU</string>
     <string name="menu_userProfile">User Profile</string>
-    <string name="menu_hikes">Hikes Neary By</string>
+    <string name="menu_hikes">Trails</string>
     <string name="menu_fitnessGoal">Fitness Goal</string>
     <string name="health">Health</string>
     <string name="set_goal">Set Goal</string>
