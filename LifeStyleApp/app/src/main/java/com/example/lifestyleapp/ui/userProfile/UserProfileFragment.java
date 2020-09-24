@@ -56,6 +56,7 @@ public class UserProfileFragment extends Fragment implements AdapterView.OnItemS
     private NumberPicker picker_weight, picker_height;
     private ImageView mIvPic;
 
+
     //Define a request code for the camera
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
@@ -128,6 +129,7 @@ public class UserProfileFragment extends Fragment implements AdapterView.OnItemS
             saveToInternalStorage(thumbnailImage);
             mIvPic = (ImageView) this.getActivity().findViewById(R.id.imageView_profile);
             mIvPic.setImageBitmap(thumbnailImage);
+
         }
     }
 
@@ -161,7 +163,7 @@ public class UserProfileFragment extends Fragment implements AdapterView.OnItemS
         return path;
     }
 
-    private void loadProfilePic(String path)
+    public void loadProfilePic(String path)
     {
         try {
             File f=new File(path, "profile.jpg");

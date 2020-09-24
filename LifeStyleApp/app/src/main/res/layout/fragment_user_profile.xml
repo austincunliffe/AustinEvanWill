@@ -10,8 +10,8 @@
         android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
         android:layout_height="120dp"
+        android:background="#2699FB"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@android:color/holo_blue_light"
         tools:layout_editor_absoluteX="-1dp">
 
 
@@ -30,10 +30,11 @@
             android:layout_width="70dp"
             android:layout_height="17dp"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="24sp"
-            android:background="#FFFFFF"
+            android:background="@drawable/rounded_corners"
             android:text="Set Picture"
-            android:textSize="10sp"
+            android:textColor="@color/DarkBlue"
+            android:textStyle="bold"
+            android:textSize="8sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imageView_profile" />
@@ -44,6 +45,7 @@
         android:id="@+id/nsv_inputs"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="#FFFFFF"
         android:fillViewport="true"
         android:paddingBottom="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -58,170 +60,162 @@
             app:layout_constraintBottom_toBottomOf="@id/constraintLayout"
             app:layout_constraintEnd_toEndOf="parent">
 
-    <TextView
-        android:id="@+id/tv_name_small"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Name"
-        android:layout_marginTop="32dp"
-        app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
-        app:layout_constraintTop_toTopOf="@id/userInfo"
-        tools:layout_editor_absoluteX="56dp" />
+            <TextView
+                android:id="@+id/tv_name_small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="Name"
+                app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
+                app:layout_constraintTop_toTopOf="@id/userInfo"
+                tools:layout_editor_absoluteX="56dp" />
 
-    <EditText
-        android:id="@+id/et_name_big"
-        android:layout_width="275sp"
-        android:layout_height="30dp"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/rounded_corners"
-        android:gravity="center"
-        android:text="Name"
-        android:textColor="@android:color/holo_blue_light"
-        app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
-        app:layout_constraintTop_toBottomOf="@+id/tv_name_small"
-        />
+            <EditText
+                android:id="@+id/et_name_big"
+                android:layout_width="275sp"
+                android:layout_height="30dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/rounded_corners"
+                android:gravity="center"
+                android:text="Name"
+                android:textColor="@android:color/holo_blue_light"
+                app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
+                app:layout_constraintTop_toBottomOf="@+id/tv_name_small" />
 
-    <TextView
-        android:id="@+id/tv_age_small"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Date of Birth"
-        android:layout_marginTop="16dp"
-        app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
-        app:layout_constraintTop_toBottomOf="@id/et_name_big"
-        tools:layout_editor_absoluteX="56dp" />
+            <TextView
+                android:id="@+id/tv_age_small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Date of Birth"
+                app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
+                app:layout_constraintTop_toBottomOf="@id/et_name_big"
+                tools:layout_editor_absoluteX="56dp" />
 
 
-    <EditText
-        android:id="@+id/et_DOB"
-        android:layout_width="275sp"
-        android:layout_height="30dp"
-        android:layout_marginTop="4sp"
-        android:clickable="true"
-        android:inputType="date"
-        android:focusable="false"
-        android:textColor="@android:color/holo_blue_light"
-        android:background="@drawable/rounded_corners"
-        android:gravity="center"
-        app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
-        app:layout_constraintTop_toBottomOf="@+id/tv_age_small"
-        />
+            <EditText
+                android:id="@+id/et_DOB"
+                android:layout_width="275sp"
+                android:layout_height="30dp"
+                android:layout_marginTop="4sp"
+                android:background="@drawable/rounded_corners"
+                android:clickable="true"
+                android:focusable="false"
+                android:gravity="center"
+                android:inputType="date"
+                android:textColor="@android:color/holo_blue_light"
+                app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
+                app:layout_constraintTop_toBottomOf="@+id/tv_age_small" />
 
-    <TextView
-        android:id="@+id/tv_city_small"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="City"
-        android:layout_marginTop="16dp"
-        app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
-        app:layout_constraintTop_toBottomOf="@id/et_DOB"
-        tools:layout_editor_absoluteX="56dp" />
+            <TextView
+                android:id="@+id/tv_city_small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="City"
+                app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
+                app:layout_constraintTop_toBottomOf="@id/et_DOB"
+                tools:layout_editor_absoluteX="56dp" />
 
-    <EditText
-        android:id="@+id/et_city_big"
-        android:layout_width="275sp"
-        android:layout_height="30dp"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/rounded_corners"
-        android:gravity="center"
-        android:text="City"
-        android:textColor="@android:color/holo_blue_light"
-        app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
-        app:layout_constraintTop_toBottomOf="@+id/tv_city_small"
-        />
+            <EditText
+                android:id="@+id/et_city_big"
+                android:layout_width="275sp"
+                android:layout_height="30dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/rounded_corners"
+                android:gravity="center"
+                android:text="City"
+                android:textColor="@android:color/white"
+                app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
+                app:layout_constraintTop_toBottomOf="@+id/tv_city_small" />
 
-    <TextView
-        android:id="@+id/tv_country_small"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:text="Country"
-        android:layout_marginTop="16dp"
-        app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
-        app:layout_constraintTop_toBottomOf="@id/et_city_big"
-        tools:layout_editor_absoluteX="56dp" />
+            <TextView
+                android:id="@+id/tv_country_small"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="16dp"
+                android:text="Country"
+                app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
+                app:layout_constraintTop_toBottomOf="@id/et_city_big"
+                tools:layout_editor_absoluteX="56dp" />
 
-    <Spinner
-        android:id="@+id/spinner_country"
-        android:layout_width="275sp"
-        android:layout_height="30dp"
-        android:background="@drawable/rounded_corners_spinner_userprofile"
-        android:theme="@style/spinner_AC_Theme"
-        android:textColor="@android:color/holo_blue_light"
-        android:textAlignment="center"
-        android:gravity="center_horizontal"
-        app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
-        app:layout_constraintTop_toBottomOf="@+id/tv_country_small"
-        />
+            <Spinner
+                android:id="@+id/spinner_country"
+                android:layout_width="275sp"
+                android:layout_height="30dp"
+                android:background="@drawable/rounded_corners_spinner_userprofile"
+                android:gravity="center_horizontal"
+                android:textAlignment="center"
+                android:textColor="@android:color/holo_blue_light"
+                android:theme="@style/spinner_AC_Theme"
+                app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
+                app:layout_constraintTop_toBottomOf="@+id/tv_country_small" />
 
-    <TextView
-        android:id="@+id/tv_height_small"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Height"
-        android:layout_marginTop="16dp"
-        app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
-        app:layout_constraintTop_toBottomOf="@id/spinner_country"
-        tools:layout_editor_absoluteX="56dp" />
+            <TextView
+                android:id="@+id/tv_height_small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Height"
+                app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
+                app:layout_constraintTop_toBottomOf="@id/spinner_country"
+                tools:layout_editor_absoluteX="56dp" />
 
-    <NumberPicker
-        android:id="@+id/np_height"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:theme="@style/numberpicker_AC_Theme"
-        android:layout_marginTop="4dp"
-        app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
-        app:layout_constraintTop_toBottomOf="@+id/tv_height_small"
-        />
+            <NumberPicker
+                android:id="@+id/np_height"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:theme="@style/numberpicker_AC_Theme"
+                app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
+                app:layout_constraintTop_toBottomOf="@+id/tv_height_small" />
 
-    <TextView
-        android:id="@+id/tv_weight_small"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Weight"
-        android:layout_marginTop="16dp"
-        app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
-        app:layout_constraintTop_toBottomOf="@id/np_height"
-        tools:layout_editor_absoluteX="56dp" />
+            <TextView
+                android:id="@+id/tv_weight_small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Weight"
+                app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
+                app:layout_constraintTop_toBottomOf="@id/np_height"
+                tools:layout_editor_absoluteX="56dp" />
 
-    <NumberPicker
-        android:id="@+id/np_weight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:theme="@style/numberpicker_AC_Theme"
-        android:layout_marginTop="4dp"
-        app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
-        app:layout_constraintTop_toBottomOf="@+id/tv_weight_small"
-        />
+            <NumberPicker
+                android:id="@+id/np_weight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:theme="@style/numberpicker_AC_Theme"
+                app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
+                app:layout_constraintTop_toBottomOf="@+id/tv_weight_small" />
 
-    <TextView
-        android:id="@+id/tv_sex_small"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Gender"
-        android:layout_marginTop="16dp"
-        app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
-        app:layout_constraintTop_toBottomOf="@id/np_weight"
-        tools:layout_editor_absoluteX="56dp" />
+            <TextView
+                android:id="@+id/tv_sex_small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Gender"
+                app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
+                app:layout_constraintTop_toBottomOf="@id/np_weight"
+                tools:layout_editor_absoluteX="56dp" />
 
-    <Spinner
-        android:id="@+id/spinner_sex"
-        android:layout_width="275sp"
-        android:layout_height="30dp"
-        android:layout_marginTop="4sp"
-        android:background="@drawable/rounded_corners_spinner_userprofile"
-        android:theme="@style/spinner_AC_Theme"
-        android:textColor="@android:color/holo_blue_light"
-        app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
-        app:layout_constraintTop_toBottomOf="@+id/tv_sex_small"
-        />
+            <Spinner
+                android:id="@+id/spinner_sex"
+                android:layout_width="275sp"
+                android:layout_height="30dp"
+                android:layout_marginTop="4sp"
+                android:background="@drawable/rounded_corners_spinner_userprofile"
+                android:textColor="@android:color/holo_blue_light"
+                android:theme="@style/spinner_AC_Theme"
+                app:layout_constraintLeft_toRightOf="@id/guideline_vertical"
+                app:layout_constraintTop_toBottomOf="@+id/tv_sex_small" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="50dp" />
-
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="50dp" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

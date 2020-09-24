@@ -9,26 +9,32 @@
         android:id="@+id/nav_home"
         android:name="com.example.lifestyleapp.ui.weather.WeatherFragment"
         android:label="@string/menu_weather"
+        android:textColor="@color/White"
         tools:layout="@layout/fragment_weather" />
 
     <fragment
         android:id="@+id/nav_hikes"
         android:name="com.example.lifestyleapp.ui.mapHikes.MapsHikeFragment"
         android:label="@string/menu_hikes"
+        android:textColor="@color/White"
         tools:layout="@layout/fragment_maps_hike" />
 
     <fragment
         android:id="@+id/nav_user_profile"
         android:name="com.example.lifestyleapp.ui.userProfile.UserProfileFragment"
         android:label="@string/menu_userProfile"
+        android:textColor="@color/White"
         tools:layout="@layout/fragment_user_profile" />
     <fragment
         android:id="@+id/nav_bmi"
         android:name="com.example.lifestyleapp.ui.bmi.BMIFragment"
         android:label="@string/menu_bmi"
+        android:textColor="@color/White"
         tools:layout="@layout/fragment_b_m_i" />
     <fragment
         android:id="@+id/nav_fitness_goal"
         android:name="com.example.lifestyleapp.ui.fitnessGoal.FitnessGoal"
-        android:label="Health" />
+        android:label="Health"
+        android:textColor="@color/White"
+        />
 </navigation>
