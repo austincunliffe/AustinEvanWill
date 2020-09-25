@@ -100,14 +100,6 @@ public class MapsHikeFragment extends Fragment implements ActivityCompat.OnReque
         lon = location.getLongitude();
         lat = location.getLatitude();
 
-//        lat = Double.parseDouble(pref.getString("lat", "0"));
-//        lon = Double.parseDouble(pref.getString("lon","0"));
-
-
-        System.out.println("-------------------------LAT LONG---------------------------------");
-        System.out.println("Lat: " + lat);
-        System.out.println("Lon: " + lon);
-
         return inflater.inflate(R.layout.fragment_maps_hike, container, false);
     }
 
@@ -193,23 +185,6 @@ public class MapsHikeFragment extends Fragment implements ActivityCompat.OnReque
         return trails;
 
     }
-
-
-//    public void onRequestPermissionsResult(
-//            int requestCode,
-//            String[] permissions,
-//            int[] grantResults
-//    ){
-//        location = getLastKnownLocation();
-//        lon = location.getLongitude();
-//        lat = location.getLatitude();
-//
-//        SupportMapFragment mapFragment =
-//                (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-//        if (mapFragment != null) {
-//            mapFragment.getMapAsync(callback);
-//        }
-//    }
 
     public Location getLastKnownLocation() {
         LocationManager mLocationManager;
