@@ -1,8 +1,8 @@
 package com.example.lifestyleapp.ui.weather;
 
 public class Weather {
-    String conditions;
-    int temp;
+    public String conditions;
+    public int temp;
 
     public Weather(String conditions, int temp) {
         this.conditions = conditions;

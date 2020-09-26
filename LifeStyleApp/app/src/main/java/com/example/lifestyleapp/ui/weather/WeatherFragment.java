@@ -73,7 +73,7 @@ public class WeatherFragment extends Fragment {
         return root;
     }
 
-    private URL buildOpenWeatherAPIURL(String cityName) throws MalformedURLException {
+    private static URL buildOpenWeatherAPIURL(String cityName) throws MalformedURLException {
         String apiKey = "&appid=63e730362b278faf6db7254c1f3837d8";
         String urlBuild = "https://api.openweathermap.org/data/2.5/weather?q=";
         urlBuild += cityName + apiKey;
@@ -82,7 +82,7 @@ public class WeatherFragment extends Fragment {
         return url;
     }
 
-    private InputStream sendAPIHTTPRequest(URL openWeatherFormattedURL) throws IOException {
+    private static InputStream sendAPIHTTPRequest(URL openWeatherFormattedURL) throws IOException {
         HttpsURLConnection urlConnection = (HttpsURLConnection) openWeatherFormattedURL.openConnection();
         InputStream in;
         try {
@@ -98,7 +98,7 @@ public class WeatherFragment extends Fragment {
         }
     }
 
-    private String readInputStream(InputStream in) throws IOException {
+    private static String readInputStream(InputStream in) throws IOException {
         int i;
         char c;
         String inString = "";
@@ -110,7 +110,7 @@ public class WeatherFragment extends Fragment {
         return inString;
     }
 
-    private Weather JSONToWeather(String weatherData) throws JSONException {
+    private static Weather JSONToWeather(String weatherData) throws JSONException {
         JSONObject weatherDataJSON = new JSONObject(weatherData);
 
         JSONArray weatherArr = weatherDataJSON.getJSONArray("weather");
@@ -126,7 +126,7 @@ public class WeatherFragment extends Fragment {
 
 
     // 63e730362b278faf6db7254c1f3837d8
-    private Weather getWeather(Location userLocation) throws IOException, JSONException {
+    public static Weather getWeather(Location userLocation) throws IOException, JSONException {
         URL url = buildOpenWeatherAPIURL(userLocation.city);
 
         InputStream in = sendAPIHTTPRequest(url);

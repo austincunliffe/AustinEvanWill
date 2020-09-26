@@ -66,7 +66,7 @@ public class WeatherFragmentTest {
         pref.edit().putString("dob", "06/02/1998").apply();
         pref.edit().putString("country", "Canada").apply();
         pref.edit().putInt("country_idx", 1).apply();
-        pref.edit().putString("city", "Tahoe").apply();
+        pref.edit().putString("city", "Montreal").apply();
         pref.edit().putString("sex", "Male").apply();
         pref.edit().putInt("sex_idx", 0).apply();
         pref.edit().putInt("height", 72).apply();
@@ -77,14 +77,14 @@ public class WeatherFragmentTest {
 
 
         ViewInteraction textView = onView(
-                allOf(withId(R.id.weatherCity), withText("Tahoe"),
+                allOf(withId(R.id.weatherCity), withText("Montreal"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.nav_host_fragment),
                                         0),
                                 0),
                         isDisplayed()));
-        textView.check(matches(withText("Tahoe")));
+        textView.check(matches(withText("Montreal")));
     }
 
     private static Matcher<View> childAtPosition(

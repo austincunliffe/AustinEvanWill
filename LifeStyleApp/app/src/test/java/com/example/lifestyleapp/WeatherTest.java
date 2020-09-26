@@ -2,8 +2,12 @@ package com.example.lifestyleapp;
 
 import com.example.lifestyleapp.ui.weather.WeatherFragment;
 import com.example.lifestyleapp.ui.weather.Weather;
+import com.example.lifestyleapp.ui.weather.Location;
 
+import org.json.JSONException;
 import org.junit.Test;
+
+import java.io.IOException;
 
 import static org.junit.Assert.*;
 
@@ -38,4 +42,14 @@ public class WeatherTest {
 
         assertEquals(expected, output, .05);
     }
+
+//    @Test
+//    public void weatherAPITest() throws IOException, JSONException {
+//        Location loc = new Location("Montreal", "Canada");
+//
+//        Weather w = WeatherFragment.getWeather(loc);
+//
+//        assertNotEquals("--", w.conditions);
+//        assertNotEquals(0, w.temp);
+//    }
 }
