@@ -1,6 +1,9 @@
 package com.example.lifestyleapp;
 
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -22,6 +25,7 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 import org.hamcrest.core.IsInstanceOf;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,6 +49,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import static androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.is;
@@ -53,16 +58,31 @@ import static org.hamcrest.Matchers.is;
 @RunWith(AndroidJUnit4.class)
 public class UserProfileTest {
 
+    SharedPreferences pref;
+
+    @Rule
+    public ActivityTestRule<LoginActivity> mActivityTestRule = new ActivityTestRule<>(
+            LoginActivity.class,true, false
+    );
+
     @Rule
     public GrantPermissionRule mGrantPermissionRule =
             GrantPermissionRule.grant(
                     "android.permission.ACCESS_FINE_LOCATION");
 
-    @Rule
-    public ActivityTestRule<LoginActivity> mActivityTestRule = new ActivityTestRule<>(LoginActivity.class);
+    @Before
+    public void setUp() {
+        Context targetContext = getInstrumentation().getTargetContext();
+        pref = targetContext.getSharedPreferences("com.example.lifestyleapp",
+                Context.MODE_PRIVATE);
+    }
 
     @Test
     public void userProfileTest() {
+
+        pref.edit().putBoolean("LOGIN_KEY", false).apply();
+
+        mActivityTestRule.launchActivity(new Intent());
 
         DateFormat df = new SimpleDateFormat("MM/dd/yy");
         Date dateobj = new Date();
