@@ -39,22 +39,26 @@ public class WeatherFragment extends Fragment {
         weatherViewModel =
                 ViewModelProviders.of(this).get(WeatherViewModel.class);
         View root = inflater.inflate(R.layout.fragment_weather, container, false);
-        SharedPreferences prefs = this.getActivity().getSharedPreferences(
-                "com.example.lifestyleapp", Context.MODE_PRIVATE);
-        String city = prefs.getString("city",null);
-        String country = prefs.getString("country",null);
-        Location userLocation = new Location(city, country);
-        Weather userLocationWeather;
-        try {
-            userLocationWeather = getWeather(userLocation);
-        } catch (IOException | JSONException e) {
-            userLocationWeather = new Weather("--",0);
-        }
+//        SharedPreferences prefs = this.getActivity().getSharedPreferences(
+//                "com.example.lifestyleapp", Context.MODE_PRIVATE);
+//        String city = prefs.getString("city",null);
+//        String country = prefs.getString("country",null);
+//        Location userLocation = new Location(city, country);
+//        Weather userLocationWeather;
+//        try {
+//            userLocationWeather = getWeather(userLocation);
+//        } catch (IOException | JSONException e) {
+//            userLocationWeather = new Weather("--",0);
+//        }
 
         TextView weatherCity = root.findViewById(R.id.weatherCity);
-        weatherCity.setText(userLocation.city);
+//        weatherCity.setText(userLocation.city);
+        weatherCity.setText(weatherViewModel.getCity());
+
 
         TextView weatherConditions = root.findViewById(R.id.weatherConditions);
+
+        Weather userLocationWeather = weatherViewModel.getUserLocationWeather();
         weatherConditions.setText(userLocationWeather.conditions);
 
         TextView weatherTemperature = root.findViewById(R.id.temperature);
