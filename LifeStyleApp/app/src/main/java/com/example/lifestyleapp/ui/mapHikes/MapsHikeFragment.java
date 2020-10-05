@@ -50,6 +50,8 @@ public class MapsHikeFragment extends Fragment implements ActivityCompat.OnReque
     double lat;
     double lon;
 
+//    MapsHikeViewModel model;
+
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
         /**
@@ -67,6 +69,8 @@ public class MapsHikeFragment extends Fragment implements ActivityCompat.OnReque
 
             try {
                 ArrayList<Trail> trailsNearBy = getNearByHikes();
+//                ArrayList<Trail> trailsNearBy = model.getNearByHikes();
+
                 for (Trail el : trailsNearBy) {
                     System.out.println("Name: " + el.name + " Lon: " + el.lon + " Lat: " + el.lat);
                     LatLng hike = new LatLng(el.lat, el.lon);
@@ -79,7 +83,9 @@ public class MapsHikeFragment extends Fragment implements ActivityCompat.OnReque
             }
 
 
+//            LatLng myLocation = new LatLng(model.getLat(), model.getLon());
             LatLng myLocation = new LatLng(lat, lon);
+
             googleMap.addMarker(new MarkerOptions().position(myLocation).title("Current Location"));
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation));
         }
@@ -93,6 +99,14 @@ public class MapsHikeFragment extends Fragment implements ActivityCompat.OnReque
                              @Nullable Bundle savedInstanceState) {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+
+//        try {
+//            model = new MapsHikeViewModel(this.getActivity().getApplication());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
 
         SharedPreferences pref = this.getActivity().getSharedPreferences("com.example.lifestyleapp",
                 Context.MODE_PRIVATE);

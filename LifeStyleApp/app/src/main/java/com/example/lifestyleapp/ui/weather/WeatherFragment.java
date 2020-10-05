@@ -30,14 +30,14 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class WeatherFragment extends Fragment {
 
-    private WeatherViewModel weatherViewModel;
+//    private WeatherViewModel weatherViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        weatherViewModel =
-                ViewModelProviders.of(this).get(WeatherViewModel.class);
+//        weatherViewModel =
+//                ViewModelProviders.of(this).get(WeatherViewModel.class);
         View root = inflater.inflate(R.layout.fragment_weather, container, false);
         SharedPreferences prefs = this.getActivity().getSharedPreferences(
                 "com.example.lifestyleapp", Context.MODE_PRIVATE);
@@ -52,9 +52,13 @@ public class WeatherFragment extends Fragment {
         }
 
         TextView weatherCity = root.findViewById(R.id.weatherCity);
-        weatherCity.setText(userLocation.city);
+//        weatherCity.setText(userLocation.city);
+//        weatherCity.setText(weatherViewModel.getCity());
+
 
         TextView weatherConditions = root.findViewById(R.id.weatherConditions);
+
+//        Weather userLocationWeather = weatherViewModel.getUserLocationWeather();
         weatherConditions.setText(userLocationWeather.conditions);
 
         TextView weatherTemperature = root.findViewById(R.id.temperature);
