@@ -1,8 +1,10 @@
 package com.example.lifestyleapp.ui.weather;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -28,32 +30,51 @@ public class WeatherViewModel extends AndroidViewModel {
     private String city;
 
 
-
     private String country;
     private Location userLocation;
-    private Weather userLocationWeather;
+    private MutableLiveData<Weather> userLocationWeather;
 
 
     public WeatherViewModel(@NonNull Application application) {
         super(application);
-        mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");
         loadData();
     }
 
 
-    void loadData(){
+    @SuppressLint("StaticFieldLeak")
+    void loadData() {
         SharedPreferences prefs = getApplication().getSharedPreferences(
                 "com.example.lifestyleapp", Context.MODE_PRIVATE);
-         city = prefs.getString("city",null);
-         country = prefs.getString("country",null);
-         userLocation = new Location(city, country);
-        try {
-            userLocationWeather = getWeather(userLocation);
-        } catch (IOException | JSONException e) {
-            userLocationWeather = new Weather("--",0);
-        }
+        city = prefs.getString("city", null);
+        country = prefs.getString("country", null);
+        userLocation = new Location(city, country);
+        
+        userLocationWeather = new MutableLiveData<>();
 
+        new AsyncTask<Location, Void, Weather>() {
+
+            @Override
+            protected Weather doInBackground(Location... locations) {
+                Location location = locations[0];
+
+                try {
+                    return getWeather(location);
+                } catch (IOException | JSONException e) {
+                    return new Weather("--", 0);
+                }
+            }
+
+
+            @Override
+            protected void onPostExecute(Weather weather) {
+                super.onPostExecute(weather);
+                try {
+                    userLocationWeather.setValue(weather);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }.execute(userLocation);
     }
 
     public LiveData<String> getText() {
@@ -63,12 +84,13 @@ public class WeatherViewModel extends AndroidViewModel {
     public MutableLiveData<String> getCity() {
         return new MutableLiveData<>(city);
     }
+
     public MutableLiveData<String> getCountry() {
         return new MutableLiveData<>(country);
     }
 
-    public MutableLiveData<Weather> getUserLocationWeather(){
-        return new MutableLiveData<>(userLocationWeather);
+    public MutableLiveData<Weather> getUserLocationWeather() {
+        return userLocationWeather;
     }
 
 
