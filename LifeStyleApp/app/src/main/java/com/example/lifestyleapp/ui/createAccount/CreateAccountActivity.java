@@ -1,30 +1,33 @@
-package com.example.lifestyleapp;
+package com.example.lifestyleapp.ui.createAccount;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.lifestyleapp.MainDrawerActivity;
+import com.example.lifestyleapp.R;
+import com.example.lifestyleapp.models.User;
+import com.example.lifestyleapp.ui.bmi.BMIViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
 public class CreateAccountActivity extends AppCompatActivity implements View.OnClickListener{
+    CreateAccountActivityViewModel model;
 
     String country, sex, username, email, password, confirm_pw, city;
     String dob = "";
@@ -42,6 +45,8 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
         getSupportActionBar().hide();
+
+        model = ViewModelProviders.of(this).get(CreateAccountActivityViewModel.class);
 
         et_username = findViewById(R.id.et_username);
         et_email = findViewById(R.id.et_email);
@@ -156,6 +161,19 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
         prefs.edit().putInt("height", height).apply();
         prefs.edit().putInt("weight", weight).apply();
         prefs.edit().putBoolean("LOGIN_KEY", true).apply();
+
+        User user = new User();
+        user.setName(username);
+        user.setSex(sex);
+
+        user.setDOB(dob);
+        user.setCity(city);
+        user.setCountry(country);
+        user.setHeight(height);
+        user.setWeight(weight);
+        user.setPassword(password);
+
+        model.init(this.getApplication(), user);
 
         this.startActivity(new Intent(this, MainDrawerActivity.class));
     }

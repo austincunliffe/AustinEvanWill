@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.lifestyleapp.ui.createAccount.CreateAccountActivity;
+
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
     private static final String LOGIN_KEY = "LOGIN_KEY";
