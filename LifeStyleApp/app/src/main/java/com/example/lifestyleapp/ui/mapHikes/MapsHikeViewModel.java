@@ -6,6 +6,7 @@
 //import android.content.pm.PackageManager;
 //import android.location.Location;
 //import android.location.LocationManager;
+//import android.os.StrictMode;
 //
 //import androidx.annotation.NonNull;
 //import androidx.core.app.ActivityCompat;
@@ -39,7 +40,7 @@
 //
 //    public MapsHikeViewModel(@NonNull Application application) throws IOException, JSONException {
 //        super(application);
-//        application.getClass()
+//        application.getClass();
 //        loadData();
 //    }
 //
@@ -153,13 +154,16 @@
 //    }
 //
 //    public Location getLastKnownLocation() {
+//        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+//        StrictMode.setThreadPolicy(policy);
+////        ActivityCompat.requestPermissions();
 //        LocationManager mLocationManager;
 //        mLocationManager = (LocationManager)getApplication().getSystemService(Context.LOCATION_SERVICE);
 //        List<String> providers = mLocationManager.getProviders(true);
 //        Location bestLocation = null;
 //
 //        if (ContextCompat.checkSelfPermission(getApplication(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplication(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            requestPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+//             requestPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 //
 //        }
 //
