@@ -26,10 +26,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class WeatherViewModel extends AndroidViewModel {
 
-    private MutableLiveData<String> mText;
     private String city;
-
-
     private String country;
     private Location userLocation;
     private MutableLiveData<Weather> userLocationWeather;
@@ -48,7 +45,7 @@ public class WeatherViewModel extends AndroidViewModel {
         city = prefs.getString("city", null);
         country = prefs.getString("country", null);
         userLocation = new Location(city, country);
-        
+
         userLocationWeather = new MutableLiveData<>();
 
         new AsyncTask<Location, Void, Weather>() {
@@ -75,10 +72,6 @@ public class WeatherViewModel extends AndroidViewModel {
                 }
             }
         }.execute(userLocation);
-    }
-
-    public LiveData<String> getText() {
-        return mText;
     }
 
     public MutableLiveData<String> getCity() {
