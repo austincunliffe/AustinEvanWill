@@ -53,9 +53,6 @@ public class WeatherFragment extends Fragment {
                 ViewModelProviders.of(this).get(WeatherViewModel.class);
         weatherViewModel.getUserLocationWeather().observe(getViewLifecycleOwner(), weatherObserver);
         weatherViewModel.getCity().observe(getViewLifecycleOwner(),locationObserver);
-
-
-
         return root;
     }
 

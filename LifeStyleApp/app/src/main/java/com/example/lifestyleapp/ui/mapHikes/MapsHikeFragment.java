@@ -19,9 +19,7 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.lifestyleapp.R;
@@ -44,10 +42,13 @@ public class MapsHikeFragment extends Fragment implements ActivityCompat.OnReque
 
     Location location;
     ArrayList<Trail> trailsNearBy;
+    boolean apiThreadCompleted;
+    SupportMapFragment mapFragment;
+
 
     MapsHikeViewModel model;
 
-    private OnMapReadyCallback callback = new OnMapReadyCallback() {
+    private OnMapReadyCallback callbackThreadStart = new OnMapReadyCallback() {
 
         /**
          * Manipulates the map once available.
@@ -60,19 +61,23 @@ public class MapsHikeFragment extends Fragment implements ActivityCompat.OnReque
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
-            try {
-                model.setUserLocation(location);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+        }
+    };
 
-            while (trailsNearBy == null) {
-                trailsNearBy = model.getTrails();
-            }
-//            ArrayList<Trail> trails = trailsNearBy.getValue();
+    private OnMapReadyCallback callbackThreadCompleted = new OnMapReadyCallback() {
 
+        /**
+         * Manipulates the map once available.
+         * This callback is triggered when the map is ready to be used.
+         * This is where we can add markers or lines, add listeners or move the camera.
+         * In this case, we just add a marker near Sydney, Australia.
+         * If Google Play services is not installed on the device, the user will be prompted to
+         * install it inside the SupportMapFragment. This method will only be triggered once the
+         * user has installed Google Play services and returned to the app.
+         */
+        @Override
+        public void onMapReady(GoogleMap googleMap) {
+            trailsNearBy = model.getTrails();
             for (Trail el : trailsNearBy) {
                 System.out.println("Name: " + el.name + " Lon: " + el.lon + " Lat: " + el.lat);
                 LatLng hike = new LatLng(el.lat, el.lon);
@@ -106,6 +111,14 @@ public class MapsHikeFragment extends Fragment implements ActivityCompat.OnReque
 
         model = ViewModelProviders.of(this).get(MapsHikeViewModel.class);
         location = getLastKnownLocation();
+        try {
+            model.setUserLocation(location);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        model.getThreadCompleted().observe(getViewLifecycleOwner(), apiThreadObserver);
 
         return inflater.inflate(R.layout.fragment_maps_hike, container, false);
     }
@@ -113,13 +126,24 @@ public class MapsHikeFragment extends Fragment implements ActivityCompat.OnReque
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        SupportMapFragment mapFragment =
-                (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-        if (mapFragment != null) {
-            mapFragment.getMapAsync(callback);
-        }
+        mapFragment =
 
+                (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        if (mapFragment == null) {
+            mapFragment.getMapAsync(callbackThreadStart);
+        }
     }
+
+
+    final Observer<Boolean> apiThreadObserver = new Observer<Boolean>() {
+        @Override
+        public void onChanged(Boolean aBoolean) {
+            apiThreadCompleted = aBoolean;
+            if (aBoolean) {
+                mapFragment.getMapAsync(callbackThreadCompleted);
+            }
+        }
+    };
 
 
     public Location getLastKnownLocation() {
