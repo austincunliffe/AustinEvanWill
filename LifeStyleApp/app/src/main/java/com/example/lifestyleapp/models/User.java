@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "user")
 public class User {
     @PrimaryKey(autoGenerate = true)
-    private int uid;
+    private long uid;
 
     @ColumnInfo(name = "name")
     private String name;
@@ -18,8 +18,8 @@ public class User {
     @ColumnInfo(name = "sex_idx")
     private int sex_idx;
 
-    @ColumnInfo(name = "dob")
-    private String dob;
+    @ColumnInfo(name = "birthday")
+    private String birthday;
 
     @ColumnInfo(name = "city")
     private String city;
@@ -39,8 +39,11 @@ public class User {
     @ColumnInfo(name = "password")
     private String password;
 
-    public int getUid() {return this.uid;}
-    public void setUid(int uid){this.uid = uid;}
+    @ColumnInfo(name = "profilePicFP")
+    private String profilePicFP;
+
+    public long getUid() {return this.uid;}
+    public void setUid(long uid){this.uid = uid;}
 
     public String getPassword() {return this.password;}
     public void setPassword(String password) {this.password = password;}
@@ -54,8 +57,8 @@ public class User {
     public int getSex_idx() {return this.sex_idx;}
     public void setSex_idx(int idx) {this.sex_idx = idx;}
 
-    public String getDOB() {return this.dob;}
-    public void setDOB(String dob) {this.dob = dob;}
+    public String getBirthday() {return this.birthday;}
+    public void setBirthday(String dob) {this.birthday = dob;}
 
     public String getCity() {return this.city;}
     public void setCity(String city) {this.city = city;}
@@ -71,4 +74,7 @@ public class User {
 
     public int getWeight() {return this.weight;}
     public void setWeight(int weight) {this.weight = weight;}
+
+    public String getProfilePicFP() {return this.profilePicFP;}
+    public void setProfilePicFP(String fp) {this.profilePicFP = fp;}
 }

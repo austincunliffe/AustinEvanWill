@@ -6,21 +6,17 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import java.util.List;
-
 @Dao
 public interface UserDao {
-    @Query("SELECT * FROM user")
-    List<User> getAll();
+    @Query("SELECT * FROM user WHERE uid = :uid LIMIT 1")
+    User getUser(long uid);
 
-    @Query("SELECT * FROM user WHERE name LIKE :name AND " +
+    @Query("SELECT COUNT(uid) FROM user WHERE name LIKE :name AND " +
             "password LIKE :password LIMIT 1")
-    User getByLogin(String name, String password);
-
-    @Query("SELECT * FROM ")
+    Integer getByLogin(String name, String password);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(User user);
+    long insert(User user);
 
     @Update
     public void updateUser(User user);

@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelStoreOwner;
 
 
 import com.example.lifestyleapp.R;
+import com.example.lifestyleapp.models.BMI;
 import com.example.lifestyleapp.ui.userProfile.UserProfileViewModel;
 
 import java.math.BigDecimal;

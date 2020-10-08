@@ -11,6 +11,10 @@ public class CreateAccountActivityViewModel extends ViewModel {
 
     public void init(Application application, User user){
         UserRepo = UserRepository.getInstance(application);
-        UserRepo.createUser(user);
+        UserRepo.insert(user);
+    }
+
+    public boolean checkFields() {
+        return false;
     }
 }

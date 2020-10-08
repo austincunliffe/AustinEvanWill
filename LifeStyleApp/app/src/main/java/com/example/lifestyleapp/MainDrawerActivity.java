@@ -55,6 +55,7 @@ public class MainDrawerActivity extends AppCompatActivity {
     private ImageView navImage;
     private ImageView profileImage;
     private  View navView;
+    public static Long userPrimaryKey;
 
 
     @SuppressLint("CommitPrefEdits")

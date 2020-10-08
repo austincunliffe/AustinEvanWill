@@ -146,29 +146,15 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
             return;
         }
 
-        SharedPreferences prefs = this.getSharedPreferences(
-                "com.example.lifestyleapp", Context.MODE_PRIVATE);
-
-        prefs.edit().putString("username", username).apply();
-        prefs.edit().putString("email", email).apply();
-        prefs.edit().putString("password", password).apply();
-        prefs.edit().putString("dob", dob).apply();
-        prefs.edit().putString("country", country).apply();
-        prefs.edit().putInt("country_idx", country_idx).apply();
-        prefs.edit().putString("city", city).apply();
-        prefs.edit().putString("sex", sex).apply();
-        prefs.edit().putInt("sex_idx", sex_idx).apply();
-        prefs.edit().putInt("height", height).apply();
-        prefs.edit().putInt("weight", weight).apply();
-        prefs.edit().putBoolean("LOGIN_KEY", true).apply();
-
         User user = new User();
+
         user.setName(username);
         user.setSex(sex);
-
-        user.setDOB(dob);
+        user.setSex_idx(sex_idx);
+        user.setBirthday(dob);
         user.setCity(city);
         user.setCountry(country);
+        user.setCountry_idx(country_idx);
         user.setHeight(height);
         user.setWeight(weight);
         user.setPassword(password);
