@@ -73,19 +73,6 @@ public class UserProfileViewModel extends AndroidViewModel {
         return directory.getAbsolutePath();
     }
 
-//    public Bitmap loadProfilePic(String fp){
-//        try {
-//            File f=new File(fp, "profile.jpg");
-//            return BitmapFactory.decodeStream(new FileInputStream(f));
-////            mIvPic = this.getActivity().findViewById(R.id.imageView_profile);
-////            mIvPic.setImageBitmap(b);
-//        }
-//        catch (FileNotFoundException e)
-//        {
-//            e.printStackTrace();
-//        }
-//    }
-
     public Bitmap getProfilePic(){
         return mRepo.getProfilePic();
     }

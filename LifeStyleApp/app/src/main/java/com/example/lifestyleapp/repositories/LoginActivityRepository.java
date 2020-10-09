@@ -23,14 +23,19 @@ public class LoginActivityRepository {
         mUserDao = db.userDao();
     }
 
-    public void verifyLogin(String name, String password) {
+    public MutableLiveData<Boolean> getData(String name, String password) {
+        verifyLogin(name, password);
+        return userVerified;
+    }
+
+    private void verifyLogin(String name, String password) {
         String[] credentials = new String[] {name, password};
         new verifyLoginAsyncTask(this).execute(credentials);
     }
 
     private static class verifyLoginAsyncTask extends AsyncTask<String, Void, Integer> {
         private WeakReference<LoginActivityRepository> mRepoWReference;
-//
+
         verifyLoginAsyncTask(LoginActivityRepository repo)
         {
             mRepoWReference = new WeakReference<LoginActivityRepository>(repo);
@@ -46,9 +51,11 @@ public class LoginActivityRepository {
         protected void onPostExecute(Integer userCount){
             LoginActivityRepository localWRvar = mRepoWReference.get();
             if(userCount < 1){
+                System.out.println("USER COUNT: " + userCount);
                 localWRvar.userVerified.setValue(false);
+            } else {
+                localWRvar.userVerified.setValue(true);
             }
-            localWRvar.userVerified.setValue(true);
         }
     }
 }

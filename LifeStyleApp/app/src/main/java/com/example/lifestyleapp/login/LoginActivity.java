@@ -17,7 +17,9 @@ import android.widget.Toast;
 
 import com.example.lifestyleapp.MainDrawerActivity;
 import com.example.lifestyleapp.R;
+import com.example.lifestyleapp.models.AppDatabase;
 import com.example.lifestyleapp.models.User;
+import com.example.lifestyleapp.models.UserDao;
 import com.example.lifestyleapp.ui.createAccount.CreateAccountActivity;
 import com.example.lifestyleapp.ui.userProfile.UserProfileViewModel;
 
@@ -26,6 +28,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //    private static final String LOGIN_KEY = "LOGIN_KEY";
 
     private LoginActivityViewModel LoginActivityViewModel;
+    UserDao userDao;
 
     EditText et_uname, et_pw;
     String un, user_pw;
@@ -96,6 +99,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         switch(v.getId()){
             case R.id.signUp:{
                 this.startActivity(new Intent(this, CreateAccountActivity.class));
+
                 break;
             }
 
@@ -104,6 +108,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 user_pw = et_pw.getText().toString();
 
                 LoginActivityViewModel.verifyLogin(un, user_pw);
+
                 break;
             }
         }

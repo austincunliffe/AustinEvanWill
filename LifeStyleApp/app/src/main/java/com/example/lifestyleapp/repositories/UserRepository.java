@@ -35,37 +35,6 @@ public class UserRepository {
         return instance;
     }
 
-//    public MutableLiveData<User> loginUser(String name, String password){
-//        // Get info from DB and set the member variable data above to it.
-//        user = mUserDao.getByLogin(name, password);
-//
-//        MutableLiveData<User> userData = new MutableLiveData<>();
-//        userData.setValue(user);
-//
-//        return userData;
-//    }
-
-//    public void createUser(final User user){
-//
-//        final long[] primary_key = new long[1];
-//        Executor myExecutor = Executors.newSingleThreadExecutor();
-//        myExecutor.execute(new Runnable() {
-//            @Override
-//            public void run() {
-//                primary_key[0] = mUserDao.insert(user);
-//            }
-//        });
-//
-//        MutableLiveData<User> userData = new MutableLiveData<>();
-//        userData.setValue(user);
-//
-//        // Put the current user primary key into shared preferences so we can use it to query later.
-//        SharedPreferences prefs = context.getSharedPreferences(
-//                "com.example.lifestyleapp", Context.MODE_PRIVATE);
-//        System.out.println("PKUser = " + primary_key[0]);
-//        prefs.edit().putLong("pk_user", primary_key[0]).apply();
-//    }
-
     public void insert(User user){
         new insertAsyncTask(mUserDao).execute(user);
     }

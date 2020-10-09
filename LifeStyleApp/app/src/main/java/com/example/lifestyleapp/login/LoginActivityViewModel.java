@@ -5,10 +5,7 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-
-import com.example.lifestyleapp.models.User;
 import com.example.lifestyleapp.repositories.LoginActivityRepository;
-import com.example.lifestyleapp.repositories.UserProfileRepository;
 
 public class LoginActivityViewModel extends AndroidViewModel {
 
@@ -18,13 +15,14 @@ public class LoginActivityViewModel extends AndroidViewModel {
     public LoginActivityViewModel(Application application){
         super(application);
         mRepo = new LoginActivityRepository(application);
+        userVerified = mRepo.getData("RICKY", "BOBBY");
     }
 
     public void verifyLogin(String name, String password) {
-        mRepo.verifyLogin(name, password);
+        userVerified = mRepo.getData(name, password);
     }
 
-    public MutableLiveData<Boolean> isVerified(){
+    public LiveData<Boolean> isVerified(){
         return userVerified;
     }
 }

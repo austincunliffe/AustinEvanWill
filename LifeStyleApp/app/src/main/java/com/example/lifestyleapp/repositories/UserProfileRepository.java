@@ -67,12 +67,6 @@ public class UserProfileRepository {
     public Bitmap getProfilePic(){ return profilePic; }
 
     private static class getProfilePicAsyncTask extends AsyncTask<String, Void, Bitmap>{
-//        private WeakReference<UserProfileRepository> mRepoWReference;
-//
-//        getProfilePicAsyncTask(Bitmap pic)
-//        {
-//            mRepoWReference = new WeakReference<UserProfileRepository>(pic);
-//        }
 
         @Override
         protected Bitmap doInBackground(String... strings) {
@@ -80,8 +74,6 @@ public class UserProfileRepository {
             try {
                 File f = new File(strings[0], "profile.jpg");
                 picBit = BitmapFactory.decodeStream(new FileInputStream(f));
-//            mIvPic = this.getActivity().findViewById(R.id.imageView_profile);
-//            mIvPic.setImageBitmap(b);
             }
             catch (FileNotFoundException e)
             {
@@ -92,7 +84,6 @@ public class UserProfileRepository {
 
         @Override
         protected void onPostExecute(Bitmap returnedPic){
-//            UserProfileRepository localWRvar = mRepoWReference.get();
             profilePic = returnedPic;
         }
     }
