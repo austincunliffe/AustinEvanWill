@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.MutableLiveData;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,17 +29,29 @@ public class MapsHikeViewModel extends AndroidViewModel {
     double lon;
     ArrayList<Trail> trails;
 
+    MutableLiveData<Boolean> threadCompleted;
+
 
     public MapsHikeViewModel(@NonNull Application application) throws IOException, JSONException {
         super(application);
+        threadCompleted = new MutableLiveData<>();
+
     }
 
     @SuppressLint("StaticFieldLeak")
     void setUserLocation(Location location) throws IOException, JSONException {
         lat = location.getLatitude();
         lon = location.getLongitude();
-
         new AsyncTask<Location, Void, ArrayList<Trail>>() {
+
+            // live data boolean
+            // preexecute set live data to be false
+
+            @Override
+            protected void onPreExecute(){
+                threadCompleted.setValue(false);
+            }
+
             @Override
             protected ArrayList<Trail> doInBackground(Location... locations) {
                 Location location = locations[0];
@@ -60,6 +73,7 @@ public class MapsHikeViewModel extends AndroidViewModel {
                 for (Trail el : nearbyHikes) {
                 }
                 trails = nearbyHikes;
+                threadCompleted.setValue(true);
             }
         }.execute(location);
     }
@@ -76,6 +90,9 @@ public class MapsHikeViewModel extends AndroidViewModel {
         return lon;
     }
 
+    public MutableLiveData<Boolean> getThreadCompleted() {
+        return threadCompleted;
+    }
 
     private URL buildHikingProjectAPIURL(double lat, double lon) throws MalformedURLException {
 
