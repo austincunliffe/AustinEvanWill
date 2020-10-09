@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelStoreOwner;
 
 
 import com.example.lifestyleapp.R;
+import com.example.lifestyleapp.models.BMI;
 import com.example.lifestyleapp.ui.userProfile.UserProfileViewModel;
 
 import java.math.BigDecimal;
@@ -38,11 +39,12 @@ class BMIFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_b_m_i, container, false);
 
-        model = new BMIViewModel(this.requireActivity().getApplication());
-        String userBMIString = model.getBMI();
+
+        model = ViewModelProviders.of(this).get(BMIViewModel.class);
+//        String userBMIString = model.getBMI();
 
         TextView mTvBMI = root.findViewById(R.id.bmi);
-        mTvBMI.setText(userBMIString);
+//        mTvBMI.setText(userBMIString);
 
         return root;
     }

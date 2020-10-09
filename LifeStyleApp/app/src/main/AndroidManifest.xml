@@ -33,9 +33,9 @@
             android:name=".MainDrawerActivity"
             android:label="@string/title_activity_main_drawer"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".CreateAccountActivity" />
+        <activity android:name=".ui.createAccount.CreateAccountActivity" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".login.LoginActivity"
             android:excludeFromRecents="true"
             android:label="@string/title_activity_login"
             android:noHistory="true">

@@ -4,7 +4,6 @@ package com.example.lifestyleapp;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -13,6 +12,8 @@ import androidx.test.espresso.ViewInteraction;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
+
+import com.example.lifestyleapp.login.LoginActivity;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
