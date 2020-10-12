@@ -47,7 +47,6 @@ public class FitnessGoal extends Fragment implements AdapterView.OnItemSelectedL
     int weightChange;
     int userWeight;
     int userHeight;
-    int testAge = 26;
     TextView tvBMR;
     TextView tvCalorieGoal;
     double BMR;
@@ -275,18 +274,5 @@ public class FitnessGoal extends Fragment implements AdapterView.OnItemSelectedL
             String calorieGoal = getCaloriesToEat(BMR);
             tvCalorieGoal.setText(("You need to eat " + calorieGoal + " calories/day to gain your goal lbs/week"));
         }
-
-        //testing
-        //weightChange = picker_weight_change.getValue();
-        System.out.println("Goal Saved");
-        System.out.println("test");
-        System.out.println(userAge);
-        System.out.println(userWeight);
-        System.out.println(userHeight);
-        System.out.println(userGender);
-        System.out.println(BMR);
-        System.out.println(activeOrSedentary);
-        System.out.println(weightChange);
-
     }
 }

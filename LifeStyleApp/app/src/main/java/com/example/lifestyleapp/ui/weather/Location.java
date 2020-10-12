@@ -1,6 +1,6 @@
 package com.example.lifestyleapp.ui.weather;
 
-class Location {
+public class Location {
     String city;
     String country;
 

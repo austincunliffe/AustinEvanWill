@@ -1,6 +1,9 @@
 package com.example.lifestyleapp;
 
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -15,12 +18,15 @@ import androidx.test.espresso.action.ScrollToAction;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
+import androidx.test.rule.GrantPermissionRule;
 import androidx.test.runner.AndroidJUnit4;
+
+import com.example.lifestyleapp.login.LoginActivity;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.hamcrest.core.IsInstanceOf;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,7 +36,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.replaceText;
@@ -44,6 +49,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import static androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.is;
@@ -52,11 +58,31 @@ import static org.hamcrest.Matchers.is;
 @RunWith(AndroidJUnit4.class)
 public class UserProfileTest {
 
+    SharedPreferences pref;
+
     @Rule
-    public ActivityTestRule<LoginActivity> mActivityTestRule = new ActivityTestRule<>(LoginActivity.class);
+    public ActivityTestRule<LoginActivity> mActivityTestRule = new ActivityTestRule<>(
+            LoginActivity.class,true, false
+    );
+
+    @Rule
+    public GrantPermissionRule mGrantPermissionRule =
+            GrantPermissionRule.grant(
+                    "android.permission.ACCESS_FINE_LOCATION");
+
+    @Before
+    public void setUp() {
+        Context targetContext = getInstrumentation().getTargetContext();
+        pref = targetContext.getSharedPreferences("com.example.lifestyleapp",
+                Context.MODE_PRIVATE);
+    }
 
     @Test
-    public void userProfileTest2() {
+    public void userProfileTest() {
+
+        pref.edit().putBoolean("LOGIN_KEY", false).apply();
+
+        mActivityTestRule.launchActivity(new Intent());
 
         DateFormat df = new SimpleDateFormat("MM/dd/yy");
         Date dateobj = new Date();
@@ -159,29 +185,7 @@ public class UserProfileTest {
                         isDisplayed()));
         appCompatEditText7.perform(replaceText("Tahoe"), closeSoftKeyboard());
 
-
-//        ViewInteraction appCompatButton3 = onView(
-//                allOf(withId(R.id.bt_signUp), withText("Sign Up"),
-//                        childAtPosition(
-//                                allOf(withId(R.id.username),
-//                                        childAtPosition(
-//                                                withId(R.id.nsv_inputs),
-//                                                0)),
-//                                22),
-//                        isDisplayed()));
-//        appCompatButton3.perform(click());
-
         onView(withId(R.id.bt_signUp)).perform(customScrollTo, click());
-
-
-//        // Added a sleep statement to match the app's execution delay.
-//        // The recommended way to handle such scenarios is to use Espresso idling resources:
-//        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
-//        try {
-//            Thread.sleep(700);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
 
         ViewInteraction appCompatImageButton = onView(
                 allOf(withContentDescription("Open navigation drawer"),

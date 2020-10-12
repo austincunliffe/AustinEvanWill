@@ -5,15 +5,22 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.Menu;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.lifestyleapp.ui.mapHikes.MapsHikeFragment;
+import com.example.lifestyleapp.ui.userProfile.UserProfileFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.Nullable;
@@ -29,12 +36,27 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import org.w3c.dom.Text;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.prefs.Preferences;
 
 public class MainDrawerActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    private SharedPreferences pref;
+    private TextView navEmail;
+    private TextView navUsername;
+    private ImageView navImage;
+    private ImageView profileImage;
+    private  View navView;
+    public static Long userPrimaryKey;
+
 
     @SuppressLint("CommitPrefEdits")
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -57,13 +79,60 @@ public class MainDrawerActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+        pref = this.getSharedPreferences("com.example.lifestyleapp",
+                Context.MODE_PRIVATE);
+
+        setNavHeaderData(navigationView);
+
         Location current = getLastKnownLocation();
-        SharedPreferences prefs = this.getSharedPreferences(
-                "com.example.lifestyleapp", Context.MODE_PRIVATE);
-        prefs.edit().putString("lat",String.valueOf(current.getLatitude()));
-        prefs.edit().putString("long",String.valueOf(current.getLongitude()));
+
+        pref.edit().putString("lat", String.valueOf(current.getLatitude()));
+        pref.edit().putString("long", String.valueOf(current.getLongitude()));
     }
 
+
+    void setNavHeaderData(NavigationView navigationView){
+        navView = navigationView.getHeaderView(0);
+        TextView nav_name = (TextView) navView.findViewById(R.id.navUsername);
+        TextView nav_email =(TextView) navView.findViewById(R.id.navEmail);
+
+
+
+
+        final String picPath = pref.getString("profile_pic", null);
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                loadProfilePic(picPath);
+            }
+        });
+
+        String username = pref.getString("username", null);
+        String email = pref.getString("email", null);
+
+        nav_name.setText(username);
+        nav_email.setText(email);
+
+    }
+    public void loadProfilePic(String path)
+    {
+        try {
+            File f=new File(path, "profile.jpg");
+            Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+            ImageView nav_pic =(ImageView) navView.findViewById(R.id.navPic);
+            nav_pic.setImageBitmap(b);
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+    @SuppressLint("ResourceType")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -81,7 +150,7 @@ public class MainDrawerActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.M)
     public Location getLastKnownLocation() {
         LocationManager mLocationManager;
-        mLocationManager = (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
+        mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         List<String> providers = mLocationManager.getProviders(true);
         Location bestLocation = null;
 
@@ -98,11 +167,12 @@ public class MainDrawerActivity extends AppCompatActivity {
                 bestLocation = l;
             }
         }
-        if (bestLocation == null){
+        if (bestLocation == null) {
             bestLocation = new Location("Default");
             bestLocation.setLongitude(-75);
             bestLocation.setLatitude(39);
         }
         return bestLocation;
     }
+
 }
