@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.os.AsyncTask;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.lifestyleapp.MainDrawerActivity;
@@ -21,6 +22,7 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.ref.WeakReference;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -29,10 +31,10 @@ import javax.net.ssl.HttpsURLConnection;
 public class WeatherRepository {
 
     private static WeatherRepository instance;
-    private User user;
+    private MutableLiveData<User> mUser = new MutableLiveData<>();
     private String city;
-    private UserDao mUserDao;
-    private MutableLiveData<Weather> userLocationWeather;
+    private static UserDao mUserDao;
+    private static MutableLiveData<Weather> userLocationWeather;
 
     public WeatherRepository(Application application){
         AppDatabase db = AppDatabase.getInstance(application);
@@ -40,47 +42,100 @@ public class WeatherRepository {
         loadData();
     }
 
+    public MutableLiveData<User> getUser(){
+        return mUser;
+    }
+
     public MutableLiveData<Weather> getUserLocationWeather(){
         return userLocationWeather;
     }
 
     public MutableLiveData<String> getUserCity(){
-        MutableLiveData<String> city = new MutableLiveData<>();
-        city.setValue(this.city);
-        return city;
+        return new MutableLiveData<>(city);
+    }
+
+    private static class getUserAsyncTask extends AsyncTask<Long, Void, User>{
+        private WeakReference<WeatherRepository> mRepoWReference;
+
+        getUserAsyncTask(WeatherRepository repo)
+        {
+            mRepoWReference = new WeakReference<WeatherRepository>(repo);
+        }
+
+        @Override
+        protected User doInBackground(Long... longs) {
+            return mUserDao.getUser(longs[0]);
+        }
+
+        @SuppressLint("StaticFieldLeak")
+        @Override
+        protected void onPostExecute(User returnedUser){
+            WeatherRepository localWRvar = mRepoWReference.get();
+            localWRvar.mUser.setValue(returnedUser);
+            String city = returnedUser.getCity();
+            localWRvar.city = returnedUser.getCity();
+
+
+            new AsyncTask<String, Void, Weather>() {
+
+                @Override
+                protected Weather doInBackground(String ... strings) {
+                    String  city = strings[0];
+
+                    try {
+                        return getWeather(city);
+                    } catch (IOException | JSONException e) {
+                        return new Weather("--", 0);
+                    }
+                }
+
+
+                @Override
+                protected void onPostExecute(Weather weather) {
+                    super.onPostExecute(weather);
+                    try {
+                       userLocationWeather.setValue(weather);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }.execute(city);
+        }
     }
 
     @SuppressLint("StaticFieldLeak")
     void loadData() {
         userLocationWeather = new MutableLiveData<>();
-
-        user = mUserDao.getUser(MainDrawerActivity.userPrimaryKey);
-        city =  user.getCity();
-
-        new AsyncTask<String, Void, Weather>() {
-
-            @Override
-            protected Weather doInBackground(String ... strings) {
-                String  city = strings[0];
-
-                try {
-                    return getWeather(city);
-                } catch (IOException | JSONException e) {
-                    return new Weather("--", 0);
-                }
-            }
+        new getUserAsyncTask(this).execute(MainDrawerActivity.userPrimaryKey);
+//        user = mUserDao.getUser(MainDrawerActivity.userPrimaryKey);
+//        city =  user.getCity();
 
 
-            @Override
-            protected void onPostExecute(Weather weather) {
-                super.onPostExecute(weather);
-                try {
-                    userLocationWeather.setValue(weather);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }.execute(city);
+
+//        new AsyncTask<String, Void, Weather>() {
+//
+//            @Override
+//            protected Weather doInBackground(String ... strings) {
+//                String  city = strings[0];
+//
+//                try {
+//                    return getWeather(city);
+//                } catch (IOException | JSONException e) {
+//                    return new Weather("--", 0);
+//                }
+//            }
+//
+//
+//            @Override
+//            protected void onPostExecute(Weather weather) {
+//                super.onPostExecute(weather);
+//                try {
+//                    userLocationWeather.setValue(weather);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }.execute(city);
     }
 
     private static URL buildOpenWeatherAPIURL(String cityName) throws MalformedURLException {

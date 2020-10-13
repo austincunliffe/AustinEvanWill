@@ -21,12 +21,17 @@ public class BMIViewModel extends ViewModel {
     private MutableLiveData<BMI> mBMI;
     private BMIRepository BMIRepo;
 
-    public void init(){
-        if(mBMI != null){
-            return;
-        }
+
+//    public void init(){
+//        if(mBMI != null){
+//            return;
+//        }
+//        BMIRepo = BMIRepository.getInstance();
+//        mBMI = BMIRepo.getBMI();
+//    }
+
+    BMIViewModel(){
         BMIRepo = BMIRepository.getInstance();
-        mBMI = BMIRepo.getBMI();
     }
 
     public LiveData<BMI> getBMI(){
