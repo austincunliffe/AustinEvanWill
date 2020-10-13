@@ -5,7 +5,7 @@ public class Trail {
     float lon;
     float lat;
 
-    Trail(String name, float lon, float lat){
+    public Trail(String name, float lon, float lat){
         this.name = name;
         this.lat =lat;
         this.lon = lon;

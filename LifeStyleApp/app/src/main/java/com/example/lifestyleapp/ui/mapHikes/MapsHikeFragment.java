@@ -86,7 +86,9 @@ public class MapsHikeFragment extends Fragment implements ActivityCompat.OnReque
             }
 
 
-            LatLng myLocation = new LatLng(model.getLat(), model.getLon());
+//            LatLng myLocation = new LatLng(model.getLat(), model.getLon());
+            LatLng myLocation = new LatLng(location.getLatitude(), location.getLongitude());
+
 
             googleMap.addMarker(new
 
@@ -95,7 +97,7 @@ public class MapsHikeFragment extends Fragment implements ActivityCompat.OnReque
                     position(myLocation).
 
                     title("Current Location"));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation,10));
         }
     };
 
