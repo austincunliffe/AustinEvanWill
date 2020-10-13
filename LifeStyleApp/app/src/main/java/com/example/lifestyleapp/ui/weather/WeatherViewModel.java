@@ -55,6 +55,7 @@ public class WeatherViewModel extends AndroidViewModel {
 //
 //    };
 
+
     public MutableLiveData<String> getCity() {
         return city;
     }

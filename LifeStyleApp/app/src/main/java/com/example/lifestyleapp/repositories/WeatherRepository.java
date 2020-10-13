@@ -30,35 +30,33 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class WeatherRepository {
 
-    private static String city;
+    private MutableLiveData<String> city = new MutableLiveData<>();
     private MutableLiveData<User> mUser = new MutableLiveData<>();
     private static UserDao mUserDao;
     private static MutableLiveData<Weather> userLocationWeather;
 
-    public WeatherRepository(Application application){
+    public WeatherRepository(Application application) {
         AppDatabase db = AppDatabase.getInstance(application);
         mUserDao = db.userDao();
         loadData();
     }
 
-    public MutableLiveData<User> getUser(){
+    public MutableLiveData<User> getUser() {
         return mUser;
     }
 
-    public MutableLiveData<Weather> getUserLocationWeather(){
+    public MutableLiveData<Weather> getUserLocationWeather() {
         return userLocationWeather;
     }
 
-    public MutableLiveData<String> getUserCity(){
-//        String string
-        return new MutableLiveData<>();
+    public MutableLiveData<String> getUserCity() {
+        return city;
     }
 
-    private static class getUserAsyncTask extends AsyncTask<Long, Void, User>{
+    private static class getUserAsyncTask extends AsyncTask<Long, Void, User> {
         private WeakReference<WeatherRepository> mRepoWReference;
 
-        getUserAsyncTask(WeatherRepository repo)
-        {
+        getUserAsyncTask(WeatherRepository repo) {
             mRepoWReference = new WeakReference<WeatherRepository>(repo);
         }
 
@@ -69,18 +67,21 @@ public class WeatherRepository {
 
         @SuppressLint("StaticFieldLeak")
         @Override
-        protected void onPostExecute(User returnedUser){
+        protected void onPostExecute(User returnedUser) {
             WeatherRepository localWRvar = mRepoWReference.get();
             localWRvar.mUser.setValue(returnedUser);
             String city = returnedUser.getCity();
-            localWRvar.city = returnedUser.getCity();
+            System.out.println(city);
+            localWRvar.city.setValue(returnedUser.getCity());
+            System.out.println("-----------------------");
+            System.out.println(localWRvar.city.getValue());
 
 
             new AsyncTask<String, Void, Weather>() {
 
                 @Override
-                protected Weather doInBackground(String ... strings) {
-                    String  city = strings[0];
+                protected Weather doInBackground(String... strings) {
+                    String city = strings[0];
 
                     try {
                         return getWeather(city);
@@ -94,8 +95,10 @@ public class WeatherRepository {
                 protected void onPostExecute(Weather weather) {
                     super.onPostExecute(weather);
                     try {
-                       userLocationWeather.setValue(weather);
-
+                        System.out.println(weather.conditions);
+                        System.out.println(weather.temp);
+                        System.out.println("-----------------------------------------------------");
+                        userLocationWeather.setValue(weather);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -107,10 +110,10 @@ public class WeatherRepository {
     @SuppressLint("StaticFieldLeak")
     void loadData() {
         userLocationWeather = new MutableLiveData<>();
+        city = new MutableLiveData<>();
         new getUserAsyncTask(this).execute(MainDrawerActivity.userPrimaryKey);
 //        user = mUserDao.getUser(MainDrawerActivity.userPrimaryKey);
 //        city =  user.getCity();
-
 
 
 //        new AsyncTask<String, Void, Weather>() {
