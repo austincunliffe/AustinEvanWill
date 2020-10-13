@@ -97,7 +97,7 @@ public class MapsHikeFragment extends Fragment implements ActivityCompat.OnReque
                     position(myLocation).
 
                     title("Current Location"));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation,10));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation,9));
         }
     };
 
