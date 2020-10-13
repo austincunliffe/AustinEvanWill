@@ -22,72 +22,49 @@ import com.example.lifestyleapp.ui.weather.Weather;
 import java.math.BigDecimal;
 import java.math.MathContext;
 
+
 public class BMIViewModel extends AndroidViewModel {
 
-    private MutableLiveData<BMI> mBMI;
     private BMIRepository BMIRepo;
-    private MutableLiveData<Integer> height;
-    private MutableLiveData<Integer> weight;
     private MutableLiveData<String> userBMIString;
 
-
-
-//    public void init(){
-//        if(mBMI != null){
-//            return;
-//        }
-//        BMIRepo = BMIRepository.getInstance();
-//        mBMI = BMIRepo.getBMI();
-//    }
-
-    BMIViewModel(@NonNull Application application){
+    public BMIViewModel(@NonNull Application application) {
         super(application);
+
+        userBMIString = new MutableLiveData<>();
         BMIRepo = new BMIRepository(application);
-        loadUserData(application);
-//        height = BMIRepo.getHeight();
-//        weight = BMIRepo.getWeight();
+        BMIRepo.getBMI().observeForever(bmiObserver);
     }
 
-    public LiveData<String> getBMI(){
+    public LiveData<String> getBMI() {
 
         return userBMIString;
-    }
-
-//    private Application application;
-//
-//    String userBMIString;
-//
-//
-//    BMIViewModel(Application application) {
-//        this.application = application;
-//        loadUserData();
-//    }
-//
-    void loadUserData(Application application) {
-        BMIRepo = new BMIRepository(application);
-//        height = BMIRepo.getHeight();
-//        weight = BMIRepo.getWeight();
-        BMIRepo.getBMI().observeForever(bmiObserver);
-//
-//        double userBMI = calculateBMI(weight.getValue(), height.getValue());
-//
-//        userBMIString = formatBMI(userBMI);
-//        System.out.println(userBMIString);
     }
 
     Observer<BMI> bmiObserver = new Observer<BMI>() {
         @Override
         public void onChanged(BMI bmi) {
-
+            System.out.println(bmi.getHeight());
+            System.out.println(bmi.getWeight());
             double userBMI = calculateBMI(bmi.getWeight(), bmi.getHeight());
-            userBMIString.setValue( formatBMI(userBMI));
+            if (userBMI == 0) {
+                userBMIString.setValue("--");
+            } else {
+                userBMIString.setValue(formatBMI(userBMI));
+            }
         }
     };
 
 
     public static double calculateBMI(int userWeight, int userHeight) {
         // this is the formula for calculating BMI in imperial units
-        double bmi = (703 * (userWeight / Math.pow(userHeight, 2)));
+        double bmi;
+        if (userHeight == 0 || userWeight == 0) {
+            bmi = 0;
+        } else {
+            bmi = (703 * (userWeight / Math.pow(userHeight, 2)));
+        }
+        System.out.println("bmi " + bmi);
         return bmi;
     }
 
@@ -98,10 +75,6 @@ public class BMIViewModel extends AndroidViewModel {
         double roundedUserBMI = bd.doubleValue();
         return Double.toString(roundedUserBMI);
     }
-
-//    public String getBMI() {
-//        return userBMIString;
-//    }
 }
 
 

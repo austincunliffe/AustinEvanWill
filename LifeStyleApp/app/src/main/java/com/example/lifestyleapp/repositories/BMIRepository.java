@@ -20,12 +20,10 @@ import java.lang.ref.WeakReference;
 
 public class BMIRepository {
 
-    private MutableLiveData<User> mUser = new MutableLiveData<>();
+    private MutableLiveData<User> mUser;
     private static UserDao mUserDao;
     private BMI bmi;
     private MutableLiveData<BMI> BMIData;
-    private MutableLiveData<Integer> height;
-    private MutableLiveData<Integer> weight;
 
 
     public BMIRepository(Application application) {
@@ -35,25 +33,16 @@ public class BMIRepository {
     }
 
     void loadData() {
-        new BMIRepository.getUserAsyncTask(this).execute(MainDrawerActivity.userPrimaryKey);
+        BMIData = new MutableLiveData<>();
+        mUser = new MutableLiveData<>();
+        bmi = new BMI(0, 0);
+        BMIData.setValue(bmi);
+        new getUserAsyncTask(this).execute(MainDrawerActivity.userPrimaryKey);
     }
 
     public MutableLiveData<BMI> getBMI() {
-        // Get info from DB and set the member variable data above to it.
-
-        MutableLiveData<BMI> BMIdata = new MutableLiveData<>();
-        BMIdata.setValue(bmi);
-        return BMIdata;
+        return BMIData;
     }
-
-//
-//    public MutableLiveData<Integer> getHeight() {
-//        return weight;
-//    }
-//
-//    public MutableLiveData<Integer> getWeight() {
-//        return height;
-//    }
 
     private static class getUserAsyncTask extends AsyncTask<Long, Void, User> {
         private WeakReference<BMIRepository> mRepoWReference;
@@ -72,10 +61,8 @@ public class BMIRepository {
         protected void onPostExecute(User returnedUser) {
             BMIRepository localWRvar = mRepoWReference.get();
             localWRvar.mUser.setValue(returnedUser);
-            localWRvar.bmi.setHeight(returnedUser.getHeight());
-            localWRvar.bmi.setWeight(returnedUser.getWeight());
-//            localWRvar.height.setValue(returnedUser.getHeight());
-//            localWRvar.weight.setValue(returnedUser.getWeight());
+            System.out.println(returnedUser.getHeight());
+            localWRvar.BMIData.setValue(new BMI(returnedUser.getHeight(), returnedUser.getWeight()));
         }
     }
 }
