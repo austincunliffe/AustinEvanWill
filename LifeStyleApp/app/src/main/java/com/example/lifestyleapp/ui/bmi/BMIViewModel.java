@@ -6,20 +6,30 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
 import com.example.lifestyleapp.models.BMI;
 import com.example.lifestyleapp.repositories.BMIRepository;
+import com.example.lifestyleapp.repositories.WeatherRepository;
+import com.example.lifestyleapp.ui.weather.Weather;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 
-public class BMIViewModel extends ViewModel {
+public class BMIViewModel extends AndroidViewModel {
 
     private MutableLiveData<BMI> mBMI;
     private BMIRepository BMIRepo;
+    private MutableLiveData<Integer> height;
+    private MutableLiveData<Integer> weight;
+    private MutableLiveData<String> userBMIString;
+
 
 
 //    public void init(){
@@ -30,12 +40,17 @@ public class BMIViewModel extends ViewModel {
 //        mBMI = BMIRepo.getBMI();
 //    }
 
-    BMIViewModel(){
-        BMIRepo = BMIRepository.getInstance();
+    BMIViewModel(@NonNull Application application){
+        super(application);
+        BMIRepo = new BMIRepository(application);
+        loadUserData(application);
+//        height = BMIRepo.getHeight();
+//        weight = BMIRepo.getWeight();
     }
 
-    public LiveData<BMI> getBMI(){
-        return mBMI;
+    public LiveData<String> getBMI(){
+
+        return userBMIString;
     }
 
 //    private Application application;
@@ -48,35 +63,42 @@ public class BMIViewModel extends ViewModel {
 //        loadUserData();
 //    }
 //
-//    void loadUserData() {
+    void loadUserData(Application application) {
+        BMIRepo = new BMIRepository(application);
+//        height = BMIRepo.getHeight();
+//        weight = BMIRepo.getWeight();
+        BMIRepo.getBMI().observeForever(bmiObserver);
 //
-//        SharedPreferences pref = application.getSharedPreferences("com.example.lifestyleapp",
-//                Context.MODE_PRIVATE);
-//
-//        int mHeightInt = pref.getInt("height", 0);
-//        int mWeightInt = pref.getInt("weight", 0);
-//
-//        double userBMI = calculateBMI(mWeightInt, mHeightInt);
+//        double userBMI = calculateBMI(weight.getValue(), height.getValue());
 //
 //        userBMIString = formatBMI(userBMI);
 //        System.out.println(userBMIString);
-//    }
-//
-//
-//    public static double calculateBMI(int userWeight, int userHeight) {
-//        // this is the formula for calculating BMI in imperial units
-//        double bmi = (703 * (userWeight / Math.pow(userHeight, 2)));
-//        return bmi;
-//    }
-//
-//    public String formatBMI(Double userBMI) {
-//        //rounding the bmi to one 3 significant digits
-//        BigDecimal bd = new BigDecimal(userBMI);
-//        bd = bd.round(new MathContext(3));
-//        double roundedUserBMI = bd.doubleValue();
-//        return Double.toString(roundedUserBMI);
-//    }
-//
+    }
+
+    Observer<BMI> bmiObserver = new Observer<BMI>() {
+        @Override
+        public void onChanged(BMI bmi) {
+
+            double userBMI = calculateBMI(bmi.getWeight(), bmi.getHeight());
+            userBMIString.setValue( formatBMI(userBMI));
+        }
+    };
+
+
+    public static double calculateBMI(int userWeight, int userHeight) {
+        // this is the formula for calculating BMI in imperial units
+        double bmi = (703 * (userWeight / Math.pow(userHeight, 2)));
+        return bmi;
+    }
+
+    public String formatBMI(Double userBMI) {
+        //rounding the bmi to one 3 significant digits
+        BigDecimal bd = new BigDecimal(userBMI);
+        bd = bd.round(new MathContext(3));
+        double roundedUserBMI = bd.doubleValue();
+        return Double.toString(roundedUserBMI);
+    }
+
 //    public String getBMI() {
 //        return userBMIString;
 //    }

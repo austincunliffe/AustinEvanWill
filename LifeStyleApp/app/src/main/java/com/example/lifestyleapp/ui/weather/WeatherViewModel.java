@@ -33,11 +33,11 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class WeatherViewModel extends AndroidViewModel {
 
-    private MutableLiveData<String> city;
+    private MutableLiveData<String> city = new MutableLiveData<>();
     private MutableLiveData<Weather> userLocationWeather;
     private WeatherRepository weatherRepository;
     private UserProfileViewModel userProfileViewModel;
-    private MutableLiveData<User> user;
+//    private MutableLiveData<User> user;
 
 
     public WeatherViewModel(@NonNull Application application) {
@@ -46,7 +46,7 @@ public class WeatherViewModel extends AndroidViewModel {
 //        user = new MutableLiveData<>();
 //        user = userProfileViewModel.getData().observe(this,userObserver);
         weatherRepository = new WeatherRepository(application);
-        user = weatherRepository.getUser();
+//        user = weatherRepository.getUser();
         userLocationWeather = weatherRepository.getUserLocationWeather();
         city = weatherRepository.getUserCity();
     }

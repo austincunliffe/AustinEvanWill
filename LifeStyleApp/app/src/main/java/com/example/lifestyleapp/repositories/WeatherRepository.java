@@ -30,9 +30,8 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class WeatherRepository {
 
-    private static WeatherRepository instance;
+    private static String city;
     private MutableLiveData<User> mUser = new MutableLiveData<>();
-    private String city;
     private static UserDao mUserDao;
     private static MutableLiveData<Weather> userLocationWeather;
 
@@ -51,7 +50,8 @@ public class WeatherRepository {
     }
 
     public MutableLiveData<String> getUserCity(){
-        return new MutableLiveData<>(city);
+//        String string
+        return new MutableLiveData<>();
     }
 
     private static class getUserAsyncTask extends AsyncTask<Long, Void, User>{
@@ -95,6 +95,7 @@ public class WeatherRepository {
                     super.onPostExecute(weather);
                     try {
                        userLocationWeather.setValue(weather);
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

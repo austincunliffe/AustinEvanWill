@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.lifecycle.ViewModelStoreOwner;
@@ -25,11 +26,13 @@ import com.example.lifestyleapp.ui.userProfile.UserProfileViewModel;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.Objects;
+import java.util.Observable;
 
 public
 class BMIFragment extends Fragment {
 
     private BMIViewModel model;
+    private TextView mTvBMI;
 
     @Nullable
     @Override
@@ -39,13 +42,18 @@ class BMIFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_b_m_i, container, false);
 
-
+        mTvBMI = root.findViewById(R.id.bmi);
         model = ViewModelProviders.of(this).get(BMIViewModel.class);
-//        String userBMIString = model.getBMI();
-
-        TextView mTvBMI = root.findViewById(R.id.bmi);
-//        mTvBMI.setText(userBMIString);
+        model.getBMI().observe(getViewLifecycleOwner(), bmiObserver);
 
         return root;
     }
+
+    Observer<String> bmiObserver = new Observer<String>() {
+        @Override
+        public void onChanged(String s) {
+            mTvBMI.setText(s);
+        }
+    };
+
 }
