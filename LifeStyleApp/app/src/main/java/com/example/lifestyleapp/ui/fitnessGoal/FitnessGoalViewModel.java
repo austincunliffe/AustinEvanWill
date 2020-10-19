@@ -20,9 +20,6 @@ public class FitnessGoalViewModel extends AndroidViewModel {
     private MutableLiveData<User> fitnessGoalUser;
     private UserProfileRepository fitnessRepo;
 
-    private String stringTDEE;
-    private String stringCaloriesWeightGoal;
-
     public FitnessGoalViewModel(@NonNull Application application) {
         super(application);
         fitnessRepo = new UserProfileRepository(application);
@@ -32,32 +29,6 @@ public class FitnessGoalViewModel extends AndroidViewModel {
     public LiveData<User> getData(){
         return fitnessGoalUser;
     }
-
-//    Observer<User> fitnessGoalObserver = new Observer<User>() {
-//        @Override
-//        public void onChanged(User user) {
-//            String activeOrSedentary = user.getActiveOrSedentary();
-//            // getting the age
-//
-//            int userWeight = user.getWeight();
-//            int userHeight = user.getHeight();
-//            String userGender = user.getSex();
-//            int weightChange = user.getWeightChange();
-//            String goal = user.getGoal();
-//
-            // getting BMR
-//            double BMR = getBMRMenFormula(userAge, userWeight, userHeight, userGender);
-//            BigDecimal bdBMR = new BigDecimal(BMR);
-//            bdBMR = bdBMR.round(new MathContext(5));
-//            double roundedBMR = bdBMR.doubleValue();
-//            String stringBMR = Double.toString(roundedBMR);
-////
-//
-//
-//
-//
-//        }
-//    };
 
     public String getBMRString() {
         double BMR = getBMRFormula();
@@ -119,60 +90,27 @@ public class FitnessGoalViewModel extends AndroidViewModel {
 
     //getting how many calories user needs to eat to get lose/gain/maintain weight
     public String getCaloriesToEat(double userBMR, int weightChange, String goal, String userGender, String activeOrSedentary){
-//        weightChange = picker_weight_change.getValue();
 
         if (goal.equals("Maintain Weight") || weightChange == 0) {
-            //setting np value to 0 if we are maintaining weight
-//            picker_weight_change.setValue(0);
 
             Double tdee = getTDEE(userBMR, activeOrSedentary);
             BigDecimal bdTDEE = new BigDecimal(tdee);
             bdTDEE = bdTDEE.round(new MathContext(5));
             double roundedTDEE = bdTDEE.doubleValue();
-            return stringTDEE = Double.toString(roundedTDEE);
+            return Double.toString(roundedTDEE);
         } else if (goal.equals("Lose Weight")){
-            //setting a toast if weight loss or gain is greater than 2 pounds per week
-            if (weightChange > 2){
-//                Toast toast = Toast.makeText(getActivity(),
-//                        "Losing more than 2 pounds per week is extreme and can be dangerous. Please use caution.",
-//                        Toast.LENGTH_LONG);
-//
-//                toast.show();
-            }
+
             Double tdee = getTDEE(userBMR, activeOrSedentary);
             //the mayo clinic suggests that you need to add/subtract 500 calories per day to gain/lose
             //1 pound per week
             Double caloriesWeightGoal = tdee - 500*weightChange;
 
-            //setting a toast if daily calorie intake is less than 1200 or 1000
-            if (userGender.equals("Male") && caloriesWeightGoal < 1200){
-//                Toast toast = Toast.makeText(getActivity(),
-//                        "Eating less than 1200 calories/day for men can be dangerous.",
-//                        Toast.LENGTH_LONG);
-//
-//                toast.show();
-            }
-            else if (userGender.equals("Female") && caloriesWeightGoal < 1000){
-//                Toast toast = Toast.makeText(getActivity(),
-//                        "Eating less than 1000 calories/day for women can be dangerous.",
-//                        Toast.LENGTH_LONG);
-//
-//                toast.show();
-            }
-
             BigDecimal bdCaloriesWeightGoal = new BigDecimal(caloriesWeightGoal);
             bdCaloriesWeightGoal = bdCaloriesWeightGoal.round(new MathContext(5));
             double roundedCaloriesWeightGoal = bdCaloriesWeightGoal.doubleValue();
-            return stringCaloriesWeightGoal = Double.toString(roundedCaloriesWeightGoal);
+            return Double.toString(roundedCaloriesWeightGoal);
         } else if (goal.equals("Gain Weight")){
-            //setting a toast if weight loss or gain is greater than 2 pounds per week
-            if (weightChange > 2){
-//                Toast toast = Toast.makeText(getActivity(),
-//                        "Gaining more than 2 pounds per week is extreme and can be dangerous. Please use caution.",
-//                        Toast.LENGTH_LONG);
-//
-//                toast.show();
-            }
+
             Double tdee = getTDEE(userBMR, activeOrSedentary);
             //the mayo clinic suggests that you need to add/subtract 500 calories per day to gain/lose
             //1 pound per week
@@ -180,7 +118,32 @@ public class FitnessGoalViewModel extends AndroidViewModel {
             BigDecimal bdCaloriesWeightGoal = new BigDecimal(caloriesWeightGoal);
             bdCaloriesWeightGoal = bdCaloriesWeightGoal.round(new MathContext(5));
             double roundedCaloriesWeightGoal = bdCaloriesWeightGoal.doubleValue();
-            return stringCaloriesWeightGoal = Double.toString(roundedCaloriesWeightGoal);
+            return Double.toString(roundedCaloriesWeightGoal);
+        } else {
+            return null;
+        }
+    }
+
+    //getting how many calories user needs to eat to get lose/gain/maintain weight
+    public Double getCaloriesToEatDouble(double userBMR, int weightChange, String goal, String userGender, String activeOrSedentary){
+
+        if (goal.equals("Maintain Weight") || weightChange == 0) {
+
+            Double tdee = getTDEE(userBMR, activeOrSedentary);
+            return tdee;
+        } else if (goal.equals("Lose Weight")){
+            Double tdee = getTDEE(userBMR, activeOrSedentary);
+            //the mayo clinic suggests that you need to add/subtract 500 calories per day to gain/lose
+            //1 pound per week
+            Double caloriesWeightGoal = tdee - 500*weightChange;
+            return caloriesWeightGoal;
+        } else if (goal.equals("Gain Weight")){
+            //setting a toast if weight loss or gain is greater than 2 pounds per week
+            Double tdee = getTDEE(userBMR, activeOrSedentary);
+            //the mayo clinic suggests that you need to add/subtract 500 calories per day to gain/lose
+            //1 pound per week
+            Double caloriesWeightGoal = tdee + 500*weightChange;
+            return caloriesWeightGoal;
         } else {
             return null;
         }
