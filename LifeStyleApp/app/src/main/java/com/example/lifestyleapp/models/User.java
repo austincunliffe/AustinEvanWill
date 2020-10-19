@@ -42,6 +42,17 @@ public class User {
     @ColumnInfo(name = "profilePicFP")
     private String profilePicFP;
 
+    // added by Evan
+
+//    @ColumnInfo(name = "activeOrSedentary")
+//    private String activeOrSedentary;
+//
+//    @ColumnInfo(name = "goal")
+//    private String goal;
+//
+//    @ColumnInfo(name = "weightChange")
+//    private int weightChange;
+
     public long getUid() {return this.uid;}
     public void setUid(long uid){this.uid = uid;}
 
@@ -77,4 +88,15 @@ public class User {
 
     public String getProfilePicFP() {return this.profilePicFP;}
     public void setProfilePicFP(String fp) {this.profilePicFP = fp;}
+
+    // added by Evan
+
+//    public String getActiveOrSedentary() {return this.activeOrSedentary;}
+//    public void setActiveOrSedentary(String aOS) {this.activeOrSedentary = aOS;}
+//
+//    public String getGoal() {return this.goal;}
+//    public void setGoal(String goal) {this.goal = goal;}
+//
+//    public int getWeightChange() {return this.weightChange;}
+//    public void setWeightChange(int weightChange) {this.weightChange = weightChange;}
 }
