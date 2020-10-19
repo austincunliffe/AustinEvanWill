@@ -1,9 +1,6 @@
 package com.example.lifestyleapp.repositories;
 
-import android.annotation.SuppressLint;
 import android.app.Application;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -26,24 +23,25 @@ public class UserProfileRepository {
     private static UserDao mUserDao;
     private static Bitmap profilePic;
 
-    public UserProfileRepository(Application application){
+    public UserProfileRepository(Application application) {
         AppDatabase db = AppDatabase.getInstance(application);
         mUserDao = db.userDao();
 
         loadData();
     }
 
-    public MutableLiveData<User> getData() {return mUser;}
+    public MutableLiveData<User> getData() {
+        return mUser;
+    }
 
     private void loadData() {
         new getUserAsyncTask(this).execute(MainDrawerActivity.userPrimaryKey);
     }
 
-    private static class getUserAsyncTask extends AsyncTask<Long, Void, User>{
+    private static class getUserAsyncTask extends AsyncTask<Long, Void, User> {
         private WeakReference<UserProfileRepository> mRepoWReference;
 
-        getUserAsyncTask(UserProfileRepository repo)
-        {
+        getUserAsyncTask(UserProfileRepository repo) {
             mRepoWReference = new WeakReference<UserProfileRepository>(repo);
         }
 
@@ -53,20 +51,32 @@ public class UserProfileRepository {
         }
 
         @Override
-        protected void onPostExecute(User returnedUser){
+        protected void onPostExecute(User returnedUser) {
             UserProfileRepository localWRvar = mRepoWReference.get();
             new getProfilePicAsyncTask().execute(returnedUser.getProfilePicFP());
             localWRvar.mUser.setValue(returnedUser);
         }
     }
 
-    public void updateUser(User user){
-        mUserDao.updateUser(user);
+    public void updateUser(User user) {
+//        mUserDao.updateUser(user);
+        new updateUserAsyncTask().execute(user);
     }
 
-    public Bitmap getProfilePic(){ return profilePic; }
+    private static class updateUserAsyncTask extends AsyncTask<User, Void, Void> {
 
-    private static class getProfilePicAsyncTask extends AsyncTask<String, Void, Bitmap>{
+        @Override
+        protected Void doInBackground(User... users) {
+            mUserDao.updateUser(users[0]);
+            return null;
+        }
+    }
+
+    public Bitmap getProfilePic() {
+        return profilePic;
+    }
+
+    private static class getProfilePicAsyncTask extends AsyncTask<String, Void, Bitmap> {
 
         @Override
         protected Bitmap doInBackground(String... strings) {
@@ -74,16 +84,14 @@ public class UserProfileRepository {
             try {
                 File f = new File(strings[0], "profile.jpg");
                 picBit = BitmapFactory.decodeStream(new FileInputStream(f));
-            }
-            catch (FileNotFoundException e)
-            {
+            } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
             return picBit;
         }
 
         @Override
-        protected void onPostExecute(Bitmap returnedPic){
+        protected void onPostExecute(Bitmap returnedPic) {
             profilePic = returnedPic;
         }
     }

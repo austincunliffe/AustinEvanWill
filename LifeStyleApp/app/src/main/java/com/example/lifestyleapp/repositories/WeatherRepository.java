@@ -4,14 +4,12 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.os.AsyncTask;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.lifestyleapp.MainDrawerActivity;
 import com.example.lifestyleapp.models.AppDatabase;
 import com.example.lifestyleapp.models.User;
 import com.example.lifestyleapp.models.UserDao;
-import com.example.lifestyleapp.ui.weather.Location;
 import com.example.lifestyleapp.ui.weather.Weather;
 
 import org.json.JSONArray;
@@ -71,10 +69,7 @@ public class WeatherRepository {
             WeatherRepository localWRvar = mRepoWReference.get();
             localWRvar.mUser.setValue(returnedUser);
             String city = returnedUser.getCity();
-            System.out.println(city);
             localWRvar.city.setValue(returnedUser.getCity());
-            System.out.println("-----------------------");
-            System.out.println(localWRvar.city.getValue());
 
 
             new AsyncTask<String, Void, Weather>() {
@@ -95,9 +90,6 @@ public class WeatherRepository {
                 protected void onPostExecute(Weather weather) {
                     super.onPostExecute(weather);
                     try {
-                        System.out.println(weather.conditions);
-                        System.out.println(weather.temp);
-                        System.out.println("-----------------------------------------------------");
                         userLocationWeather.setValue(weather);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -112,34 +104,6 @@ public class WeatherRepository {
         userLocationWeather = new MutableLiveData<>();
         city = new MutableLiveData<>();
         new getUserAsyncTask(this).execute(MainDrawerActivity.userPrimaryKey);
-//        user = mUserDao.getUser(MainDrawerActivity.userPrimaryKey);
-//        city =  user.getCity();
-
-
-//        new AsyncTask<String, Void, Weather>() {
-//
-//            @Override
-//            protected Weather doInBackground(String ... strings) {
-//                String  city = strings[0];
-//
-//                try {
-//                    return getWeather(city);
-//                } catch (IOException | JSONException e) {
-//                    return new Weather("--", 0);
-//                }
-//            }
-//
-//
-//            @Override
-//            protected void onPostExecute(Weather weather) {
-//                super.onPostExecute(weather);
-//                try {
-//                    userLocationWeather.setValue(weather);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }.execute(city);
     }
 
     private static URL buildOpenWeatherAPIURL(String cityName) throws MalformedURLException {
