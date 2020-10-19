@@ -23,6 +23,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
 
 public class UserProfileViewModel extends AndroidViewModel {
 
@@ -39,7 +40,7 @@ public class UserProfileViewModel extends AndroidViewModel {
         return mUser;
     }
 
-    public void updateUser(User user){
+    public void updateUser(User user) throws ExecutionException, InterruptedException {
         mRepo.updateUser(user);
     }
 

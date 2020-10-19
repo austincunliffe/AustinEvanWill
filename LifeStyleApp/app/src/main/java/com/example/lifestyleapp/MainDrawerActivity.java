@@ -8,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,15 +18,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.lifestyleapp.ui.mapHikes.MapsHikeFragment;
-import com.example.lifestyleapp.ui.userProfile.UserProfileFragment;
 import com.google.android.material.navigation.NavigationView;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -36,15 +31,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import org.w3c.dom.Text;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
 import java.util.List;
-import java.util.prefs.Preferences;
 
 public class MainDrawerActivity extends AppCompatActivity {
 
@@ -54,7 +45,7 @@ public class MainDrawerActivity extends AppCompatActivity {
     private TextView navUsername;
     private ImageView navImage;
     private ImageView profileImage;
-    private  View navView;
+    private View navView;
     public static Long userPrimaryKey;
 
 
@@ -86,17 +77,15 @@ public class MainDrawerActivity extends AppCompatActivity {
 
         Location current = getLastKnownLocation();
 
-        pref.edit().putString("lat", String.valueOf(current.getLatitude()));
-        pref.edit().putString("long", String.valueOf(current.getLongitude()));
+//        pref.edit().putString("lat", String.valueOf(current.getLatitude()));
+//        pref.edit().putString("long", String.valueOf(current.getLongitude()));
     }
 
 
-    void setNavHeaderData(NavigationView navigationView){
+    void setNavHeaderData(NavigationView navigationView) {
         navView = navigationView.getHeaderView(0);
         TextView nav_name = (TextView) navView.findViewById(R.id.navUsername);
-        TextView nav_email =(TextView) navView.findViewById(R.id.navEmail);
-
-
+        TextView nav_email = (TextView) navView.findViewById(R.id.navEmail);
 
 
         final String picPath = pref.getString("profile_pic", null);
@@ -111,25 +100,23 @@ public class MainDrawerActivity extends AppCompatActivity {
         String username = pref.getString("username", null);
         String email = pref.getString("email", null);
 
+//        UserProfileViewModel model = new UserProfileViewModel(this.getApplication());
+
         nav_name.setText(username);
         nav_email.setText(email);
 
     }
-    public void loadProfilePic(String path)
-    {
+
+    public void loadProfilePic(String path) {
         try {
-            File f=new File(path, "profile.jpg");
+            File f = new File(path, "profile.jpg");
             Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
-            ImageView nav_pic =(ImageView) navView.findViewById(R.id.navPic);
+            ImageView nav_pic = (ImageView) navView.findViewById(R.id.navPic);
             nav_pic.setImageBitmap(b);
-        }
-        catch (FileNotFoundException e)
-        {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
-
-
 
 
     @SuppressLint("ResourceType")
