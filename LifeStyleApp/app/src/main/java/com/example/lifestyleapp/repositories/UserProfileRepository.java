@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.lang.ref.WeakReference;
+import java.util.concurrent.ExecutionException;
 
 public class UserProfileRepository {
 
@@ -58,17 +59,16 @@ public class UserProfileRepository {
         }
     }
 
-    public void updateUser(User user) {
-//        mUserDao.updateUser(user);
-        new updateUserAsyncTask().execute(user);
+    public void updateUser(User user) throws ExecutionException, InterruptedException {
+        boolean threadCompleted = new updateUserAsyncTask().execute(user).get();
     }
 
-    private static class updateUserAsyncTask extends AsyncTask<User, Void, Void> {
+    private static class updateUserAsyncTask extends AsyncTask<User, Void, Boolean> {
 
         @Override
-        protected Void doInBackground(User... users) {
+        protected Boolean doInBackground(User... users) {
             mUserDao.updateUser(users[0]);
-            return null;
+            return true;
         }
     }
 

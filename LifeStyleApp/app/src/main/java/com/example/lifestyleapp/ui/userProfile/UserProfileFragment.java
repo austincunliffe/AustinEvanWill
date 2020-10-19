@@ -34,6 +34,7 @@ import com.example.lifestyleapp.R;
 import com.example.lifestyleapp.models.User;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.concurrent.ExecutionException;
 
 public class UserProfileFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
@@ -75,7 +76,6 @@ public class UserProfileFragment extends Fragment implements AdapterView.OnItemS
 
         // Set the observer
         UserProfileViewModel.getData().observe(getViewLifecycleOwner(), userObserver);
-
         initializeCamera();
 
 
@@ -100,7 +100,13 @@ public class UserProfileFragment extends Fragment implements AdapterView.OnItemS
     @Override
     public void onDestroy() {
         super.onDestroy();
-        UserProfileViewModel.updateUser(currUser);
+        try {
+            UserProfileViewModel.updateUser(currUser);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     //create an observer that watches the LiveData<User> object
