@@ -42,17 +42,6 @@ public class User {
     @ColumnInfo(name = "profilePicFP")
     private String profilePicFP;
 
-    // added by Evan
-
-//    @ColumnInfo(name = "activeOrSedentary")
-//    private String activeOrSedentary;
-//
-//    @ColumnInfo(name = "goal")
-//    private String goal;
-//
-//    @ColumnInfo(name = "weightChange")
-//    private int weightChange;
-
     public long getUid() {return this.uid;}
     public void setUid(long uid){this.uid = uid;}
 
