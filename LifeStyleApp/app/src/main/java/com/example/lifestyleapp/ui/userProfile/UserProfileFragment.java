@@ -192,11 +192,13 @@ public class UserProfileFragment extends Fragment implements AdapterView.OnItemS
                         calendar_DOB.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
+
     }
 
     private void updateLabel() {
         SimpleDateFormat sdf = UserProfileViewModel.createDobLabel();
         et_DOB.setText(sdf.format(calendar_DOB.getTime()));
+        currUser.setBirthday(sdf.format(calendar_DOB.getTime()));
     }
 
     private void initializeSpinners(User user) {
