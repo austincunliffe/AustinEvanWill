@@ -195,9 +195,7 @@ public class UserProfileFragment extends Fragment implements AdapterView.OnItemS
     }
 
     private void updateLabel() {
-//        String myFormat = "MM/dd/yy";
         SimpleDateFormat sdf = UserProfileViewModel.createDobLabel();
-//        String dob = sdf.format(calendar_DOB.getTime());
         et_DOB.setText(sdf.format(calendar_DOB.getTime()));
     }
 
@@ -275,9 +273,6 @@ public class UserProfileFragment extends Fragment implements AdapterView.OnItemS
     }
 
     public void initializeEditTexts(final User user) {
-//        String mName = pref.getString("username", null);
-//        String mAge = pref.getString("dob", null);
-//        String mCity = pref.getString("city", null);
 
         et_name.setText(user.getName());
         et_DOB.setText(user.getBirthday());
