@@ -4,13 +4,13 @@ import android.app.Application;
 import androidx.lifecycle.ViewModel;
 
 import com.example.lifestyleapp.models.User;
-import com.example.lifestyleapp.repositories.UserRepository;
+import com.example.lifestyleapp.repositories.CreateAccountActivityRepository;
 
 public class CreateAccountActivityViewModel extends ViewModel {
-    private UserRepository UserRepo;
+    private CreateAccountActivityRepository UserRepo;
 
     public void init(Application application, User user){
-        UserRepo = UserRepository.getInstance(application);
+        UserRepo = CreateAccountActivityRepository.getInstance(application);
         UserRepo.insert(user);
     }
 
