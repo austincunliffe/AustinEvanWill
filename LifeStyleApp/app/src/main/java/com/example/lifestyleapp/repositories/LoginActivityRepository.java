@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.lifestyleapp.MainDrawerActivity;
 import com.example.lifestyleapp.models.AppDatabase;
 import com.example.lifestyleapp.models.User;
 import com.example.lifestyleapp.models.UserDao;
@@ -33,7 +34,7 @@ public class LoginActivityRepository {
         new verifyLoginAsyncTask(this).execute(credentials);
     }
 
-    private static class verifyLoginAsyncTask extends AsyncTask<String, Void, Integer> {
+    private static class verifyLoginAsyncTask extends AsyncTask<String, Void, Long> {
         private WeakReference<LoginActivityRepository> mRepoWReference;
 
         verifyLoginAsyncTask(LoginActivityRepository repo)
@@ -42,19 +43,20 @@ public class LoginActivityRepository {
         }
 
         @Override
-        protected Integer doInBackground(String... strings) {
+        protected Long doInBackground(String... strings) {
             return mUserDao.getByLogin(strings[0], strings[1]);
 
         }
 
         @Override
-        protected void onPostExecute(Integer userCount){
+        protected void onPostExecute(Long uid){
             LoginActivityRepository localWRvar = mRepoWReference.get();
-            if(userCount < 1){
-                System.out.println("USER COUNT: " + userCount);
-                localWRvar.userVerified.setValue(false);
-            } else {
+            if(uid != null){
+                System.out.println("USER COUNT: " + uid);
                 localWRvar.userVerified.setValue(true);
+                MainDrawerActivity.userPrimaryKey = uid;
+            } else {
+                localWRvar.userVerified.setValue(false);
             }
         }
     }
