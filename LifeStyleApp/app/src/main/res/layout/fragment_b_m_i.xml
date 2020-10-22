@@ -9,7 +9,7 @@
     tools:context=".ui.bmi.BMIFragment" >
 
     <TextView
-        android:id="@+id/bmi_title"
+        android:id="@+id/stepCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
