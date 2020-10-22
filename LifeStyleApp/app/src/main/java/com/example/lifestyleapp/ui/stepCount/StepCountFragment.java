@@ -1,8 +1,11 @@
 package com.example.lifestyleapp.ui.stepCount;
 
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -31,16 +34,31 @@ public class StepCountFragment extends Fragment {
         return inflater.inflate(R.layout.step_count_fragment, container, false);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(StepCountViewModel.class);
-        //mViewModel.getData().observe(this,stepsObserver); getData
-
+        mViewModel = new StepCountViewModel(this.getActivity().getApplication());
+        mViewModel.registerSensor();
+        mViewModel.getData().observe(getViewLifecycleOwner(), stepsObserver);
         stepsTV = getView().findViewById(R.id.steps);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public void onResume() {
+        super.onResume();
+        mViewModel.registerSensor();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mViewModel.unregisterSensor();
+    }
+
     Observer<Long> stepsObserver = new Observer<Long>() {
+        @SuppressLint("SetTextI18n")
         @Override
         public void onChanged(Long aLong) {
             stepsTV.setText(aLong.toString());
