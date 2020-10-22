@@ -39,6 +39,10 @@ public class StepCountViewModel extends AndroidViewModel implements SensorEventL
         return steps;
     }
 
+    public MutableLiveData<Long> setData() {
+        return steps;
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void registerSensor() {
         if (sensor != null) {
