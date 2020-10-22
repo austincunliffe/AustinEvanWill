@@ -71,5 +71,6 @@
     <string name="what_is_your_fitness_goal">What is your fitness goal?</string>
     <string name="are_you_active_or_sedentary">Are you active or sedentary?</string>
     <string name="basal_metabolic_rate">Basal Metabolic Rate:</string>
+    <string name="stepCount">Step Count</string>
 
 </resources>

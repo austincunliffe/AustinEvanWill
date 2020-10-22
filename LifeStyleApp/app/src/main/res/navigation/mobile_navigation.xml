@@ -37,4 +37,11 @@
         android:label="Health"
         android:textColor="@color/White"
         />
+
+    <fragment
+        android:id="@+id/nav_step_count"
+        android:name="com.example.lifestyleapp.ui.stepCount.StepCountFragment"
+        android:label="Step Count"
+        android:textColor="@color/White"
+        />
 </navigation>
