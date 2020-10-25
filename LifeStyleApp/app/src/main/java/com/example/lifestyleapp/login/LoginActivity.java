@@ -122,7 +122,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             if(verified==true) {
                 successfulLogin();
             } else {
-                unsuccessfulLogin();;
+//                unsuccessfulLogin();;
             }
         }
     };

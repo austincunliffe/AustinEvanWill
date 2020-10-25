@@ -21,5 +21,8 @@
         <item
             android:id="@+id/nav_fitness_goal"
             android:title="@string/health" />
+        <item
+            android:id="@+id/nav_step_count"
+            android:title="@string/stepCount" />
     </group>
 </menu>
