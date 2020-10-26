@@ -4,17 +4,21 @@ import android.app.Application;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.amplifyframework.core.Amplify;
 import com.example.lifestyleapp.MainDrawerActivity;
 import com.example.lifestyleapp.models.AppDatabase;
 import com.example.lifestyleapp.models.User;
 import com.example.lifestyleapp.models.UserDao;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.lang.ref.WeakReference;
 import java.util.concurrent.ExecutionException;
 
@@ -94,5 +98,23 @@ public class UserProfileRepository {
         protected void onPostExecute(Bitmap returnedPic) {
             profilePic = returnedPic;
         }
+    }
+
+    public void backupDatabase(Application app) {
+        File dbFile = app.getApplicationContext().getDatabasePath("lifestyle-db");
+
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(dbFile));
+            writer.close();
+        } catch (Exception exception) {
+            Log.e("Lifestyle App", "Upload failed", exception);
+        }
+
+        Amplify.Storage.uploadFile(
+                "db-backup",
+                dbFile,
+                result -> Log.i("Lifestyle App", "Successfully uploaded: " + result.getKey()),
+                storageFailure -> Log.e("Lifestyle App", "Upload failed", storageFailure)
+        );
     }
 }

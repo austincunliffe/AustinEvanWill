@@ -77,4 +77,8 @@ public class UserProfileViewModel extends AndroidViewModel {
     public Bitmap getProfilePic(){
         return mRepo.getProfilePic();
     }
+
+    public void backupDatabase(Application app) {
+        mRepo.backupDatabase(app);
+    }
 }
