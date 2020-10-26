@@ -14,7 +14,10 @@ import androidx.annotation.RequiresApi;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.lifestyleapp.models.StepCount;
 import com.example.lifestyleapp.repositories.StepCountRepository;
+
+import java.time.LocalDateTime;
 
 public class StepCountViewModel extends AndroidViewModel implements SensorEventListener {
 
@@ -31,8 +34,7 @@ public class StepCountViewModel extends AndroidViewModel implements SensorEventL
         stepCount = 0;
         sensorManager = (SensorManager) this.getApplication().getSystemService(Context.SENSOR_SERVICE);
         this.sensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
-//        repository = new StepCountRepository();
-//         repository.getData().observe();
+        repository = new StepCountRepository(application);
     }
 
     public MutableLiveData<Long> getData() {
@@ -45,6 +47,8 @@ public class StepCountViewModel extends AndroidViewModel implements SensorEventL
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void registerSensor() {
+        // Check state sharedpref if state
+
         if (sensor != null) {
             sensorManager.registerListener(this, sensor, Sensor.TYPE_STEP_COUNTER);
         } else {
@@ -52,9 +56,18 @@ public class StepCountViewModel extends AndroidViewModel implements SensorEventL
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void unregisterSensor() {
         if (sensor != null) {
             sensorManager.unregisterListener(this);
+
+            StepCount currentCount = new StepCount();
+            String currentTime = LocalDateTime.now().toString();
+            System.out.println(currentTime);
+            currentCount.setTime(currentTime);
+            currentCount.setCount(this.stepCount);
+            repository.setData(currentCount);
+            
         } else {
             System.out.println("NULL SENSOR");
         }

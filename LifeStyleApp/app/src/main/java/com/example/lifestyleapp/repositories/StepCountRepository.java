@@ -1,64 +1,44 @@
 package com.example.lifestyleapp.repositories;
 
-import android.annotation.SuppressLint;
 import android.app.Application;
 import android.os.AsyncTask;
 
-import androidx.lifecycle.MutableLiveData;
-
-import com.example.lifestyleapp.MainDrawerActivity;
 import com.example.lifestyleapp.models.AppDatabase;
-import com.example.lifestyleapp.models.BMI;
-import com.example.lifestyleapp.models.User;
-import com.example.lifestyleapp.models.UserDao;
+import com.example.lifestyleapp.models.StepCount;
+import com.example.lifestyleapp.models.StepDao;
+
 
 import java.lang.ref.WeakReference;
 
 public class StepCountRepository {
-    private MutableLiveData<User> mUser;
-    private static UserDao mUserDao;
-    private long steps;
-    private MutableLiveData<Long> stepsData;
-// userDao.insert(StepCount Object);
 
-//    public BMIRepository(Application application) {
-//        AppDatabase db = AppDatabase.getInstance(application);
-//        mUserDao = db.userDao();
-//        loadData();
-//    }
-//
-//    void loadData() {
-//        BMIData = new MutableLiveData<>();
-//        mUser = new MutableLiveData<>();
-//        bmi = new BMI(0, 0);
-//        BMIData.setValue(bmi);
-//        new BMIRepository.getUserAsyncTask(this).execute(MainDrawerActivity.userPrimaryKey);
-//    }
-//
-//    public MutableLiveData<BMI> getBMI() {
-//        return BMIData;
-//    }
-//
-//    private static class getUserAsyncTask extends AsyncTask<Long, Void, User> {
-//        private WeakReference<BMIRepository> mRepoWReference;
-//
-//        getUserAsyncTask(BMIRepository repo) {
-//            mRepoWReference = new WeakReference<BMIRepository>(repo);
-//        }
-//
-//        @Override
-//        protected User doInBackground(Long... longs) {
-//            return mUserDao.getUser(longs[0]);
-//        }
-//
-//        @SuppressLint("StaticFieldLeak")
-//        @Override
-//        protected void onPostExecute(User returnedUser) {
-//            BMIRepository localWRvar = mRepoWReference.get();
-//            localWRvar.mUser.setValue(returnedUser);
-//            System.out.println(returnedUser.getHeight());
-//            localWRvar.BMIData.setValue(new BMI(returnedUser.getHeight(), returnedUser.getWeight()));
-//        }
-//    }
+    private static StepDao mStepDao;
+
+    public StepCountRepository(Application application) {
+        AppDatabase db = AppDatabase.getInstance(application);
+        mStepDao = db.stepDao();
+    }
+
+    public void setData(StepCount stepCount) {
+        new setStepCountAsyncTask(this).execute(stepCount);
+    }
+
+    private static class setStepCountAsyncTask extends AsyncTask<StepCount, Void, Boolean> {
+        private WeakReference<StepCountRepository> mRepoWReference;
+
+        setStepCountAsyncTask(StepCountRepository repo) {
+            mRepoWReference = new WeakReference<StepCountRepository>(repo);
+        }
+
+        @Override
+        protected Boolean doInBackground(StepCount... stepCounts) {
+            try {
+                mStepDao.insert(stepCounts[0]);
+            } catch (Exception e) {
+                return false;
+            }
+            return true;
+        }
+    }
 
 }
