@@ -161,27 +161,6 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
 
         model.init(this.getApplication(), user);
 
-        //////////////////// CODE IN THIS BLOCK WILL EVENTUALLY BE DELETED ////////////////////
-        //////////////////// NEEDED FOR OTHER MODULES UNTIL THEY PULL FROM DB ////////////////////
-
-        SharedPreferences prefs = this.getSharedPreferences(
-                "com.example.lifestyleapp", Context.MODE_PRIVATE);
-
-        prefs.edit().putString("username", username).apply();
-        prefs.edit().putString("email", email).apply();
-        prefs.edit().putString("password", password).apply();
-        prefs.edit().putString("dob", dob).apply();
-        prefs.edit().putString("country", country).apply();
-        prefs.edit().putInt("country_idx", country_idx).apply();
-        prefs.edit().putString("city", city).apply();
-        prefs.edit().putString("sex", sex).apply();
-        prefs.edit().putInt("sex_idx", sex_idx).apply();
-        prefs.edit().putInt("height", height).apply();
-        prefs.edit().putInt("weight", weight).apply();
-        prefs.edit().putBoolean("LOGIN_KEY", true).apply();
-
-        //////////////////// END ////////////////////
-
         this.startActivity(new Intent(this, MainDrawerActivity.class));
     }
 }

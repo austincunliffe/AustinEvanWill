@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         @Override
         public void onChanged(@Nullable final Boolean verified) {
             // Update the UI if this data variable changes
-            if(verified==true) {
+            if(verified) {
                 successfulLogin();
             } else {
                 unsuccessfulLogin();;
