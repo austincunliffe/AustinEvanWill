@@ -102,7 +102,7 @@ public class UserProfileFragment extends Fragment implements AdapterView.OnItemS
         super.onDestroy();
         try {
             UserProfileViewModel.updateUser(currUser);
-            UserProfileViewModel.backupDatabase(this.getActivity().getApplication());
+//            UserProfileViewModel.backupDatabase(this.getActivity().getApplication());
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {

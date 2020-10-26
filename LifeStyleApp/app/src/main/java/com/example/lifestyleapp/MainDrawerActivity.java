@@ -76,9 +76,6 @@ public class MainDrawerActivity extends AppCompatActivity {
         setNavHeaderData(navigationView);
 
         Location current = getLastKnownLocation();
-
-//        pref.edit().putString("lat", String.valueOf(current.getLatitude()));
-//        pref.edit().putString("long", String.valueOf(current.getLongitude()));
     }
 
 
