@@ -1,0 +1,16 @@
+{
+  "auth": {
+    "lifestylee198b008": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  },
+  "storage": {
+    "lifestyleApp": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation"
+    }
+  }
+}
