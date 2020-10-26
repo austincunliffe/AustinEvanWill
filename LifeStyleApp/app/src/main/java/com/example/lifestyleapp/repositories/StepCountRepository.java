@@ -19,7 +19,7 @@ public class StepCountRepository {
     private static UserDao mUserDao;
     private long steps;
     private MutableLiveData<Long> stepsData;
-
+// userDao.insert(StepCount Object);
 
 //    public BMIRepository(Application application) {
 //        AppDatabase db = AppDatabase.getInstance(application);
