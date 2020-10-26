@@ -1,7 +1,9 @@
 package com.example.lifestyleapp.ui.stepCount;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -24,14 +26,24 @@ public class StepCountViewModel extends AndroidViewModel implements SensorEventL
     StepCountRepository repository;
     Sensor sensor;
     long stepCount;
+    long sensorHistory;
     SensorManager sensorManager;
     MutableLiveData<Long> steps = new MutableLiveData<>();
+    SharedPreferences preferences;
 
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     StepCountViewModel(@NonNull Application application) {
         super(application);
-        stepCount = 0;
+        preferences = getApplication().getSharedPreferences("com.example.lifestyleapp",
+                Context.MODE_PRIVATE);
+        long sensorHistory = preferences.getLong("sensorHistory", 0);
+        if (sensorHistory == 0) {
+            stepCount = 0;
+        } else {
+            stepCount = preferences.getLong("initialCount", 0);
+        }
+        steps.setValue(stepCount);
         sensorManager = (SensorManager) this.getApplication().getSystemService(Context.SENSOR_SERVICE);
         this.sensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
         repository = new StepCountRepository(application);
@@ -41,45 +53,69 @@ public class StepCountViewModel extends AndroidViewModel implements SensorEventL
         return steps;
     }
 
-    public MutableLiveData<Long> setData() {
-        return steps;
-    }
-
+    @SuppressLint("CommitPrefEdits")
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void registerSensor() {
-        // Check state sharedpref if state
-
-        if (sensor != null) {
+        // Check state sharedpref if state as well as the current total steps form sensor
+        if (!preferences.getBoolean("registered", false)) {
+            System.out.println("Swipe Left to right");
+//            if (sensor != null) {
             sensorManager.registerListener(this, sensor, Sensor.TYPE_STEP_COUNTER);
+            preferences.edit().putBoolean("registered", true);
+            preferences.edit().apply();
+            System.out.println(preferences.getBoolean("registered", false));
+//            } else {
+//                System.out.println("NULL SENSOR");
+//            }
         } else {
-            System.out.println("NULL SENSOR");
+            Toast.makeText(getApplication(), "Step Counter is already active.", Toast.LENGTH_SHORT).show();
         }
     }
 
+    @SuppressLint("CommitPrefEdits")
+    public void storeCurrentSteps() {
+        preferences.edit().putLong("initialCount", stepCount);
+    }
+
+    @SuppressLint("CommitPrefEdits")
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void unregisterSensor() {
-        if (sensor != null) {
-            sensorManager.unregisterListener(this);
+//        if (sensor != null) {
+        sensorManager.unregisterListener(this);
 
-            StepCount currentCount = new StepCount();
-            String currentTime = LocalDateTime.now().toString();
-            System.out.println(currentTime);
-            currentCount.setTime(currentTime);
-            currentCount.setCount(this.stepCount);
-            repository.setData(currentCount);
-            
-        } else {
-            System.out.println("NULL SENSOR");
-        }
+        StepCount currentCount = new StepCount();
+        String currentTime = LocalDateTime.now().toString();
+        System.out.println(currentTime);
+        System.out.println(stepCount);
+        currentCount.setTime(currentTime);
+        currentCount.setCount(this.stepCount);
+        repository.setData(currentCount);
+        preferences.edit().remove("sensorHistory");
+        preferences.edit().remove("initialCount");
+        preferences.edit().remove("registered");
+        preferences.edit().apply();
+
+//        } else {
+//            System.out.println("NULL SENSOR");
+//        }
     }
 
+
+    @SuppressLint("CommitPrefEdits")
     @Override
     public void onSensorChanged(SensorEvent event) {
         System.out.println(event.timestamp);
         if (event.sensor.getType() == Sensor.TYPE_STEP_COUNTER) {
-            System.out.println(event.values[0]);
-            stepCount++;
-            steps.setValue(stepCount);
+
+            long sensorCount = (long) event.values[0];
+            if (sensorHistory == 0) {
+                sensorHistory = sensorCount;
+                preferences.edit().putLong("countHistory", sensorHistory);
+            }
+
+            stepCount = sensorCount - sensorHistory;
+
+            this.steps.setValue(stepCount);
         }
     }
 

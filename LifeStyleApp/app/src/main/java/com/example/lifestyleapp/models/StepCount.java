@@ -6,13 +6,19 @@ import androidx.room.PrimaryKey;
 
 import java.time.LocalDateTime;
 
+import io.reactivex.annotations.NonNull;
+
 @Entity(tableName = "stepCount")
 public class StepCount {
-    @PrimaryKey
-    private long count;
+
 
     @ColumnInfo(name = "time")
     private String time;
+
+//    @ColumnInfo(name = "count")
+    @PrimaryKey
+    private long count;
+
 
     public long getCount() {
         return this.count;
