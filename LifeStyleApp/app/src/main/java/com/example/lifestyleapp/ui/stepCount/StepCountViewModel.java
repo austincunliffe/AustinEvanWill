@@ -35,6 +35,7 @@ public class StepCountViewModel extends AndroidViewModel implements SensorEventL
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     StepCountViewModel(@NonNull Application application) {
         super(application);
+
         preferences = getApplication().getSharedPreferences("com.example.lifestyleapp",
                 Context.MODE_PRIVATE);
         long sensorHistory = preferences.getLong("sensorHistory", 0);
@@ -56,25 +57,24 @@ public class StepCountViewModel extends AndroidViewModel implements SensorEventL
     @SuppressLint("CommitPrefEdits")
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void registerSensor() {
-        // Check state sharedpref if state as well as the current total steps form sensor
         if (!preferences.getBoolean("registered", false)) {
             System.out.println("Swipe Left to right");
 //            if (sensor != null) {
             sensorManager.registerListener(this, sensor, Sensor.TYPE_STEP_COUNTER);
-            preferences.edit().putBoolean("registered", true);
-            preferences.edit().apply();
+            preferences.edit().putBoolean("registered", true).apply();
             System.out.println(preferences.getBoolean("registered", false));
 //            } else {
 //                System.out.println("NULL SENSOR");
 //            }
-        } else {
-            Toast.makeText(getApplication(), "Step Counter is already active.", Toast.LENGTH_SHORT).show();
+        }
+        else {
+//            Toast.makeText(getApplication(), "Step Counter is active.", Toast.LENGTH_SHORT).show();
         }
     }
 
     @SuppressLint("CommitPrefEdits")
     public void storeCurrentSteps() {
-        preferences.edit().putLong("initialCount", stepCount);
+        preferences.edit().putLong("initialCount", stepCount).apply();
     }
 
     @SuppressLint("CommitPrefEdits")
@@ -90,10 +90,9 @@ public class StepCountViewModel extends AndroidViewModel implements SensorEventL
         currentCount.setTime(currentTime);
         currentCount.setCount(this.stepCount);
         repository.setData(currentCount);
-        preferences.edit().remove("sensorHistory");
-        preferences.edit().remove("initialCount");
-        preferences.edit().remove("registered");
-        preferences.edit().apply();
+        preferences.edit().remove("sensorHistory").apply();
+        preferences.edit().remove("initialCount").apply();
+        preferences.edit().remove("registered").apply();
 
 //        } else {
 //            System.out.println("NULL SENSOR");
@@ -110,7 +109,7 @@ public class StepCountViewModel extends AndroidViewModel implements SensorEventL
             long sensorCount = (long) event.values[0];
             if (sensorHistory == 0) {
                 sensorHistory = sensorCount;
-                preferences.edit().putLong("countHistory", sensorHistory);
+                preferences.edit().putLong("countHistory", sensorHistory).apply();
             }
 
             stepCount = sensorCount - sensorHistory;
