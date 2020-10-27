@@ -66,12 +66,13 @@ public class StepCountFragment extends Fragment {
                                 return false;
                             if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE
                                     && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                                mViewModel.unregisterSensor();
+                                mViewModel.storeData();
 
-                            } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE
-                                    && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                                mViewModel.registerSensor();
                             }
+//                            else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE
+//                                    && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+//                                mViewModel.registerSensor();
+//                            }
                         } catch (Exception e) {
                             // nothing
                         }
@@ -93,6 +94,7 @@ public class StepCountFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+        mViewModel.unregisterSensor();
         mViewModel.storeCurrentSteps();
     }
 
