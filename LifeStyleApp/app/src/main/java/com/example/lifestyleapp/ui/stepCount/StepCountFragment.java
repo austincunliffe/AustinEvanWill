@@ -44,7 +44,7 @@ public class StepCountFragment extends Fragment {
         mViewModel.registerSensor();
         mViewModel.getData().observe(getViewLifecycleOwner(), stepsObserver);
         stepsTV = getView().findViewById(R.id.steps);
-        Toast.makeText(this.getActivity(), "Swipe right to start and left to stop the step count!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this.getActivity(), "Shake to start and right to reset and stop the step count!", Toast.LENGTH_SHORT).show();
 
         final GestureDetector gesture = new GestureDetector(getActivity(),
                 new GestureDetector.SimpleOnGestureListener() {
@@ -66,11 +66,8 @@ public class StepCountFragment extends Fragment {
                                 return false;
                             if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE
                                     && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                                mViewModel.unregisterSensor();
+                                mViewModel.storeData();
 
-                            } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE
-                                    && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                                mViewModel.registerSensor();
                             }
                         } catch (Exception e) {
                             // nothing
@@ -93,6 +90,7 @@ public class StepCountFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+        mViewModel.unregisterSensor();
         mViewModel.storeCurrentSteps();
     }
 

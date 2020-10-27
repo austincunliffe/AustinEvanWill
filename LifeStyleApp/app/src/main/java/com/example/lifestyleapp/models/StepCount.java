@@ -4,21 +4,24 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.time.LocalDateTime;
-
-import io.reactivex.annotations.NonNull;
-
 @Entity(tableName = "stepCount")
 public class StepCount {
+
+    @PrimaryKey (autoGenerate = true)
+    private long CID;
 
 
     @ColumnInfo(name = "time")
     private String time;
 
-//    @ColumnInfo(name = "count")
-    @PrimaryKey
+    //    @PrimaryKey
+    @ColumnInfo(name = "count")
     private long count;
 
+
+    public long getCID(){return this.CID;}
+
+    public void setCID(long cid){this.CID = cid;}
 
     public long getCount() {
         return this.count;
