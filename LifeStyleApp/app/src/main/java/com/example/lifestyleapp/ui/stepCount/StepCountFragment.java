@@ -69,10 +69,6 @@ public class StepCountFragment extends Fragment {
                                 mViewModel.storeData();
 
                             }
-//                            else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE
-//                                    && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-//                                mViewModel.registerSensor();
-//                            }
                         } catch (Exception e) {
                             // nothing
                         }
