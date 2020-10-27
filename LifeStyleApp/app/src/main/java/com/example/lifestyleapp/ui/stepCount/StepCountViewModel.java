@@ -59,17 +59,17 @@ public class StepCountViewModel extends AndroidViewModel implements SensorEventL
     public void registerSensor() {
         if (!preferences.getBoolean("registered", false)) {
             System.out.println("Swipe Left to right");
-//            if (sensor != null) {
+            if (sensor != null) {
             sensorManager.registerListener(this, sensor, Sensor.TYPE_STEP_COUNTER);
             preferences.edit().putBoolean("registered", true).apply();
             System.out.println(preferences.getBoolean("registered", false));
-//            } else {
-//                System.out.println("NULL SENSOR");
-//            }
+            } else {
+                System.out.println("NULL SENSOR");
+            }
         }
-        else {
-//            Toast.makeText(getApplication(), "Step Counter is active.", Toast.LENGTH_SHORT).show();
-        }
+        Toast.makeText(getApplication(), "Step Counter is active.", Toast.LENGTH_SHORT).show();
+
+
     }
 
     @SuppressLint("CommitPrefEdits")
@@ -80,7 +80,7 @@ public class StepCountViewModel extends AndroidViewModel implements SensorEventL
     @SuppressLint("CommitPrefEdits")
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void unregisterSensor() {
-//        if (sensor != null) {
+        if (sensor != null) {
         sensorManager.unregisterListener(this);
 
         StepCount currentCount = new StepCount();
@@ -94,9 +94,9 @@ public class StepCountViewModel extends AndroidViewModel implements SensorEventL
         preferences.edit().remove("initialCount").apply();
         preferences.edit().remove("registered").apply();
 
-//        } else {
-//            System.out.println("NULL SENSOR");
-//        }
+        } else {
+            System.out.println("NULL SENSOR");
+        }
     }
 
 
